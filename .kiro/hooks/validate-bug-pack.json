@@ -1,0 +1,6 @@
+{
+  "trigger": "file-save",
+  "pattern": "src/bugs/**/*.ts",
+  "command": "node scripts/validate-pack.js",
+  "on-error": "show-in-editor"
+}
