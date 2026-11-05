@@ -1,6 +1,11 @@
 {
-  "trigger": "file-save",
-  "pattern": "src/bugs/**/*.ts",
-  "command": "node scripts/validate-pack.js",
-  "on-error": "show-in-editor"
+  "name": "validate-bug-pack",
+  "description": "When a bug pack file is saved, run the validation script. Tests must fail on broken code and pass on solution code.",
+  "trigger": "PostFileSave",
+  "matcher": "src/bugs/.+\\.ts$",
+  "action": {
+    "type": "command",
+    "command": "node scripts/validate-pack.js"
+  },
+  "timeout": 30
 }

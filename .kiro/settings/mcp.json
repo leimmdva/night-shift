@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "description": "Provides up-to-date documentation for Phaser, Monaco Editor, Vite, and Vitest. Use when writing or reviewing code that touches these libraries."
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "description": "Browser automation for end-to-end testing. Use to verify the live game in a real browser: open the laptop, run tests, check the postmortem report."
+    }
+  }
+}
