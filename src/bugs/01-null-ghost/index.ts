@@ -8,7 +8,7 @@ const pack: BugPack = {
     name: 'Null Ghost',
     fileLabel: 'profile.js',
     behaviour:
-      'Semi-transparent; only fully visible in the flashlight beam. Moves slowly.',
+      'Sprite alpha is 0.4 by default. Rises to 1.0 only while inside the player\'s view cone. The red file label is always fully visible.',
   },
 
   hints: [

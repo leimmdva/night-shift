@@ -8,7 +8,7 @@ const pack: BugPack = {
     name: 'Off-by-One',
     fileLabel: 'pagination.js',
     behaviour:
-      'Always stops exactly one tile short of its waypoint, then reverses. Never quite arrives.',
+      'Overshoots each waypoint by 32px past the target in the direction of travel. Applies the same overshoot while chasing — fast but predictable.',
   },
 
   hints: [
