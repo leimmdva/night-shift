@@ -92,6 +92,12 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
 - Kiro feature: vibe coding
 - How Kiro helped: wrote a small shading toolkit (distance-field lighting, 3-face boxes) and the drawings, and judged each sprite from zoomed renders. Several rounds of redrawing by hand-tuned parameters (null-ghost hole, crawler head, golem padlock).
 - Problems and fixes: shading the ghost with its hole made a shadow ring, so the hole is punched after shading. Crawler ring plates and the crawler head are still busy at 1x.
+- Commit: 53b32f3
+### 2026-11-15 — 2.5D office map preview with hiding spots and Halloween decor
+- What: one-room office (20x14 tiles, 32px) drawn as 55 reusable pieces, composed by `scripts/sprites/build-office.mjs` (`npm run build-office`). Writes `src/game/maps/office.json` and three 2x previews in `docs/art/` (lit, night, annotated) plus a pieces sheet. Seven hide spots, player desk, server door, entrance, four monster spawns.
+- Kiro feature: vibe coding
+- How Kiro helped: wrote the drawing code, layout module, lighting passes and annotation overlay, and reviewed zoomed renders. A first session was cut by a time limit and a second one finished it.
+- Problems and fixes: the doormat overlapped the EXIT sign (moved up); wall plants hid the windows (moved); annotation numbers were unreadable (enlarged). 11 floor tiles are more than 5.5 tiles from a hide spot. The skeleton still overlaps its desk.
 - Commit: pending
 
 ## Decisions
@@ -121,7 +127,8 @@ Measured on 2026-11-15.
 | Custom agents | 1 |
 | MCP servers | 2 |
 | Monster sprites | 14 PNG files |
-| Commits | 11 before this one |
+| Office sprites | 55 PNG pieces in `public/sprites/office/` (tiles and props) |
+| Commits | 12 before this one |
 
 Bundle sizes from the last `npm run build` (gzip):
 

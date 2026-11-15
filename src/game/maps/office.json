@@ -1,0 +1,777 @@
+{
+  "grid": {
+    "cols": 20,
+    "rows": 14,
+    "tile": 32,
+    "widthPx": 640,
+    "heightPx": 448,
+    "wallRows": 2
+  },
+  "tiles": {
+    "floor": [
+      "floor_a",
+      "floor_b",
+      "floor_worn",
+      "floor_stain"
+    ],
+    "wallFront": "wall_front",
+    "wallTop": [
+      "wall_top_h",
+      "wall_top_v",
+      "wall_corner"
+    ]
+  },
+  "wall": [
+    {
+      "id": "window-a",
+      "sprite": "window_night_a",
+      "px": 182,
+      "py": 10
+    },
+    {
+      "id": "whiteboard",
+      "sprite": "whiteboard",
+      "px": 231,
+      "py": 24
+    },
+    {
+      "id": "wall-clock",
+      "sprite": "wall_clock",
+      "px": 338,
+      "py": 26
+    },
+    {
+      "id": "window-b",
+      "sprite": "window_night_b",
+      "px": 370,
+      "py": 10
+    },
+    {
+      "id": "closet-door",
+      "sprite": "closet",
+      "px": 423,
+      "py": 4
+    },
+    {
+      "id": "server-door",
+      "sprite": "door_server",
+      "px": 544,
+      "py": 0
+    },
+    {
+      "id": "banner",
+      "sprite": "banner_halloween",
+      "px": 232,
+      "py": 8
+    },
+    {
+      "id": "string-lights-0",
+      "sprite": "string_lights",
+      "px": 0,
+      "py": 5
+    },
+    {
+      "id": "string-lights-1",
+      "sprite": "string_lights",
+      "px": 64,
+      "py": 5
+    },
+    {
+      "id": "string-lights-2",
+      "sprite": "string_lights",
+      "px": 128,
+      "py": 5
+    },
+    {
+      "id": "string-lights-3",
+      "sprite": "string_lights",
+      "px": 192,
+      "py": 5
+    },
+    {
+      "id": "string-lights-4",
+      "sprite": "string_lights",
+      "px": 256,
+      "py": 5
+    },
+    {
+      "id": "string-lights-5",
+      "sprite": "string_lights",
+      "px": 320,
+      "py": 5
+    },
+    {
+      "id": "string-lights-6",
+      "sprite": "string_lights",
+      "px": 384,
+      "py": 5
+    },
+    {
+      "id": "string-lights-7",
+      "sprite": "string_lights",
+      "px": 448,
+      "py": 5
+    },
+    {
+      "id": "string-lights-8",
+      "sprite": "string_lights",
+      "px": 512,
+      "py": 5
+    },
+    {
+      "id": "string-lights-9",
+      "sprite": "string_lights",
+      "px": 576,
+      "py": 5
+    },
+    {
+      "id": "string-window-a",
+      "sprite": "string_lights_window",
+      "px": 176,
+      "py": 10
+    },
+    {
+      "id": "string-window-b",
+      "sprite": "string_lights_window",
+      "px": 364,
+      "py": 10
+    },
+    {
+      "id": "bat-a1",
+      "sprite": "bat_a",
+      "px": 190,
+      "py": 22
+    },
+    {
+      "id": "bat-b1",
+      "sprite": "bat_b",
+      "px": 205,
+      "py": 32
+    },
+    {
+      "id": "bat-a2",
+      "sprite": "bat_a",
+      "px": 193,
+      "py": 38
+    },
+    {
+      "id": "bat-b2",
+      "sprite": "bat_b",
+      "px": 394,
+      "py": 20
+    },
+    {
+      "id": "bat-a3",
+      "sprite": "bat_a",
+      "px": 381,
+      "py": 30
+    },
+    {
+      "id": "bat-b3",
+      "sprite": "bat_b",
+      "px": 399,
+      "py": 38
+    },
+    {
+      "id": "spider",
+      "sprite": "spider_hanging",
+      "px": 359,
+      "py": 12
+    },
+    {
+      "id": "web-tl",
+      "sprite": "cobweb_corner",
+      "px": 8,
+      "py": 6
+    },
+    {
+      "id": "web-door",
+      "sprite": "cobweb_small",
+      "px": 547,
+      "py": 8
+    }
+  ],
+  "props": [
+    {
+      "id": "fridge",
+      "sprite": "fridge",
+      "x": 0.5,
+      "y": 2,
+      "w": 1,
+      "h": 0.75,
+      "px": 13,
+      "py": 24,
+      "blocks": true
+    },
+    {
+      "id": "counter",
+      "sprite": "kitchen_counter",
+      "x": 1.5,
+      "y": 2,
+      "w": 3.25,
+      "h": 0.75,
+      "px": 45,
+      "py": 28,
+      "blocks": true
+    },
+    {
+      "id": "water-cooler",
+      "sprite": "water_cooler",
+      "x": 4.75,
+      "y": 2,
+      "w": 0.6,
+      "h": 0.75,
+      "px": 148,
+      "py": 32,
+      "blocks": true
+    },
+    {
+      "id": "plant-1",
+      "sprite": "plant_tall",
+      "x": 5.45,
+      "y": 2,
+      "w": 0.6,
+      "h": 0.75,
+      "px": 166,
+      "py": 31,
+      "blocks": true
+    },
+    {
+      "id": "plant-2",
+      "sprite": "plant_tall",
+      "x": 10.95,
+      "y": 2,
+      "w": 0.6,
+      "h": 0.75,
+      "px": 342,
+      "py": 31,
+      "blocks": true
+    },
+    {
+      "id": "desk-pumpkin",
+      "sprite": "desk_pumpkin",
+      "x": 2,
+      "y": 5,
+      "w": 2,
+      "h": 1,
+      "px": 62,
+      "py": 149,
+      "blocks": true
+    },
+    {
+      "id": "desk-witch",
+      "sprite": "desk_witch",
+      "x": 5,
+      "y": 5,
+      "w": 2,
+      "h": 1,
+      "px": 158,
+      "py": 137,
+      "blocks": true
+    },
+    {
+      "id": "desk-plain",
+      "sprite": "desk_plain",
+      "x": 8,
+      "y": 5,
+      "w": 2,
+      "h": 1,
+      "px": 254,
+      "py": 149,
+      "blocks": true
+    },
+    {
+      "id": "chair-1",
+      "sprite": "chair_teal",
+      "x": 2.72,
+      "y": 6,
+      "w": 0.65,
+      "h": 0.7,
+      "px": 82,
+      "py": 183,
+      "blocks": true
+    },
+    {
+      "id": "chair-2",
+      "sprite": "chair_blue",
+      "x": 5.72,
+      "y": 6,
+      "w": 0.65,
+      "h": 0.7,
+      "px": 178,
+      "py": 183,
+      "blocks": true
+    },
+    {
+      "id": "chair-skeleton",
+      "sprite": "chair_skeleton",
+      "x": 8.56,
+      "y": 6.75,
+      "w": 0.8,
+      "h": 0.9,
+      "px": 269,
+      "py": 180,
+      "blocks": true
+    },
+    {
+      "id": "desk-skirt",
+      "sprite": "desk_skirt",
+      "x": 2,
+      "y": 9,
+      "w": 2,
+      "h": 1,
+      "px": 62,
+      "py": 277,
+      "blocks": true
+    },
+    {
+      "id": "desk-player",
+      "sprite": "desk_player",
+      "x": 5,
+      "y": 9,
+      "w": 2,
+      "h": 1,
+      "px": 158,
+      "py": 277,
+      "blocks": true
+    },
+    {
+      "id": "chair-player",
+      "sprite": "chair_teal",
+      "x": 5.72,
+      "y": 10,
+      "w": 0.65,
+      "h": 0.7,
+      "px": 178,
+      "py": 311,
+      "blocks": true
+    },
+    {
+      "id": "desk-right",
+      "sprite": "desk_pumpkin",
+      "x": 15,
+      "y": 8,
+      "w": 2,
+      "h": 1,
+      "px": 478,
+      "py": 245,
+      "blocks": true
+    },
+    {
+      "id": "chair-right",
+      "sprite": "chair_blue",
+      "x": 15.72,
+      "y": 9,
+      "w": 0.65,
+      "h": 0.7,
+      "px": 498,
+      "py": 279,
+      "blocks": true
+    },
+    {
+      "id": "meeting-table",
+      "sprite": "meeting_table",
+      "x": 9.5,
+      "y": 8,
+      "w": 4.125,
+      "h": 2,
+      "px": 300,
+      "py": 250,
+      "blocks": true
+    },
+    {
+      "id": "chair-meet-0",
+      "sprite": "chair_front",
+      "x": 10.09,
+      "y": 7.45,
+      "w": 0.6,
+      "h": 0.55,
+      "px": 318,
+      "py": 216,
+      "blocks": true
+    },
+    {
+      "id": "chair-meet-1",
+      "sprite": "chair_front",
+      "x": 11.25,
+      "y": 7.45,
+      "w": 0.6,
+      "h": 0.55,
+      "px": 355,
+      "py": 216,
+      "blocks": true
+    },
+    {
+      "id": "chair-meet-2",
+      "sprite": "chair_front",
+      "x": 12.41,
+      "y": 7.45,
+      "w": 0.6,
+      "h": 0.55,
+      "px": 392,
+      "py": 216,
+      "blocks": true
+    },
+    {
+      "id": "plant-divider",
+      "sprite": "plant_divider",
+      "x": 7.5,
+      "y": 12,
+      "w": 3.125,
+      "h": 0.9,
+      "px": 236,
+      "py": 339,
+      "blocks": true
+    },
+    {
+      "id": "sofa",
+      "sprite": "sofa",
+      "x": 14.5,
+      "y": 12,
+      "w": 3.06,
+      "h": 0.9,
+      "px": 460,
+      "py": 367,
+      "blocks": true
+    },
+    {
+      "id": "gravestone",
+      "sprite": "gravestone",
+      "x": 18.1,
+      "y": 12,
+      "w": 0.7,
+      "h": 0.8,
+      "px": 575,
+      "py": 376,
+      "blocks": true
+    },
+    {
+      "id": "plant-small-1",
+      "sprite": "plant_small",
+      "x": 13.55,
+      "y": 12.15,
+      "w": 0.6,
+      "h": 0.6,
+      "px": 426,
+      "py": 378,
+      "blocks": true
+    },
+    {
+      "id": "plant-small-2",
+      "sprite": "plant_small",
+      "x": 0.45,
+      "y": 11,
+      "w": 0.6,
+      "h": 0.6,
+      "px": 6,
+      "py": 341,
+      "blocks": true
+    },
+    {
+      "id": "locker",
+      "sprite": "locker",
+      "x": 0.5,
+      "y": 7,
+      "w": 1,
+      "h": 0.9,
+      "px": 13,
+      "py": 181,
+      "blocks": true
+    },
+    {
+      "id": "cabinet-1",
+      "sprite": "filing_cabinet",
+      "x": 17.7,
+      "y": 5,
+      "w": 0.9,
+      "h": 0.9,
+      "px": 563,
+      "py": 139,
+      "blocks": true
+    },
+    {
+      "id": "cabinet-2",
+      "sprite": "filing_cabinet",
+      "x": 18.6,
+      "y": 5,
+      "w": 0.9,
+      "h": 0.9,
+      "px": 592,
+      "py": 139,
+      "blocks": true
+    },
+    {
+      "id": "printer",
+      "sprite": "printer",
+      "x": 18.6,
+      "y": 8,
+      "w": 1.12,
+      "h": 1,
+      "px": 591,
+      "py": 239,
+      "blocks": true
+    },
+    {
+      "id": "boxes",
+      "sprite": "boxes",
+      "x": 18.45,
+      "y": 7,
+      "w": 1.25,
+      "h": 0.7,
+      "px": 587,
+      "py": 200,
+      "blocks": true
+    },
+    {
+      "id": "entrance-door",
+      "sprite": "door_entrance",
+      "x": 1,
+      "y": 13,
+      "w": 2,
+      "h": 1,
+      "px": 32,
+      "py": 404,
+      "blocks": false
+    },
+    {
+      "id": "pumpkin-entrance",
+      "sprite": "pumpkin_l",
+      "x": 3.1,
+      "y": 12.3,
+      "w": 0.75,
+      "h": 0.6,
+      "px": 93,
+      "py": 384,
+      "blocks": true
+    }
+  ],
+  "decals": [
+    {
+      "id": "doormat",
+      "sprite": "doormat",
+      "px": 38,
+      "py": 376
+    },
+    {
+      "id": "wrapper-0",
+      "sprite": "wrapper_a",
+      "px": 137,
+      "py": 232
+    },
+    {
+      "id": "wrapper-1",
+      "sprite": "wrapper_b",
+      "px": 262,
+      "py": 262
+    },
+    {
+      "id": "wrapper-2",
+      "sprite": "wrapper_c",
+      "px": 356,
+      "py": 188
+    },
+    {
+      "id": "wrapper-3",
+      "sprite": "wrapper_a",
+      "px": 420,
+      "py": 372
+    },
+    {
+      "id": "wrapper-4",
+      "sprite": "wrapper_c",
+      "px": 76,
+      "py": 340
+    },
+    {
+      "id": "wrapper-5",
+      "sprite": "wrapper_b",
+      "px": 585,
+      "py": 262
+    },
+    {
+      "id": "wrapper-6",
+      "sprite": "wrapper_a",
+      "px": 210,
+      "py": 396
+    },
+    {
+      "id": "wrapper-7",
+      "sprite": "wrapper_c",
+      "px": 500,
+      "py": 300
+    },
+    {
+      "id": "wrapper-8",
+      "sprite": "wrapper_b",
+      "px": 300,
+      "py": 120
+    },
+    {
+      "id": "wrapper-9",
+      "sprite": "wrapper_a",
+      "px": 118,
+      "py": 150
+    }
+  ],
+  "hideSpots": [
+    {
+      "id": "desk-skirt",
+      "type": "under-desk",
+      "x": 2,
+      "y": 9,
+      "enter": {
+        "x": 2,
+        "y": 10
+      },
+      "prop": "desk-skirt"
+    },
+    {
+      "id": "locker",
+      "type": "locker",
+      "x": 1,
+      "y": 7,
+      "enter": {
+        "x": 1,
+        "y": 8
+      },
+      "prop": "locker"
+    },
+    {
+      "id": "supply-closet",
+      "type": "closet",
+      "x": 14,
+      "y": 2,
+      "enter": {
+        "x": 14,
+        "y": 3
+      },
+      "prop": "closet-door"
+    },
+    {
+      "id": "sofa",
+      "type": "behind-sofa",
+      "x": 15,
+      "y": 11,
+      "enter": {
+        "x": 15,
+        "y": 10
+      },
+      "prop": "sofa"
+    },
+    {
+      "id": "meeting-table",
+      "type": "under-table",
+      "x": 11,
+      "y": 9,
+      "enter": {
+        "x": 11,
+        "y": 10
+      },
+      "prop": "meeting-table"
+    },
+    {
+      "id": "plant-divider",
+      "type": "behind-plant",
+      "x": 9,
+      "y": 11,
+      "enter": {
+        "x": 9,
+        "y": 10
+      },
+      "prop": "plant-divider"
+    },
+    {
+      "id": "printer-boxes",
+      "type": "behind-boxes",
+      "x": 18,
+      "y": 7,
+      "enter": {
+        "x": 17,
+        "y": 7
+      },
+      "prop": "boxes"
+    }
+  ],
+  "playerDesk": {
+    "x": 5,
+    "y": 9,
+    "w": 2,
+    "h": 1,
+    "seat": {
+      "x": 6,
+      "y": 10
+    },
+    "prop": "desk-player"
+  },
+  "serverDoor": {
+    "x": 17,
+    "y": 0,
+    "w": 2,
+    "h": 2,
+    "prop": "server-door",
+    "approach": {
+      "x": 17,
+      "y": 2
+    },
+    "golemSlots": [
+      {
+        "x": 16,
+        "y": 3
+      },
+      {
+        "x": 18,
+        "y": 3
+      }
+    ],
+    "clearZone": {
+      "x": 15,
+      "y": 2,
+      "w": 5,
+      "h": 3
+    }
+  },
+  "entrance": {
+    "x": 1,
+    "y": 13,
+    "w": 2,
+    "h": 1,
+    "spawn": {
+      "x": 2,
+      "y": 12
+    }
+  },
+  "monsterSpawns": [
+    {
+      "x": 7,
+      "y": 3
+    },
+    {
+      "x": 16,
+      "y": 6
+    },
+    {
+      "x": 12,
+      "y": 12
+    },
+    {
+      "x": 4,
+      "y": 7
+    }
+  ],
+  "walkable": [
+    "00000000000000000000",
+    "00000000000000000000",
+    "00000011111011111111",
+    "11111111111111111111",
+    "11111111111111111111",
+    "11001001001111111000",
+    "11101101111111111111",
+    "00111111010001111100",
+    "11111111100000100100",
+    "11001001100000110111",
+    "11111101111111111111",
+    "01111111111111111111",
+    "11101110000110000001",
+    "11111111111111111111"
+  ]
+}
