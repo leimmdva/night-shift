@@ -20,9 +20,9 @@ Hide, open your laptop, fix the real JavaScript code, run the tests — the mons
 
 ## How Kiro was used
 
-Full dated record: [docs/KIRO_LOG.md](docs/KIRO_LOG.md).
+Full dated record: [docs/KIRO_LOG.md](docs/KIRO_LOG.md). Every Kiro session (prompt, summary, commits, owner feedback) has its own file in [docs/kiro-sessions/](docs/kiro-sessions/). Run `npm run check-submission` to check the Kiroween submission rules offline.
 
-- **Steering:** seven always-included files in `.kiro/steering/` fix scope, tech stack, folder layout, Sudo's voice and the bug pack format.
+- **Steering:** eight always-included files in `.kiro/steering/` fix scope, tech stack, folder layout, Sudo's voice, the bug pack format, the dev-log rule and the Kiroween submission rules.
 - **Specs:** seven systems (editor, runner, monster-ai, bug-pack-validation, checkpoint, postmortem, game-flow) each have requirements, design and tasks files.
 - **Hook:** `validate-bug-pack` runs on save and rejects a pack whose tests do not fail on the broken code or do not all pass on the solution.
 - **MCP:** `context7` (library docs) and `playwright` (browser checks) are configured in `.kiro/settings/mcp.json`.
@@ -30,7 +30,7 @@ Full dated record: [docs/KIRO_LOG.md](docs/KIRO_LOG.md).
 - **Vibe coding:** the game skeleton, monster behaviour utilities (28 unit tests) and the sprite build script were generated in chat sessions.
 - **Corrections:** the first hook format and single-file specs were wrong and were fixed on 2026-11-05.
 
-## Fonts, art and audio credits
+## Credits
 
 | Asset | Source | Licence |
 |---|---|---|

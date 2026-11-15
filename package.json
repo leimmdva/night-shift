@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "validate-packs": "node scripts/validate-pack.js",
+    "check-submission": "node scripts/check-submission.mjs",
     "draw-sprites": "node scripts/sprites/draw/draw-sprites.mjs",
     "build-sprites": "node scripts/sprites/build-sprites.mjs",
     "draw-office": "node scripts/sprites/draw/draw-office.mjs",
