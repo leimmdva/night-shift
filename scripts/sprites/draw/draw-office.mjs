@@ -4,8 +4,9 @@
 import * as tiles from './office-tiles.mjs'
 import * as props from './office-props.mjs'
 import * as decor from './office-decor.mjs'
+import * as props2 from './office-props2.mjs'
 
 const only = process.argv.slice(2)
 const isJob = ([, fn]) => typeof fn === 'function' && !/^draw[A-Z]/.test(fn.name) && fn.length === 0
-const jobs = Object.fromEntries([tiles, props, decor].flatMap((m) => Object.entries(m).filter(isJob)))
+const jobs = Object.fromEntries([tiles, props, props2, decor].flatMap((m) => Object.entries(m).filter(isJob)))
 for (const [name, fn] of Object.entries(jobs)) if (!only.length || only.includes(name)) fn()

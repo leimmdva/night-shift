@@ -42,7 +42,7 @@ export function drawDrape(cv, x0, x1, y0, y1, MC, o = {}) {
 
 // ------------------------------------------------------------------ desks (64 wide, 18 deep top + 14 front)
 const DESK = { x0: 2, y0: 18, x1: 65, y1: 43, td: 12 }
-function deskBase(cv, { skirt = false } = {}) {
+export function deskBase(cv, { skirt = false } = {}) {
   const { x0, y0, x1, y1, td } = DESK
   castShadow(cv, x0, x1, y1, { depth: 3, shift: 4 })
   if (skirt) {
@@ -184,61 +184,65 @@ function bone(cv, pts, w = 2) {
   for (let k = 0; k < w; k++) seg(cv, pts.map(([x, y]) => [x + k, y]), k === 0 ? BONE.l : BONE.b)
   void w
 }
-export function skeletonChair() {
-  const W = 38, H = 70
+// Seated skeleton in profile at the right end of a desk: bent at the hips, thighs forward under the desk, headset on.
+export function skeletonDesk() {
+  const W = 108, H = 72, oy = 14
   const cv = new Canvas(W, H)
-  const cx = 19, by = 65
-  drawChairFront(cv, cx, by, MAT.plastic, true)
-  // arms resting on the armrests (behind the ribcage)
-  for (const s of [-1, 1]) {
-    const a = R(cv, cx + s * 8 - 1, by - 40, cx + s * 8 + 1, by - 28)
-    vol(cv, a, BONE, { rad: 2 })
-    const h = E(cv, cx + s * 10, by - 25, 2.2, 1.8)
-    vol(cv, h, BONE, { rad: 2 })
-  }
-  // ribcage
-  const ribs = E(cv, cx, by - 36, 6.5, 8.5)
-  vol(cv, ribs, BONE, { rad: 5 })
-  for (const y of [by - 41, by - 38, by - 35, by - 32]) {
-    const half = y === by - 41 ? 4 : 5
-    for (let x = cx - half; x <= cx + half; x++) if (Math.abs(x - cx) > 0) cv.set(x, y, BONE.s)
-    cv.set(cx - half - 1, y, BONE.o); cv.set(cx + half + 1, y, BONE.o)
-  }
-  for (let y = by - 43; y <= by - 29; y++) { cv.set(cx, y, BONE.h); cv.set(cx + 1, y, BONE.l) }
-  // pelvis and legs
-  vol(cv, E(cv, cx, by - 24, 6, 2.6), BONE, { rad: 2.5 })
-  for (const s of [-1, 1]) {
-    const thigh = R(cv, cx + s * 4 - 1, by - 22, cx + s * 4 + 1, by - 14)
-    vol(cv, thigh, BONE, { rad: 2 })
-    vol(cv, E(cv, cx + s * 4 + 0.5, by - 13, 2.4, 2), BONE, { rad: 2 })
-    const shin = R(cv, cx + s * 4 - 1, by - 11, cx + s * 4 + 1, by - 4)
-    vol(cv, shin, BONE, { rad: 2 })
-    vol(cv, E(cv, cx + s * 4 + 1, by - 2, 3.4, 1.8), BONE, { rad: 2 })
-  }
-  // neck, skull, headset
-  fill(cv, R(cv, cx - 1, by - 49, cx + 1, by - 44), BONE.b)
-  for (let y = by - 49; y <= by - 44; y += 2) for (let x = cx - 1; x <= cx + 1; x++) cv.set(x, y, BONE.s)
-  const skull = E(cv, cx, by - 54, 6.4, 6)
-  const jaw = R(cv, cx - 4, by - 51, cx + 3, by - 48)
+  const KB = MAT.plastic
+  // chair (profile): star base, gas lift, seat, curved backrest
+  ellipseShadow(cv, 90, 62, 15, 3)
+  seg(cv, [[78, 63], [90, 60], [101, 63]], KB.o)
+  seg(cv, [[78, 62], [90, 59], [101, 62]], KB.b)
+  for (const x of [78, 90, 101]) { fill(cv, R(cv, x - 1, 63, x + 1, 64), KB.o) }
+  fill(cv, R(cv, 89, 54, 91, 59), KB.l); outline(cv, R(cv, 89, 54, 91, 59), KB.o)
+  const back = P(cv, [[98, 30], [102, 30], [103, 52], [97, 54]])
+  vol(cv, back, MAT.chairTeal, { rad: 3 })
+  cuboid(cv, 76, 49, 101, 55, 2, MAT.chairTeal, { bot: 1 })
+  // legs: thigh forward (left) under the desk, shin down, foot on the floor
+  const bonePath = (pts) => { for (let i = 0; i < pts.length - 1; i++) seg(cv, [pts[i], pts[i + 1]], BONE.o) }
+  const thigh = R(cv, 66, 46, 88, 49); vol(cv, thigh, BONE, { rad: 2 })
+  vol(cv, E(cv, 67, 47.5, 2.8, 2.6), BONE, { rad: 2 })
+  const shin = R(cv, 65, 50, 67, 58); vol(cv, shin, BONE, { rad: 2 })
+  vol(cv, E(cv, 63.5, 59.5, 3.8, 1.8), BONE, { rad: 2 })
+  void bonePath
+  // pelvis and the spine, bent forward from the hips
+  vol(cv, E(cv, 91, 47, 4.5, 3.2), BONE, { rad: 3 })
+  seg(cv, [[92, 44], [91, 40], [89, 36], [86, 33]], BONE.o)
+  seg(cv, [[93, 44], [92, 40], [90, 36], [87, 33]], BONE.b)
+  // ribcage, leaning towards the desk
+  const ribs = P(cv, [[90, 29], [97, 31], [98, 40], [93, 43], [88, 41], [86, 34]])
+  vol(cv, ribs, BONE, { rad: 4 })
+  for (const y of [32, 35, 38, 41]) for (let x = 88 + (y > 40 ? 2 : 0); x <= 96; x++) if (ribs.has(x, y)) cv.set(x, y, BONE.s)
+  // arm: upper arm down from the shoulder, forearm forward onto the desk
+  vol(cv, R(cv, 88, 33, 90, 41), BONE, { rad: 2 })
+  vol(cv, R(cv, 76, 40, 88, 42), BONE, { rad: 2 })
+  vol(cv, E(cv, 75, 41, 2.4, 1.8), BONE, { rad: 2 })
+  // neck and skull (profile, facing left), well below the monitor top
+  fill(cv, R(cv, 86, 28, 88, 31), BONE.b)
+  const skull = E(cv, 85, 24, 6.2, 5.8)
+  const jaw = R(cv, 79, 25, 85, 29)
   vol(cv, skull.or(jaw), BONE, { rad: 5 })
-  for (const s of [-1, 1]) {
-    const eye = E(cv, cx + s * 2.8 + 0.2, by - 54, 1.9, 2.3)
-    for (const [x, y] of eye.cells()) cv.set(x, y, '#150E1C')
-  }
-  dotsAt(cv, [[cx, by - 51], [cx - 1, by - 50], [cx, by - 50]], '#150E1C')
-  for (let x = cx - 3; x <= cx + 2; x++) cv.set(x, by - 48, x % 2 ? BONE.h : '#150E1C')
-  // headset: band over the skull, ear cups, boom mic
-  seg(cv, [[cx - 6, by - 55], [cx - 5, by - 59], [cx, by - 61], [cx + 5, by - 59], [cx + 6, by - 55]], MAT.plastic.b)
-  seg(cv, [[cx - 6, by - 56], [cx - 5, by - 60], [cx, by - 62], [cx + 5, by - 60], [cx + 6, by - 56]], MAT.plastic.o)
-  for (const s of [-1, 1]) {
-    const cup = R(cv, cx + s * 7 - 1, by - 56, cx + s * 7 + 1, by - 51)
-    fill(cv, cup, MAT.plastic.l)
-    cv.set(cx + s * 7, by - 54, MAT.trim.l)
-    outline(cv, cup, MAT.plastic.o)
-  }
-  seg(cv, [[cx - 7, by - 51], [cx - 7, by - 49], [cx - 5, by - 47]], MAT.plastic.o)
-  fill(cv, R(cv, cx - 5, by - 47, cx - 4, by - 46), MAT.trim.b)
-  saveOffice('chair_skeleton', cv, { feet: by, ax: 5 }, 'Plastic skeleton in an office chair, wearing a headset')
+  for (const [x, y] of E(cv, 82, 23, 1.7, 2).cells()) cv.set(x, y, '#150E1C')
+  for (let x = 79; x <= 84; x++) cv.set(x, 29, x % 2 ? BONE.h : '#150E1C')
+  seg(cv, [[79, 26], [79, 27]], '#150E1C')
+  // headset: band over the skull, ear cup, boom mic
+  seg(cv, [[80, 21], [83, 17], [88, 17], [91, 21]], KB.o)
+  seg(cv, [[80, 22], [83, 18], [88, 18], [91, 22]], KB.b)
+  const cup = R(cv, 86, 22, 90, 27); fill(cv, cup, KB.l); outline(cv, cup, KB.o); cv.set(88, 24, MAT.trim.l)
+  seg(cv, [[86, 27], [84, 31], [81, 31]], KB.o)
+  fill(cv, R(cv, 79, 31, 81, 32), MAT.trim.b)
+  // desk on top of the thighs
+  const d = new Canvas(72, 50)
+  deskBase(d)
+  drawMonitor(d, 22, 2, 'blue', 9)
+  drawKeyboard(d, 25, 24); drawMouse(d, 43, 25)
+  drawSticky(d, 6, 20, '#FF9AC8')
+  drawMug(d, 56, 28, MAT.paper)
+  drawBat(d, 8, 27, 1, '#2A1E44')
+  blit(cv, d, 0, oy)
+  // keyboard hand reaching the desk edge
+  vol(cv, E(cv, 74, 54 - 12, 0.1, 0.1), BONE, { rad: 1 })
+  saveOffice('desk_skeleton', cv, { feet: 43 + oy, ax: 2 }, 'Desk with a plastic skeleton seated at it, wearing a headset')
 }
 
 // ------------------------------------------------------------------ hiding-spot furniture

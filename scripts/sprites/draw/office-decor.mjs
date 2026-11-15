@@ -309,8 +309,8 @@ export function stringLights() {
   const cv = new Canvas(64, 14)
   drawSwag(cv, 0, 63, 1, 4, [8, 24, 40, 56], 0)
   saveOffice('string_lights', cv, { feet: 14, ax: 0 }, 'String lights (repeat every 64px)')
-  const w = new Canvas(56, 16)
-  drawSwag(w, 0, 55, 2, 4, [9, 27, 45], 1)
+  const w = new Canvas(80, 16)
+  drawSwag(w, 0, 79, 2, 4, [10, 30, 50, 70], 1)
   saveOffice('string_lights_window', w, { feet: 16, ax: 0 }, 'String lights over a window')
 }
 export function banner() {
@@ -362,17 +362,17 @@ export function gravestone() {
   saveOffice('gravestone', cv, { feet: 34, ax: 4 }, 'Foam gravestone prop')
 }
 export function doormat() {
-  const cv = new Canvas(54, 22)
-  const mat = R(cv, 1, 1, 52, 20)
+  const cv = new Canvas(40, 22)
+  const mat = R(cv, 1, 1, 38, 20)
   fill(cv, mat, '#2A2438')
-  for (let x = 1; x <= 52; x++) { cv.set(x, 1, '#4A4060'); cv.set(x, 20, '#17121F') }
-  for (let y = 1; y <= 20; y++) { cv.set(1, y, '#4A4060'); cv.set(52, y, '#17121F') }
-  for (const [x0, y0, x1, y1] of [[3, 3, 50, 18]]) {
+  for (let x = 1; x <= 38; x++) { cv.set(x, 1, '#4A4060'); cv.set(x, 20, '#17121F') }
+  for (let y = 1; y <= 20; y++) { cv.set(1, y, '#4A4060'); cv.set(38, y, '#17121F') }
+  for (const [x0, y0, x1, y1] of [[3, 3, 36, 18]]) {
     for (let x = x0; x <= x1; x++) { cv.set(x, y0, MAT.trim.b); cv.set(x, y1, MAT.trim.s) }
     for (let y = y0; y <= y1; y++) { cv.set(x0, y, MAT.trim.b); cv.set(x1, y, MAT.trim.s) }
   }
-  drawText(cv, 27 - Math.floor(textW('mortem') / 2), 6, 'mortem', MAT.trim.h)
-  drawText(cv, 27 - Math.floor(textW('labs') / 2), 12, 'labs', '#C9A6F0')
+  drawText(cv, 20 - Math.floor(textW('mortem') / 2), 6, 'mortem', MAT.trim.h)
+  drawText(cv, 20 - Math.floor(textW('labs') / 2), 12, 'labs', '#C9A6F0')
   outline(cv, mat, '#0C0912')
   saveOffice('doormat', cv, { feet: 21, ax: 1 }, 'Doormat (MORTEM LABS)')
 }

@@ -4,93 +4,112 @@ import {
   drawText, textW, saveOffice, dotsAt, putIfEmpty,
 } from './office-lib.mjs'
 
-// ------------------------------------------------------------------ floor: worn carpet tiles, 32x32, tileable
-function carpet(name, M, seed, o = {}) {
+// ------------------------------------------------------------------ floor: warm wood planks, 32x32, tileable
+function planks(name, seed, o = {}) {
   const cv = new Canvas(32, 32)
-  for (let y = 0; y < 32; y++) for (let x = 0; x < 32; x++) {
-    const n = rnd(x, y, seed)
-    let c = M.b
-    if (n < 0.1) c = M.l
-    else if (n > 0.92) c = M.s
-    cv.set(x, y, c)
-  }
-  // short horizontal fibre runs so it reads as carpet and not as noise
-  for (let i = 0; i < 18; i++) {
-    const x = Math.floor(rnd(i, 1, seed) * 28), y = Math.floor(rnd(i, 2, seed) * 30) + 1
-    for (let k = 0; k < 3; k++) cv.set(x + k, y, M.l)
-  }
-  // seams: dark line on the top and left edge, lit line right inside it
-  for (let i = 0; i < 32; i++) { cv.set(i, 0, M.o); cv.set(0, i, M.o) }
-  for (let i = 1; i < 32; i++) { cv.set(i, 1, M.h); cv.set(1, i, M.h) }
-  if (o.worn) {
-    // pale, flattened pile along the walking line
-    for (let y = 8; y < 26; y++) for (let x = 6; x < 30; x++) {
-      const d = Math.abs(y - 17) + Math.abs(x - 18) * 0.4
-      if (d < 7 && rnd(x, y, seed + 3) < 0.55) cv.set(x, y, M.h)
+  const P1 = MAT.plank, PD = MAT.plankDk
+  for (let row = 0; row < 4; row++) {
+    const y0 = row * 8
+    const dark = o.dark?.includes(row)
+    const M = dark ? PD : P1
+    const joint = (Math.floor(rnd(row, 3, seed) * 20) + 6 + (o.shift ?? 0) * 11) % 32
+    for (let y = y0; y < y0 + 8; y++) for (let x = 0; x < 32; x++) {
+      let c = M.b
+      if (y === y0) c = M.o
+      else if (y === y0 + 1) c = M.h
+      else if (y === y0 + 7) c = M.s
+      else if (rnd(x, y, seed + row) < 0.07) c = M.l
+      else if (rnd(x >> 2, y, seed + row + 9) < 0.09) c = M.s
+      cv.set(x, y, c)
     }
+    for (let y = y0; y < y0 + 8; y++) { cv.set(joint, y, M.o); cv.set((joint + 1) % 32, y, M.h) }
+    // two short grain streaks
+    for (let k = 0; k < 2; k++) { const gx = Math.floor(rnd(row, k, seed + 5) * 22); for (let i = 0; i < 6; i++) cv.set((gx + i) % 32, y0 + 3 + k * 2, M.s) }
   }
-  if (o.stain) {
-    const st = E(cv, 20, 19, 5.5, 3.6)
-    for (const [x, y] of st.cells()) cv.set(x, y, rnd(x, y, 4) < 0.6 ? '#5C5170' : '#665A7A')
-    for (const [x, y] of E(cv, 20, 19, 3, 1.8).cells()) cv.set(x, y, '#4E4462')
-    for (const [x, y] of [[26, 22], [27, 24], [14, 14]]) cv.set(x, y, '#5C5170')
-  }
+  if (o.stain) for (const [x, y] of [[12, 12], [13, 12], [14, 13], [13, 14], [20, 21], [21, 21], [21, 22]]) cv.set(x, y, MAT.plankDk.s)
   saveOffice(name, cv, { feet: 32, ax: 0 }, `Floor tile ${name}`)
 }
 export function floors() {
-  carpet('floor_a', MAT.carpetA, 11)
-  carpet('floor_b', MAT.carpetB, 23)
-  carpet('floor_worn', MAT.carpetA, 37, { worn: true })
-  carpet('floor_stain', MAT.carpetB, 51, { stain: true })
+  planks('floor_a', 11, { dark: [2], shift: 0 })
+  planks('floor_b', 23, { dark: [0], shift: 1 })
+  planks('floor_worn', 37, { dark: [1, 3], shift: 2 })
+  planks('floor_stain', 51, { dark: [2], shift: 3, stain: true })
 }
 
-// ------------------------------------------------------------------ back wall (front face, 32x64, tileable) and wall tops
+// ------------------------------------------------------------------ back wall (front face, 32x96, tileable) and thick wall tops
 export function wallFront() {
-  const cv = new Canvas(32, 64)
+  const cv = new Canvas(32, 96)
   const C = MAT.wallCap, W = MAT.wall
-  // top of the wall (cap), 6px
-  for (let y = 0; y < 6; y++) for (let x = 0; x < 32; x++) cv.set(x, y, y === 0 ? C.o : y === 1 ? C.h : y < 5 ? C.l : C.s)
-  for (let x = 0; x < 32; x++) cv.set(x, 5, C.o)
-  // wallpaper face with soft stripes and a darker band under the cap
-  for (let y = 6; y < 64; y++) for (let x = 0; x < 32; x++) {
-    let c = W.l
-    if (x % 16 === 0) c = W.h
-    else if (x % 16 === 15) c = W.b
-    else if ((x + y * 3) % 23 === 0 && rnd(x, y, 8) < 0.4) c = W.b
+  // top cap, 7px
+  for (let y = 0; y < 7; y++) for (let x = 0; x < 32; x++) cv.set(x, y, y === 0 ? C.o : y === 1 ? C.h : y < 5 ? C.l : y === 5 ? C.b : C.s)
+  // cream plaster face with faint panel lines and a shadow under the cap
+  for (let y = 7; y < 96; y++) for (let x = 0; x < 32; x++) {
+    let c = W.h
+    if (rnd(x, y, 8) < 0.04) c = W.l
+    if (x === 0) c = W.l
+    if (x === 31) c = W.b
     cv.set(x, y, c)
   }
-  for (let x = 0; x < 32; x++) { cv.set(x, 6, W.s); cv.set(x, 7, W.b); if (x % 2 === 0) cv.set(x, 8, W.b) }
-  // dado rail and wainscot
-  for (let x = 0; x < 32; x++) {
-    cv.set(x, 44, MAT.board.h); cv.set(x, 45, MAT.board.l); cv.set(x, 46, MAT.board.b); cv.set(x, 47, MAT.board.o)
-    for (let y = 48; y < 58; y++) cv.set(x, y, x % 16 === 0 ? W.b : W.s)
-    cv.set(x, 48, W.b)
+  for (let x = 0; x < 32; x++) { cv.set(x, 7, W.b); if (x % 2 === 0) cv.set(x, 8, W.l) }
+  // chair rail
+  for (let x = 0; x < 32; x++) { cv.set(x, 66, MAT.wood.h); cv.set(x, 67, MAT.wood.l); cv.set(x, 68, MAT.wood.b); cv.set(x, 69, MAT.wood.o) }
+  // wainscot: warm wood panels
+  for (let y = 70; y < 90; y++) for (let x = 0; x < 32; x++) {
+    let c = MAT.wood.b
+    if (x % 16 === 0) c = MAT.wood.o
+    else if (x % 16 === 1) c = MAT.wood.l
+    else if (x % 16 === 15) c = MAT.wood.s
+    else if (y === 70) c = MAT.wood.s
+    else if (y === 89) c = MAT.wood.s
+    else if (rnd(x, y, 3) < 0.05) c = MAT.wood.l
+    cv.set(x, y, c)
   }
-  for (let y = 48; y < 58; y++) { cv.set(8, y, W.o); cv.set(24, y, W.o) }
+  for (let x = 0; x < 32; x++) { cv.set(x, 90, MAT.wood.o) }
   // baseboard
-  for (let x = 0; x < 32; x++) {
-    cv.set(x, 58, MAT.board.l); cv.set(x, 59, MAT.board.b); cv.set(x, 60, MAT.board.b); cv.set(x, 61, MAT.board.s); cv.set(x, 62, MAT.board.s); cv.set(x, 63, MAT.board.o)
-  }
-  saveOffice('wall_front', cv, { feet: 64, ax: 0 }, 'Back wall, front face (2 tiles tall)')
+  for (let x = 0; x < 32; x++) { cv.set(x, 91, MAT.wood.l); cv.set(x, 92, MAT.wood.b); cv.set(x, 93, MAT.wood.b); cv.set(x, 94, MAT.wood.s); cv.set(x, 95, MAT.wood.o) }
+  saveOffice('wall_front', cv, { feet: 96, ax: 0 }, 'Back wall, front face (3 tiles tall)')
 }
+// Thick walls (16px): lit top surface, dark outer border, a darker inner face towards the room.
 export function wallTops() {
   const C = MAT.wallCap
-  const h = new Canvas(32, 8)
-  for (let y = 0; y < 8; y++) for (let x = 0; x < 32; x++) h.set(x, y, y === 0 || y === 7 ? C.o : y === 1 ? C.h : y < 5 ? C.l : y === 5 ? C.b : C.s)
-  saveOffice('wall_top_h', h, { feet: 8, ax: 0 }, 'Wall top, horizontal (bottom wall)')
-  const v = new Canvas(8, 32)
-  for (let y = 0; y < 32; y++) for (let x = 0; x < 8; x++) v.set(x, y, x === 0 || x === 7 ? C.o : x === 1 ? C.h : x < 5 ? C.l : x === 5 ? C.b : C.s)
-  saveOffice('wall_top_v', v, { feet: 32, ax: 0 }, 'Wall top, vertical (side walls)')
-  const c = new Canvas(8, 8)
-  for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) c.set(x, y, x === 0 || x === 7 || y === 0 || y === 7 ? C.o : x === 1 || y === 1 ? C.h : x < 5 ? C.l : x === 5 ? C.b : C.s)
-  saveOffice('wall_corner', c, { feet: 8, ax: 0 }, 'Wall corner')
+  const h = new Canvas(32, 16) // bottom wall: top surface rows 3..11, inner face rows 0..2 (towards the room, above)
+  for (let y = 0; y < 16; y++) for (let x = 0; x < 32; x++) {
+    let c
+    if (y === 0) c = C.o
+    else if (y === 1) c = C.s
+    else if (y === 2) c = C.b
+    else if (y === 3) c = C.h
+    else if (y < 11) c = y === 4 ? C.h : C.l
+    else if (y === 11) c = C.b
+    else if (y < 14) c = C.s
+    else c = C.o
+    h.set(x, y, c)
+  }
+  saveOffice('wall_top_h', h, { feet: 16, ax: 0 }, 'Wall top, horizontal (bottom wall, 16px thick)')
+  const v = new Canvas(16, 32) // left wall as drawn; the right wall is its mirror
+  for (let y = 0; y < 32; y++) for (let x = 0; x < 16; x++) {
+    let c
+    if (x < 2) c = C.o
+    else if (x < 4) c = x === 2 ? C.h : C.l
+    else if (x < 12) c = C.l
+    else if (x === 12) c = C.b
+    else if (x < 15) c = C.s
+    else c = C.o
+    if (x > 3 && x < 11 && rnd(x, y, 2) < 0.04) c = C.h
+    v.set(x, y, c)
+  }
+  saveOffice('wall_top_v', v, { feet: 32, ax: 0 }, 'Wall top, vertical (side walls, 16px thick; left-wall orientation)')
+  const c = new Canvas(16, 16)
+  for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) c.set(x, y, x === 0 || y === 0 || x === 15 || y === 15 ? C.o : x < 3 || y < 3 ? C.h : x < 12 && y < 12 ? C.l : x === 12 || y === 12 ? C.b : C.s)
+  saveOffice('wall_corner', c, { feet: 16, ax: 0 }, 'Wall corner (16px)')
 }
 
 // ------------------------------------------------------------------ night windows (glass shows sky, moon and far city lights)
 function windowNight(name, o) {
-  const cv = new Canvas(44, 50)
+  const WW = 76
+  const cv = new Canvas(WW, 58)
   const F = MAT.white
-  const fx0 = 2, fy0 = 1, fx1 = 41, fy1 = 40
+  const fx0 = 2, fy0 = 1, fx1 = WW - 3, fy1 = 48
   face(cv, fx0, fy0, fx1, fy1, F)
   const gx0 = fx0 + 3, gy0 = fy0 + 3, gx1 = fx1 - 3, gy1 = fy1 - 3
   const bands = [[0, GLOW.skyA], [9, GLOW.skyB], [17, GLOW.skyC], [24, GLOW.skyD]]
@@ -129,8 +148,8 @@ function windowNight(name, o) {
   // a red aircraft light on the tallest block
   if (o.beacon) cv.set(o.beacon[0], o.beacon[1], GLOW.ledR)
   // mullions
-  const mx = Math.floor((gx0 + gx1) / 2), my = gy0 + 14
-  for (let yy = gy0; yy <= gy1; yy++) { cv.set(mx, yy, F.l); cv.set(mx + 1, yy, F.s) }
+  const my = gy0 + 18
+  for (const mx of [gx0 + Math.floor((gx1 - gx0) / 3), gx0 + Math.floor(((gx1 - gx0) * 2) / 3)]) for (let yy = gy0; yy <= gy1; yy++) { cv.set(mx, yy, F.l); cv.set(mx + 1, yy, F.s) }
   for (let xx = gx0; xx <= gx1; xx++) { cv.set(xx, my, F.l); cv.set(xx, my + 1, F.s) }
   // frame shadow inside the glass (top and left), then pane highlight streaks
   for (let xx = gx0; xx <= gx1; xx++) cv.set(xx, gy0, '#050A1E')
@@ -139,12 +158,12 @@ function windowNight(name, o) {
   seg(cv, [[gx1 - 10, gy1 - 9], [gx1 - 5, gy1 - 16]], GLOW.skyD)
   outline(cv, R(cv, gx0, gy0, gx1, gy1), F.o)
   // sill sticking out into the room
-  cuboid(cv, 0, 41, 43, 47, 3, MAT.wallCap, { bot: 1 })
-  saveOffice(name, cv, { feet: 47, ax: 0 }, 'Night window')
+  cuboid(cv, 0, 49, WW - 1, 55, 3, MAT.wallCap, { bot: 1 })
+  saveOffice(name, cv, { feet: 55, ax: 0 }, 'Night window')
 }
 export function windows() {
-  windowNight('window_night_a', { seed: 1, moon: [30, 12], beacon: [14, 22] })
-  windowNight('window_night_b', { seed: 7, moon: [10, 11], beacon: [30, 24] })
+  windowNight('window_night_a', { seed: 1, moon: [52, 13], beacon: [20, 30] })
+  windowNight('window_night_b', { seed: 7, moon: [14, 12], beacon: [50, 32] })
 }
 
 // ------------------------------------------------------------------ whiteboard with the crossed-out schedule
@@ -259,18 +278,18 @@ export function doorServer() {
 
 // ------------------------------------------------------------------ entrance (gap in the bottom wall, bottom-left)
 export function doorEntrance() {
-  const cv = new Canvas(64, 44)
+  const cv = new Canvas(64, 52)
   const C = MAT.wallCap
   // wall caps either side of the opening, 8px high, flush with the bottom of the image
   for (const [x0, x1] of [[0, 5], [58, 63]]) {
-    for (let y = 36; y < 44; y++) for (let x = x0; x <= x1; x++) cv.set(x, y, y === 36 || y === 43 ? C.o : y === 37 ? C.h : y < 41 ? C.l : y === 41 ? C.b : C.s)
-    for (let y = 36; y < 44; y++) cv.set(x0 === 0 ? x1 : x0, y, C.o)
+    for (let y = 36; y < 52; y++) for (let x = x0; x <= x1; x++) cv.set(x, y, y === 36 || y === 51 ? C.o : y === 37 ? C.h : y < 47 ? C.l : y === 47 ? C.b : C.s)
+    for (let y = 36; y < 52; y++) cv.set(x0 === 0 ? x1 : x0, y, C.o)
   }
   // the opening: dark hallway beyond, a metal threshold strip
-  for (let y = 38; y < 44; y++) for (let x = 6; x <= 57; x++) cv.set(x, y, '#0E1424')
+  for (let y = 38; y < 52; y++) for (let x = 6; x <= 57; x++) cv.set(x, y, '#0E1424')
   for (let x = 6; x <= 57; x++) { cv.set(x, 37, MAT.metal.l); cv.set(x, 38, MAT.metal.b); cv.set(x, 39, MAT.metal.s) }
   for (let x = 6; x <= 57; x += 6) cv.set(x, 38, MAT.metal.o)
-  for (let x = 8; x <= 55; x += 5) for (let y = 41; y <= 42; y++) cv.set(x, y, '#18213A')
+  for (let x = 8; x <= 55; x += 5) for (let y = 43; y <= 48; y++) cv.set(x, y, '#18213A')
   // open glass door leaf standing on the left hinge, seen edge-on running back into the room
   const leaf = R(cv, 7, 12, 10, 36)
   fill(cv, leaf, '#7C9CB8')
@@ -290,5 +309,5 @@ export function doorEntrance() {
   outline(cv, sign, '#06150E')
   drawText(cv, 42, 5, 'exit', GLOW.exit)
   for (let x = 41; x <= 54; x++) cv.set(x, 11, GLOW.exit)
-  saveOffice('door_entrance', cv, { feet: 44, ax: 0 }, 'Entrance door gap with pole-mounted EXIT sign')
+  saveOffice('door_entrance', cv, { feet: 52, ax: 0 }, 'Entrance door gap with pole-mounted EXIT sign')
 }

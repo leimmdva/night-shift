@@ -5,7 +5,7 @@
     "tile": 32,
     "widthPx": 640,
     "heightPx": 448,
-    "wallRows": 2
+    "wallRows": 3
   },
   "tiles": {
     "floor": [
@@ -25,169 +25,169 @@
     {
       "id": "window-a",
       "sprite": "window_night_a",
-      "px": 182,
-      "py": 10
+      "px": 224,
+      "py": 12
     },
     {
       "id": "whiteboard",
       "sprite": "whiteboard",
-      "px": 231,
+      "px": 308,
       "py": 24
     },
     {
       "id": "wall-clock",
       "sprite": "wall_clock",
-      "px": 338,
-      "py": 26
+      "px": 192,
+      "py": 8
     },
     {
       "id": "window-b",
       "sprite": "window_night_b",
-      "px": 370,
-      "py": 10
+      "px": 414,
+      "py": 12
     },
     {
       "id": "closet-door",
       "sprite": "closet",
-      "px": 423,
-      "py": 4
+      "px": 490,
+      "py": 34
     },
     {
       "id": "server-door",
       "sprite": "door_server",
       "px": 544,
-      "py": 0
+      "py": 33
     },
     {
       "id": "banner",
       "sprite": "banner_halloween",
-      "px": 232,
-      "py": 8
+      "px": 36,
+      "py": 12
     },
     {
       "id": "string-lights-0",
       "sprite": "string_lights",
-      "px": 0,
-      "py": 5
+      "px": 16,
+      "py": 8
     },
     {
       "id": "string-lights-1",
       "sprite": "string_lights",
-      "px": 64,
-      "py": 5
+      "px": 80,
+      "py": 8
     },
     {
       "id": "string-lights-2",
       "sprite": "string_lights",
-      "px": 128,
-      "py": 5
+      "px": 144,
+      "py": 8
     },
     {
       "id": "string-lights-3",
       "sprite": "string_lights",
-      "px": 192,
-      "py": 5
+      "px": 208,
+      "py": 8
     },
     {
       "id": "string-lights-4",
       "sprite": "string_lights",
-      "px": 256,
-      "py": 5
+      "px": 272,
+      "py": 8
     },
     {
       "id": "string-lights-5",
       "sprite": "string_lights",
-      "px": 320,
-      "py": 5
+      "px": 336,
+      "py": 8
     },
     {
       "id": "string-lights-6",
       "sprite": "string_lights",
-      "px": 384,
-      "py": 5
+      "px": 400,
+      "py": 8
     },
     {
       "id": "string-lights-7",
       "sprite": "string_lights",
-      "px": 448,
-      "py": 5
+      "px": 464,
+      "py": 8
     },
     {
       "id": "string-lights-8",
       "sprite": "string_lights",
-      "px": 512,
-      "py": 5
+      "px": 528,
+      "py": 8
     },
     {
       "id": "string-lights-9",
       "sprite": "string_lights",
-      "px": 576,
-      "py": 5
+      "px": 592,
+      "py": 8
     },
     {
       "id": "string-window-a",
       "sprite": "string_lights_window",
-      "px": 176,
-      "py": 10
+      "px": 222,
+      "py": 14
     },
     {
       "id": "string-window-b",
       "sprite": "string_lights_window",
-      "px": 364,
-      "py": 10
+      "px": 412,
+      "py": 14
     },
     {
       "id": "bat-a1",
       "sprite": "bat_a",
-      "px": 190,
-      "py": 22
+      "px": 232,
+      "py": 36
     },
     {
       "id": "bat-b1",
       "sprite": "bat_b",
-      "px": 205,
-      "py": 32
+      "px": 246,
+      "py": 44
     },
     {
       "id": "bat-a2",
       "sprite": "bat_a",
-      "px": 193,
-      "py": 38
+      "px": 236,
+      "py": 52
     },
     {
       "id": "bat-b2",
       "sprite": "bat_b",
-      "px": 394,
-      "py": 20
+      "px": 470,
+      "py": 34
     },
     {
       "id": "bat-a3",
       "sprite": "bat_a",
-      "px": 381,
-      "py": 30
+      "px": 452,
+      "py": 46
     },
     {
       "id": "bat-b3",
       "sprite": "bat_b",
-      "px": 399,
+      "px": 424,
       "py": 38
+    },
+    {
+      "id": "cat",
+      "sprite": "cat_cutout",
+      "px": 158,
+      "py": 14
     },
     {
       "id": "spider",
       "sprite": "spider_hanging",
-      "px": 359,
-      "py": 12
-    },
-    {
-      "id": "web-tl",
-      "sprite": "cobweb_corner",
-      "px": 8,
+      "px": 528,
       "py": 6
     },
     {
       "id": "web-door",
       "sprite": "cobweb_small",
-      "px": 547,
+      "px": 546,
       "py": 8
     }
   ],
@@ -196,330 +196,396 @@
       "id": "fridge",
       "sprite": "fridge",
       "x": 0.5,
-      "y": 2,
+      "y": 3,
       "w": 1,
       "h": 0.75,
       "px": 13,
-      "py": 24,
+      "py": 56,
       "blocks": true
     },
     {
       "id": "counter",
       "sprite": "kitchen_counter",
       "x": 1.5,
-      "y": 2,
+      "y": 3,
       "w": 3.25,
       "h": 0.75,
       "px": 45,
-      "py": 28,
+      "py": 60,
       "blocks": true
     },
     {
       "id": "water-cooler",
       "sprite": "water_cooler",
       "x": 4.75,
-      "y": 2,
+      "y": 3,
       "w": 0.6,
       "h": 0.75,
       "px": 148,
-      "py": 32,
+      "py": 64,
       "blocks": true
     },
     {
-      "id": "plant-1",
-      "sprite": "plant_tall",
+      "id": "bookshelf-1",
+      "sprite": "bookshelf",
       "x": 5.45,
-      "y": 2,
-      "w": 0.6,
+      "y": 3,
+      "w": 1.6,
       "h": 0.75,
-      "px": 166,
-      "py": 31,
+      "px": 172,
+      "py": 34,
       "blocks": true
     },
     {
-      "id": "plant-2",
-      "sprite": "plant_tall",
-      "x": 10.95,
-      "y": 2,
-      "w": 0.6,
+      "id": "credenza",
+      "sprite": "credenza",
+      "x": 7.15,
+      "y": 3,
+      "w": 2.6,
       "h": 0.75,
-      "px": 342,
-      "py": 31,
+      "px": 227,
+      "py": 82,
+      "blocks": true
+    },
+    {
+      "id": "printer",
+      "sprite": "printer",
+      "x": 9.9,
+      "y": 3,
+      "w": 1.15,
+      "h": 0.75,
+      "px": 313,
+      "py": 71,
+      "blocks": true
+    },
+    {
+      "id": "cabinet-1",
+      "sprite": "filing_cabinet",
+      "x": 11.1,
+      "y": 3,
+      "w": 0.9,
+      "h": 0.75,
+      "px": 352,
+      "py": 70,
+      "blocks": true
+    },
+    {
+      "id": "cabinet-2",
+      "sprite": "filing_cabinet",
+      "x": 12,
+      "y": 3,
+      "w": 0.9,
+      "h": 0.75,
+      "px": 381,
+      "py": 70,
+      "blocks": true
+    },
+    {
+      "id": "bookshelf-2",
+      "sprite": "bookshelf",
+      "x": 13.4,
+      "y": 3,
+      "w": 1.6,
+      "h": 0.75,
+      "px": 427,
+      "py": 34,
       "blocks": true
     },
     {
       "id": "desk-pumpkin",
       "sprite": "desk_pumpkin",
-      "x": 2,
+      "x": 3,
       "y": 5,
       "w": 2,
       "h": 1,
-      "px": 62,
-      "py": 149,
-      "blocks": true
-    },
-    {
-      "id": "desk-witch",
-      "sprite": "desk_witch",
-      "x": 5,
-      "y": 5,
-      "w": 2,
-      "h": 1,
-      "px": 158,
-      "py": 137,
-      "blocks": true
-    },
-    {
-      "id": "desk-plain",
-      "sprite": "desk_plain",
-      "x": 8,
-      "y": 5,
-      "w": 2,
-      "h": 1,
-      "px": 254,
+      "px": 94,
       "py": 149,
       "blocks": true
     },
     {
       "id": "chair-1",
       "sprite": "chair_teal",
-      "x": 2.72,
+      "x": 3.72,
       "y": 6,
       "w": 0.65,
       "h": 0.7,
-      "px": 82,
+      "px": 114,
       "py": 183,
-      "blocks": true
-    },
-    {
-      "id": "chair-2",
-      "sprite": "chair_blue",
-      "x": 5.72,
-      "y": 6,
-      "w": 0.65,
-      "h": 0.7,
-      "px": 178,
-      "py": 183,
-      "blocks": true
-    },
-    {
-      "id": "chair-skeleton",
-      "sprite": "chair_skeleton",
-      "x": 8.56,
-      "y": 6.75,
-      "w": 0.8,
-      "h": 0.9,
-      "px": 269,
-      "py": 180,
       "blocks": true
     },
     {
       "id": "desk-skirt",
       "sprite": "desk_skirt",
-      "x": 2,
-      "y": 9,
+      "x": 6,
+      "y": 5,
       "w": 2,
       "h": 1,
-      "px": 62,
-      "py": 277,
+      "px": 190,
+      "py": 149,
+      "blocks": true
+    },
+    {
+      "id": "desk-skeleton",
+      "sprite": "desk_skeleton",
+      "x": 9,
+      "y": 5,
+      "w": 2.9,
+      "h": 1,
+      "px": 286,
+      "py": 135,
+      "blocks": true
+    },
+    {
+      "id": "desk-witch",
+      "sprite": "desk_witch",
+      "x": 3,
+      "y": 8,
+      "w": 2,
+      "h": 1,
+      "px": 94,
+      "py": 233,
+      "blocks": true
+    },
+    {
+      "id": "chair-2",
+      "sprite": "chair_blue",
+      "x": 3.72,
+      "y": 9,
+      "w": 0.65,
+      "h": 0.7,
+      "px": 114,
+      "py": 279,
+      "blocks": true
+    },
+    {
+      "id": "desk-plain",
+      "sprite": "desk_plain",
+      "x": 6,
+      "y": 8,
+      "w": 2,
+      "h": 1,
+      "px": 190,
+      "py": 245,
+      "blocks": true
+    },
+    {
+      "id": "chair-3",
+      "sprite": "chair_teal",
+      "x": 6.72,
+      "y": 9,
+      "w": 0.65,
+      "h": 0.7,
+      "px": 210,
+      "py": 279,
       "blocks": true
     },
     {
       "id": "desk-player",
       "sprite": "desk_player",
-      "x": 5,
-      "y": 9,
+      "x": 15,
+      "y": 7,
       "w": 2,
       "h": 1,
-      "px": 158,
-      "py": 277,
+      "px": 478,
+      "py": 213,
       "blocks": true
     },
     {
       "id": "chair-player",
       "sprite": "chair_teal",
-      "x": 5.72,
-      "y": 10,
-      "w": 0.65,
-      "h": 0.7,
-      "px": 178,
-      "py": 311,
-      "blocks": true
-    },
-    {
-      "id": "desk-right",
-      "sprite": "desk_pumpkin",
-      "x": 15,
-      "y": 8,
-      "w": 2,
-      "h": 1,
-      "px": 478,
-      "py": 245,
-      "blocks": true
-    },
-    {
-      "id": "chair-right",
-      "sprite": "chair_blue",
       "x": 15.72,
-      "y": 9,
+      "y": 8,
       "w": 0.65,
       "h": 0.7,
       "px": 498,
-      "py": 279,
+      "py": 247,
       "blocks": true
     },
     {
       "id": "meeting-table",
       "sprite": "meeting_table",
-      "x": 9.5,
+      "x": 10,
       "y": 8,
       "w": 4.125,
       "h": 2,
-      "px": 300,
+      "px": 316,
       "py": 250,
       "blocks": true
     },
     {
       "id": "chair-meet-0",
       "sprite": "chair_front",
-      "x": 10.09,
-      "y": 7.45,
+      "x": 10.59,
+      "y": 7.5,
       "w": 0.6,
-      "h": 0.55,
-      "px": 318,
+      "h": 0.5,
+      "px": 334,
       "py": 216,
       "blocks": true
     },
     {
       "id": "chair-meet-1",
       "sprite": "chair_front",
-      "x": 11.25,
-      "y": 7.45,
+      "x": 11.75,
+      "y": 7.5,
       "w": 0.6,
-      "h": 0.55,
-      "px": 355,
+      "h": 0.5,
+      "px": 371,
       "py": 216,
       "blocks": true
     },
     {
       "id": "chair-meet-2",
       "sprite": "chair_front",
-      "x": 12.41,
-      "y": 7.45,
+      "x": 12.91,
+      "y": 7.5,
       "w": 0.6,
-      "h": 0.55,
-      "px": 392,
+      "h": 0.5,
+      "px": 408,
       "py": 216,
-      "blocks": true
-    },
-    {
-      "id": "plant-divider",
-      "sprite": "plant_divider",
-      "x": 7.5,
-      "y": 12,
-      "w": 3.125,
-      "h": 0.9,
-      "px": 236,
-      "py": 339,
       "blocks": true
     },
     {
       "id": "sofa",
       "sprite": "sofa",
-      "x": 14.5,
-      "y": 12,
+      "x": 12.5,
+      "y": 11.3,
       "w": 3.06,
       "h": 0.9,
-      "px": 460,
-      "py": 367,
-      "blocks": true
-    },
-    {
-      "id": "gravestone",
-      "sprite": "gravestone",
-      "x": 18.1,
-      "y": 12,
-      "w": 0.7,
-      "h": 0.8,
-      "px": 575,
-      "py": 376,
-      "blocks": true
-    },
-    {
-      "id": "plant-small-1",
-      "sprite": "plant_small",
-      "x": 13.55,
-      "y": 12.15,
-      "w": 0.6,
-      "h": 0.6,
-      "px": 426,
-      "py": 378,
+      "px": 396,
+      "py": 344,
       "blocks": true
     },
     {
       "id": "plant-small-2",
       "sprite": "plant_small",
-      "x": 0.45,
-      "y": 11,
+      "x": 11.6,
+      "y": 11.4,
       "w": 0.6,
       "h": 0.6,
-      "px": 6,
-      "py": 341,
+      "px": 363,
+      "py": 354,
+      "blocks": true
+    },
+    {
+      "id": "gravestone",
+      "sprite": "gravestone",
+      "x": 15.75,
+      "y": 11.3,
+      "w": 0.7,
+      "h": 0.8,
+      "px": 500,
+      "py": 353,
+      "blocks": true
+    },
+    {
+      "id": "plant-divider",
+      "sprite": "plant_divider",
+      "x": 7,
+      "y": 11,
+      "w": 3.125,
+      "h": 0.9,
+      "px": 220,
+      "py": 307,
       "blocks": true
     },
     {
       "id": "locker",
       "sprite": "locker",
       "x": 0.5,
-      "y": 7,
+      "y": 5.2,
       "w": 1,
       "h": 0.9,
       "px": 13,
-      "py": 181,
+      "py": 123,
       "blocks": true
     },
     {
-      "id": "cabinet-1",
+      "id": "wardrobe",
+      "sprite": "wardrobe",
+      "x": 0.5,
+      "y": 8.2,
+      "w": 1.45,
+      "h": 0.9,
+      "px": 14,
+      "py": 203,
+      "blocks": true
+    },
+    {
+      "id": "plant-1",
+      "sprite": "plant_tall",
+      "x": 0.5,
+      "y": 10.6,
+      "w": 0.6,
+      "h": 0.75,
+      "px": 8,
+      "py": 306,
+      "blocks": true
+    },
+    {
+      "id": "cabinet-3",
       "sprite": "filing_cabinet",
-      "x": 17.7,
+      "x": 17.6,
       "y": 5,
       "w": 0.9,
-      "h": 0.9,
-      "px": 563,
-      "py": 139,
+      "h": 0.8,
+      "px": 560,
+      "py": 136,
       "blocks": true
     },
     {
-      "id": "cabinet-2",
+      "id": "cabinet-4",
       "sprite": "filing_cabinet",
-      "x": 18.6,
+      "x": 18.5,
       "y": 5,
       "w": 0.9,
-      "h": 0.9,
-      "px": 592,
-      "py": 139,
+      "h": 0.8,
+      "px": 589,
+      "py": 136,
       "blocks": true
     },
     {
-      "id": "printer",
+      "id": "printer-2",
       "sprite": "printer",
-      "x": 18.6,
-      "y": 8,
-      "w": 1.12,
-      "h": 1,
-      "px": 591,
-      "py": 239,
+      "x": 18.2,
+      "y": 7.2,
+      "w": 1.15,
+      "h": 0.8,
+      "px": 578,
+      "py": 207,
+      "blocks": true
+    },
+    {
+      "id": "plant-2",
+      "sprite": "plant_tall",
+      "x": 18.8,
+      "y": 9,
+      "w": 0.6,
+      "h": 0.75,
+      "px": 594,
+      "py": 255,
       "blocks": true
     },
     {
       "id": "boxes",
       "sprite": "boxes",
-      "x": 18.45,
-      "y": 7,
-      "w": 1.25,
-      "h": 0.7,
-      "px": 587,
-      "py": 200,
+      "x": 16.9,
+      "y": 11.4,
+      "w": 1.4,
+      "h": 0.9,
+      "px": 538,
+      "py": 348,
+      "blocks": true
+    },
+    {
+      "id": "boxes-big",
+      "sprite": "boxes_big",
+      "x": 18.3,
+      "y": 11.5,
+      "w": 1.2,
+      "h": 0.9,
+      "px": 583,
+      "py": 345,
       "blocks": true
     },
     {
@@ -530,27 +596,96 @@
       "w": 2,
       "h": 1,
       "px": 32,
-      "py": 404,
+      "py": 396,
       "blocks": false
     },
     {
-      "id": "pumpkin-entrance",
-      "sprite": "pumpkin_l",
-      "x": 3.1,
-      "y": 12.3,
-      "w": 0.75,
+      "id": "pumpkin-pile",
+      "sprite": "pumpkin_pile",
+      "x": 3.3,
+      "y": 12,
+      "w": 1.4,
+      "h": 0.9,
+      "px": 102,
+      "py": 371,
+      "blocks": true
+    },
+    {
+      "id": "plant-small-3",
+      "sprite": "plant_small",
+      "x": 13,
+      "y": 5.3,
+      "w": 0.6,
       "h": 0.6,
-      "px": 93,
-      "py": 384,
+      "px": 408,
+      "py": 159,
+      "blocks": true
+    },
+    {
+      "id": "gravestone-2",
+      "sprite": "gravestone",
+      "x": 6.7,
+      "y": 12,
+      "w": 0.7,
+      "h": 0.8,
+      "px": 210,
+      "py": 376,
+      "blocks": true
+    },
+    {
+      "id": "sign-mortem",
+      "sprite": "sign_mortem",
+      "x": 5,
+      "y": 12,
+      "w": 1.1,
+      "h": 0.9,
+      "px": 156,
+      "py": 373,
       "blocks": true
     }
   ],
   "decals": [
     {
+      "id": "rug-teal",
+      "sprite": "rug_teal",
+      "px": 88,
+      "py": 262
+    },
+    {
+      "id": "rug-plum",
+      "sprite": "rug_plum",
+      "px": 372,
+      "py": 326
+    },
+    {
+      "id": "sofa-gap-shadow",
+      "sprite": "gap_shadow",
+      "px": 400,
+      "py": 341
+    },
+    {
+      "id": "pillow-gap",
+      "sprite": "wrapper_b",
+      "px": 380,
+      "py": 338
+    },
+    {
+      "id": "pillow-gap2",
+      "sprite": "wrapper_c",
+      "px": 470,
+      "py": 340
+    },
+    {
+      "id": "rug-brown",
+      "sprite": "rug_brown",
+      "px": 64,
+      "py": 142
+    },
+    {
       "id": "doormat",
       "sprite": "doormat",
-      "px": 38,
-      "py": 376
+      "px": 44,
+      "py": 410
     },
     {
       "id": "wrapper-0",
@@ -586,7 +721,7 @@
       "id": "wrapper-5",
       "sprite": "wrapper_b",
       "px": 585,
-      "py": 262
+      "py": 232
     },
     {
       "id": "wrapper-6",
@@ -604,24 +739,36 @@
       "id": "wrapper-8",
       "sprite": "wrapper_b",
       "px": 300,
-      "py": 120
+      "py": 150
     },
     {
       "id": "wrapper-9",
       "sprite": "wrapper_a",
       "px": 118,
-      "py": 150
+      "py": 190
+    },
+    {
+      "id": "wrapper-10",
+      "sprite": "wrapper_c",
+      "px": 560,
+      "py": 400
+    },
+    {
+      "id": "wrapper-11",
+      "sprite": "wrapper_b",
+      "px": 330,
+      "py": 330
     }
   ],
   "hideSpots": [
     {
       "id": "desk-skirt",
       "type": "under-desk",
-      "x": 2,
-      "y": 9,
+      "x": 6,
+      "y": 5,
       "enter": {
-        "x": 2,
-        "y": 10
+        "x": 6,
+        "y": 6
       },
       "prop": "desk-skirt"
     },
@@ -629,29 +776,29 @@
       "id": "locker",
       "type": "locker",
       "x": 1,
-      "y": 7,
+      "y": 5,
       "enter": {
         "x": 1,
-        "y": 8
+        "y": 4
       },
       "prop": "locker"
     },
     {
       "id": "supply-closet",
       "type": "closet",
-      "x": 14,
-      "y": 2,
+      "x": 15,
+      "y": 3,
       "enter": {
-        "x": 14,
-        "y": 3
+        "x": 15,
+        "y": 4
       },
       "prop": "closet-door"
     },
     {
       "id": "sofa",
       "type": "behind-sofa",
-      "x": 15,
-      "y": 11,
+      "x": 14,
+      "y": 10,
       "enter": {
         "x": 15,
         "y": 10
@@ -672,8 +819,8 @@
     {
       "id": "plant-divider",
       "type": "behind-plant",
-      "x": 9,
-      "y": 11,
+      "x": 8,
+      "y": 10,
       "enter": {
         "x": 9,
         "y": 10
@@ -681,25 +828,36 @@
       "prop": "plant-divider"
     },
     {
-      "id": "printer-boxes",
+      "id": "boxes",
       "type": "behind-boxes",
       "x": 18,
-      "y": 7,
+      "y": 10,
       "enter": {
         "x": 17,
-        "y": 7
+        "y": 10
       },
       "prop": "boxes"
+    },
+    {
+      "id": "wardrobe",
+      "type": "wardrobe",
+      "x": 1,
+      "y": 9,
+      "enter": {
+        "x": 2,
+        "y": 9
+      },
+      "prop": "wardrobe"
     }
   ],
   "playerDesk": {
-    "x": 5,
-    "y": 9,
+    "x": 15,
+    "y": 7,
     "w": 2,
     "h": 1,
     "seat": {
-      "x": 6,
-      "y": 10
+      "x": 15,
+      "y": 8
     },
     "prop": "desk-player"
   },
@@ -707,26 +865,26 @@
     "x": 17,
     "y": 0,
     "w": 2,
-    "h": 2,
+    "h": 3,
     "prop": "server-door",
     "approach": {
       "x": 17,
-      "y": 2
+      "y": 3
     },
     "golemSlots": [
       {
         "x": 16,
-        "y": 3
+        "y": 4
       },
       {
         "x": 18,
-        "y": 3
+        "y": 4
       }
     ],
     "clearZone": {
-      "x": 15,
-      "y": 2,
-      "w": 5,
+      "x": 16,
+      "y": 3,
+      "w": 3,
       "h": 3
     }
   },
@@ -742,36 +900,36 @@
   },
   "monsterSpawns": [
     {
-      "x": 7,
-      "y": 3
+      "x": 1,
+      "y": 4
     },
     {
-      "x": 16,
-      "y": 6
+      "x": 9,
+      "y": 4
     },
     {
-      "x": 12,
+      "x": 2,
+      "y": 11
+    },
+    {
+      "x": 9,
       "y": 12
-    },
-    {
-      "x": 4,
-      "y": 7
     }
   ],
   "walkable": [
     "00000000000000000000",
     "00000000000000000000",
-    "00000011111011111111",
-    "11111111111111111111",
-    "11111111111111111111",
-    "11001001001111111000",
-    "11101101111111111111",
-    "00111111010001111100",
-    "11111111100000100100",
-    "11001001100000110111",
-    "11111101111111111111",
-    "01111111111111111111",
-    "11101110000110000001",
-    "11111111111111111111"
+    "00000000000000000000",
+    "00000000000000011110",
+    "01111111111111111110",
+    "00100100100010111000",
+    "01110111111111111110",
+    "01111111111110100100",
+    "00100100110000110110",
+    "01110110110000111110",
+    "01111111111111111110",
+    "01111110001100000000",
+    "01100010111111111000",
+    "01100000000000000000"
   ]
 }

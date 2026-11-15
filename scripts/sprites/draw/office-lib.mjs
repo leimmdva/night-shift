@@ -18,10 +18,10 @@ export const MAT = {
   wall: m('#EBDDBB', '#D9C79F', '#C2AC82', '#9B8662', '#3B2E21'),
   wallCap: m('#F7EED8', '#E6D9B8', '#CFBF99', '#A8977A', '#3B2E21'),
   board: m('#9B7B62', '#7C5F4A', '#634A39', '#47342A', '#1E130E'),
-  wood: m('#F2DDB0', '#E0C48C', '#C8A36B', '#9C7646', '#40271A'),
+  wood: m('#E0A870', '#C28650', '#9E6633', '#744522', '#2E180C'),
   woodDark: m('#A9876B', '#876A53', '#6B523F', '#4D3A2D', '#21150E'),
   metal: m('#C9D9E6', '#9DB3C7', '#7790A8', '#536B85', '#1C2838'),
-  cabinet: m('#E4E0D0', '#C9C4B0', '#A9A38C', '#7D786A', '#2D2A22'),
+  cabinet: m('#B4CCC0', '#8EAEA6', '#6C8E8A', '#4D6A68', '#1A2B2A'),
   white: m('#FFFFFF', '#EEEBF4', '#D2CEE0', '#9893B2', '#2E2B47'),
   plastic: m('#6A7088', '#474C63', '#32364A', '#232638', '#0B0C14'),
   steel: m('#9DB0B0', '#74898E', '#566A74', '#3B4C5A', '#141D26'),
@@ -43,12 +43,14 @@ export const MAT = {
   doorTeal: m('#8FD0C8', '#5FAAA6', '#437F85', '#2E5662', '#0E2630'),
   mug: m('#FF8F7A', '#E5634F', '#BC4538', '#8A2E2C', '#32100E'),
   paper: m('#FFFFFF', '#F4F2EC', '#E2DDD0', '#B7B0A0', '#4A4438'),
-  carpetA: m('#8D88AC', '#7F7AA0', '#716C93', '#625D84', '#4C486C'),
-  carpetB: m('#837EA4', '#75709A', '#68638C', '#59547C', '#46426A'),
+  carpetA: m('#EBD5A8', '#DFC595', '#D0B284', '#B8976A', '#8A6B42'),
+  carpetB: m('#E6CE9F', '#D9BC8B', '#C9A97A', '#B08F62', '#8A6B42'),
+  plank: m('#F0DDB4', '#E2C998', '#D3B687', '#BD9B6C', '#8A6B42'),
+  plankDk: m('#DDBF90', '#CFAF80', '#C09F70', '#A98859', '#7E6038'),
 }
 
-export const SH = '#120A24A0' // contact shadow (flat, one alpha level)
-export const SH2 = '#120A2470' // faint outer shadow
+export const SH = '#2A140A8C' // contact shadow (flat, one alpha level)
+export const SH2 = '#2A140A55' // faint outer shadow
 
 // Colours that stay lit when the lights go out (screens, bulbs, glowing faces, LEDs, windows, EXIT sign).
 export const GLOW = {

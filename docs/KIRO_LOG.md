@@ -98,6 +98,13 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
 - Kiro feature: vibe coding
 - How Kiro helped: wrote the drawing code, layout module, lighting passes and annotation overlay, and reviewed zoomed renders. A first session was cut by a time limit and a second one finished it.
 - Problems and fixes: the doormat overlapped the EXIT sign (moved up); wall plants hid the windows (moved); annotation numbers were unreadable (enlarged). 11 floor tiles are more than 5.5 tiles from a hide spot. The skeleton still overlaps its desk.
+- Commit: a03044c
+
+### 2026-11-15 — Office map rebuilt in a warm cosy style with Halloween decor
+- What: redrew the office from a reference illustration: wood-plank floor, 3-tile cream back wall with wainscot, 16px thick side and bottom walls, brown furniture with warm shadows, bookshelves, credenza, wardrobe, rugs, dense desk clutter. New seated skeleton (profile, headset, legs under the desk). Eight hide spots, player desk moved to the right, spawns at least 6 tiles from it. Night preview gives each monster a light pool.
+- Kiro feature: vibe coding
+- How Kiro helped: wrote the new drawing code (`office-props2.mjs`), layout, compose changes and a reachability check that now also reports hide-spot coverage (max 5 tiles) and spawn distance. Layout was corrected by hand after viewing previews (isolated tile, doormat under EXIT sign, ghost spawn).
+- Problems and fixes: one walkable tile beside the boxes was cut off (blocked by moving the stack); the doormat was narrowed to clear the EXIT pole. Side walls have a thin dark border, not as dark as the reference.
 - Commit: pending
 
 ## Decisions
@@ -127,8 +134,8 @@ Measured on 2026-11-15.
 | Custom agents | 1 |
 | MCP servers | 2 |
 | Monster sprites | 14 PNG files |
-| Office sprites | 55 PNG pieces in `public/sprites/office/` (tiles and props) |
-| Commits | 12 before this one |
+| Office sprites | 66 PNG pieces in `public/sprites/office/` (tiles and props) |
+| Commits | 13 before this one |
 
 Bundle sizes from the last `npm run build` (gzip):
 

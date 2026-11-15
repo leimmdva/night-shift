@@ -24,7 +24,7 @@ const base = renderBase(L, S)
 // ---------------------------------------------------------------- map JSON
 const rel = (p) => ({ id: p.id, sprite: p.sprite, x: p.x, y: p.y, w: p.w, h: p.h, px: p.px, py: p.py, blocks: p.blocks })
 const json = {
-  grid: { cols: COLS, rows: ROWS, tile: T, widthPx: W, heightPx: H, wallRows: 2 },
+  grid: { cols: COLS, rows: ROWS, tile: T, widthPx: W, heightPx: H, wallRows: 3 },
   tiles: { floor: ['floor_a', 'floor_b', 'floor_worn', 'floor_stain'], wallFront: 'wall_front', wallTop: ['wall_top_h', 'wall_top_v', 'wall_corner'] },
   wall: L.wall.map(({ id, sprite, px, py }) => ({ id, sprite, px, py })),
   props: L.props.map(rel),
@@ -48,36 +48,53 @@ for (const m of L.monsterSpawns) if (!walk[m.y][m.x]) problems.push(`monster spa
 for (const g of L.serverDoor.golemSlots) if (!walk[g.y][g.x]) problems.push(`golem slot ${g.x},${g.y} is blocked`)
 const open = walk.flat().filter(Boolean).length
 if (![...seen].length || seen.size < open) problems.push(`walkable tiles split: ${seen.size} reachable of ${open}`)
-// every hide spot within 5 tiles of every walkable tile
-let far = 0
+// every walkable tile within 5 tiles of a hide spot
+let far = 0, worst = 0, worstTile = null
 for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) if (walk[y][x]) {
-  if (!L.hideSpots.some((h) => Math.hypot(h.x - x, h.y - y) <= 5.5)) far++
+  const d = Math.min(...L.hideSpots.map((h) => Math.hypot(h.x - x, h.y - y)))
+  if (d > worst) { worst = d; worstTile = `${x},${y}` }
+  if (d > 5) { far++; problems.push(`tile ${x},${y} is ${d.toFixed(1)} tiles from the nearest hide spot (max 5)`) }
 }
-if (far) console.log(`note: ${far} walkable tiles are more than 5.5 tiles from any hide spot`)
+console.log(`hide-spot coverage: ${L.hideSpots.length} spots, farthest walkable tile ${worstTile} is ${worst.toFixed(2)} tiles away (${far} tiles over 5)`)
+// monster spawns at least 6 tiles from the player's desk (desk tiles and seat)
+{
+  const pd = L.playerDesk
+  const pts = [pd.seat]
+  for (let i = 0; i < pd.w; i++) for (let j = 0; j < pd.h; j++) pts.push({ x: pd.x + i, y: pd.y + j })
+  for (const m of L.monsterSpawns) {
+    const d = Math.min(...pts.map((p) => Math.hypot(p.x - m.x, p.y - m.y)))
+    console.log(`spawn ${m.x},${m.y}: ${d.toFixed(1)} tiles from the player's desk`)
+    if (d < 6) problems.push(`monster spawn ${m.x},${m.y} is only ${d.toFixed(1)} tiles from the player's desk (min 6)`)
+  }
+}
 
 // ---------------------------------------------------------------- previews
 const lit = lightsOn(base)
 out('docs/art/office-preview.png', png(scale(lit, 2)))
 
-// night: monsters stand in the room for scale
+// night: monsters stand at spawn tiles, each with a light pool in its accent colour
 const mGhost = loadMonster('null-ghost')
 const mCrawler = loadMonster('infinite-crawler')
-const ghostAt = { x: 6 * T - 24, y: 4 * T - 40 } // spawn (7,3) area, left of centre aisle
-const crawlAt = { x: 16 * T - 24, y: 7 * T - 30 }
-const night = lightsOff(base, L, [
-  { x: ghostAt.x + 24, y: ghostAt.y + 26, rx: 44, ry: 34, c: [127, 227, 242], strong: false },
-])
+const at = (m, tx, ty) => ({ x: Math.round(tx * T + T / 2 - m.w / 2), y: Math.round((ty + 1) * T - m.feet) })
+const ghostAt = at(mGhost, L.monsterSpawns[1].x, L.monsterSpawns[1].y)
+const crawlAt = at(mCrawler, L.monsterSpawns[3].x, L.monsterSpawns[3].y)
+const pools = [
+  { x: ghostAt.x + mGhost.w / 2, y: ghostAt.y + mGhost.h * 0.6, rx: 56, ry: 40, c: [127, 227, 242], strong: true },
+  { x: crawlAt.x + mCrawler.w / 2, y: crawlAt.y + mCrawler.h * 0.7, rx: 60, ry: 38, c: [255, 154, 46], strong: true },
+]
+const night = lightsOff(base, L, pools)
 const dim = (s, k) => {
   const o = { w: s.w, h: s.h, d: new Uint8Array(s.d) }
   for (let i = 0; i < o.d.length; i += 4) { o.d[i] = Math.round(o.d[i] * k * 0.8); o.d[i + 1] = Math.round(o.d[i + 1] * k * 0.9); o.d[i + 2] = Math.round(o.d[i + 2] * k + 14) }
   return o
 }
-blend(night, dim(asImg(mCrawler), 0.6), crawlAt.x, crawlAt.y)
+blend(night, dim(asImg(mCrawler), 0.9), crawlAt.x, crawlAt.y)
 blend(night, asImg(mGhost), ghostAt.x, ghostAt.y)
 out('docs/art/office-preview-night.png', png(scale(night, 2)))
 
 // annotated
-const ann = scale(lit, 2)
+const LEG = 150
+const ann = (() => { const a = scale(lit, 2); const o = makeImage(a.w, a.h + LEG, [14, 12, 26, 255]); o.d.set(a.d, 0); return o })()
 const px = (x, y, c) => { if (x >= 0 && y >= 0 && x < ann.w && y < ann.h) ann.d.set([...c, 255], (y * ann.w + x) * 4) }
 const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16))
 const GREEN = hex('#A9F07E'), AMBER = hex('#E8A33D'), RED = hex('#C8402F'), INKC = [8, 6, 16], WHITE = [245, 240, 225]
@@ -111,12 +128,13 @@ const spriteBox = (it) => { const b = bbox(S[it.sprite]); return [it.px + b.x0, 
 const everything = [...L.props, ...L.wall]
 L.hideSpots.forEach((h, i) => {
   const it = everything.find((p) => p.id === h.prop)
-  const [x0, y0, x1, y1] = spriteBox(it)
+  let [x0, y0, x1, y1] = spriteBox(it)
+  if (h.type.startsWith('behind')) { x0 = Math.min(x0, h.x * T); y0 = Math.min(y0, h.y * T); x1 = Math.max(x1, h.x * T + T - 1) }
   rectOut(x0 * 2 - 3, y0 * 2 - 3, (x1 + 1) * 2 + 2, (y1 + 1) * 2 + 2, GREEN)
   // numbered badge inside the outline's top-left corner
-  const bx = x0 * 2 + 1, by = y0 * 2 + 1 < 16 ? 16 : y0 * 2 + 1
-  for (let y = 0; y < 18; y++) for (let x = 0; x < 16; x++) px(bx + x, by + y, y === 0 || y === 17 || x === 0 || x === 15 ? INKC : GREEN)
-  text(bx + 3, by + 2, i + 1, INKC, 3, false)
+  const bx = x0 * 2 + 2, by = Math.max(y0 * 2 + 2, 4)
+  for (let y = 0; y < 38; y++) for (let x = 0; x < 30; x++) px(bx + x, by + y, y < 2 || y >= 36 || x < 2 || x >= 28 ? INKC : GREEN)
+  text(bx + 6, by + 4, i + 1, INKC, 6, false)
 })
 {
   const pd = L.props.find((p) => p.id === L.playerDesk.prop)
@@ -132,16 +150,22 @@ for (const m of L.monsterSpawns) {
   for (let k = -17; k <= 17; k++) for (const t of [-3, 3]) { px(cx + k, cy + k + t, INKC); px(cx + k, cy - k + t, INKC) }
   for (let k = -16; k <= 16; k++) for (let t = -2; t <= 2; t++) { px(cx + k, cy + k + t, RED); px(cx + k, cy - k + t, RED) }
 }
-// legend (bottom-right, over the free floor)
+// legend: in the strip below the room, outside the floor
 {
-  const lw = 400, lh = 136, lx = ann.w - lw - 120, ly = 140
-  for (let y = ly; y < ly + lh; y++) for (let x = lx; x < lx + lw; x++) ann.d.set([14, 12, 26, 255], (y * ann.w + x) * 4)
-  rectOut(lx, ly, lx + lw - 1, ly + lh - 1, [90, 86, 120], 2)
-  const row = (i, label, draw) => { draw(lx + 24, ly + 26 + i * 30); text(lx + 70, ly + 20 + i * 30, label, WHITE, 2, false) }
-  row(0, 'hide spot', (x, y) => rectOut(x - 10, y - 10, x + 12, y + 10, GREEN))
-  row(1, 'player desk', (x, y) => rectOut(x - 10, y - 10, x + 12, y + 10, AMBER, 3))
-  row(2, 'server door', (x, y) => rectOut(x - 10, y - 10, x + 12, y + 10, RED, 3))
-  row(3, 'monster spawn', (x, y) => { for (let k = -9; k <= 9; k++) for (let t = -1; t <= 1; t++) { px(x + 1 + k, y + k + t, RED); px(x + 1 + k, y - k + t, RED) } })
+  const ly0 = lit.h * 2
+  const rowW = 310
+  const items = [
+    ['hide spot', (x, y) => rectOut(x - 14, y - 14, x + 14, y + 14, GREEN)],
+    ['player desk', (x, y) => rectOut(x - 14, y - 14, x + 14, y + 14, AMBER, 3)],
+    ['server door', (x, y) => rectOut(x - 14, y - 14, x + 14, y + 14, RED, 3)],
+    ['monster spawn', (x, y) => { for (let k = -12; k <= 12; k++) for (let t = -2; t <= 2; t++) { px(x + k, y + k + t, RED); px(x + k, y - k + t, RED) } }],
+  ]
+  items.forEach(([label, draw], i) => {
+    const x = 50 + (i % 4) * rowW
+    draw(x, ly0 + 54)
+    text(x + 34, ly0 + 42, label, WHITE, 3, false)
+  })
+  text(50, ly0 + 100, 'numbers 1-' + L.hideSpots.length + ' mark hide spots: ' + L.hideSpots.map((h, i) => `${i + 1} ${h.id}`).join(', '), [190, 184, 210], 2, false)
 }
 out('docs/art/office-preview-annotated.png', png(ann))
 

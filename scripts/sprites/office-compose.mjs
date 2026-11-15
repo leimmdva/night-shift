@@ -15,42 +15,51 @@ const flip = (s) => {
 }
 const hash = (x, y) => { let h = Math.imul(x * 73856093 ^ y * 19349663, 2654435761); h ^= h >>> 15; return (h >>> 0) / 4294967296 }
 
+const shade = (img, x0, y0, w, h, c) => {
+  for (let y = y0; y < y0 + h; y++) for (let x = x0; x < x0 + w; x++) {
+    if (x < 0 || y < 0 || x >= img.w || y >= img.h) continue
+    const i = (y * img.w + x) * 4, a = c[3] / 255
+    for (let k = 0; k < 3; k++) img.d[i + k] = Math.round(img.d[i + k] * (1 - a) + c[k] * a)
+  }
+}
+export const WALL_T = 16
+
 export function renderBase(L, S) {
   const img = makeImage(W, H, [0, 0, 0, 255])
-  // floor: checkerboard of two carpet tiles, a few worn and stained ones
-  for (let ty = 2; ty < ROWS; ty++) for (let tx = 0; tx < COLS; tx++) {
+  // floor: warm wood planks, a few darker and stained boards
+  for (let ty = 3; ty < ROWS; ty++) for (let tx = 0; tx < COLS; tx++) {
     const r = hash(tx, ty)
     let n = (tx + ty) % 2 === 0 ? 'floor_a' : 'floor_b'
-    if (r < 0.12) n = 'floor_worn'
-    else if (r > 0.94) n = 'floor_stain'
+    if (r < 0.14) n = 'floor_worn'
+    else if (r > 0.95) n = 'floor_stain'
     blend(img, asImg(S[n]), tx * T, ty * T)
   }
-  // back wall
+  // back wall (3 tiles tall)
   for (let tx = 0; tx < COLS; tx++) blend(img, asImg(S.wall_front), tx * T, 0)
+  // soft shadows the walls cast onto the floor (light from the top-left): below the back wall, right of the left wall
+  const SHW = [42, 22, 12]
+  shade(img, WALL_T, 96, W - 2 * WALL_T, 5, [...SHW, 120]); shade(img, WALL_T, 101, W - 2 * WALL_T, 3, [...SHW, 64])
+  shade(img, WALL_T, 104, W - 2 * WALL_T, 2, [...SHW, 30])
+  shade(img, WALL_T, 96, 5, H - 96 - WALL_T, [...SHW, 100]); shade(img, WALL_T + 5, 96, 3, H - 96 - WALL_T, [...SHW, 50])
   // wall-mounted pieces
-  for (const w of L.wall) {
-    if (w.id === 'web-tl') continue
-    blend(img, asImg(S[w.sprite]), w.px, w.py)
-  }
-  // floor decals
+  for (const w of L.wall) blend(img, asImg(S[w.sprite]), w.px, w.py)
+  // floor decals (rugs, wrappers, doormat)
   for (const d of L.decals) blend(img, asImg(S[d.sprite]), d.px, d.py)
   // props sorted by their floor line
   const sorted = [...L.props].sort((a, b) => (a.y + a.h) - (b.y + b.h) || a.x - b.x)
   for (const p of sorted) blend(img, asImg(S[p.sprite]), p.px, p.py)
-  // wall tops: left, right and bottom (with the entrance gap), then corners
+  // thick walls: left and right sides, bottom (with the entrance gap), then corners
   for (let y = 0; y < H; y += T) {
     blend(img, asImg(S.wall_top_v), 0, y)
-    blend(img, asImg(S.wall_top_v), W - 8, y)
+    blend(img, flip(S.wall_top_v), W - WALL_T, y)
   }
-  for (let tx = 0; tx < COLS; tx++) if (tx < 1 || tx > 2) blend(img, asImg(S.wall_top_h), tx * T, H - 8)
-  for (const [x, y] of [[0, 0], [W - 8, 0], [0, H - 8], [W - 8, H - 8]]) blend(img, asImg(S.wall_corner), x, y)
-  // the entrance door sprite sits on top of the bottom wall opening
+  for (let tx = 0; tx < COLS; tx++) if (tx < 1 || tx > 2) blend(img, asImg(S.wall_top_h), tx * T, H - WALL_T)
+  for (const [x, y] of [[0, 0], [W - WALL_T, 0], [0, H - WALL_T], [W - WALL_T, H - WALL_T]]) blend(img, asImg(S.wall_corner), x, y)
   const ent = L.props.find((p) => p.id === 'entrance-door')
   blend(img, asImg(S[ent.sprite]), ent.px, ent.py)
   // cobwebs over everything in the top corners
-  blend(img, asImg(S.cobweb_corner), 8, 6)
-  blend(img, flip(S.cobweb_corner), W - 8 - S.cobweb_corner.w, 6)
-  blend(img, flip(S.cobweb_small), 604 - S.cobweb_small.w + 4, 8)
+  blend(img, asImg(S.cobweb_corner), WALL_T, 8)
+  blend(img, flip(S.cobweb_corner), W - WALL_T - S.cobweb_corner.w, 8)
   return img
 }
 
@@ -116,17 +125,17 @@ export function lightsOff(base, L, extraLights = []) {
   }
   // moonlight through the two windows: slanted patches on the floor with the window bars as dark gaps
   for (const wn of L.wall.filter((w) => w.id.startsWith('window-'))) {
-    const gx0 = wn.px + 5, gx1 = wn.px + 38
-    for (let y = 66; y < 118; y++) {
-      const t = y - 66
+    const gx0 = wn.px + 5, gx1 = wn.px + 70
+    for (let y = 100; y < 156; y++) {
+      const t = y - 100
       const shift = Math.round(t * 0.45)
       for (let x = gx0 + shift; x <= gx1 + shift; x++) {
         const lx = x - gx0 - shift
-        if (lx >= 15 && lx <= 17) continue // vertical bar
+        if ((lx >= 21 && lx <= 22) || (lx >= 43 && lx <= 44)) continue // vertical bars
         if (t >= 22 && t <= 25) continue // horizontal bar
-        const edge = lx < 2 || lx > 31 || t < 2 || t > 48
+        const edge = lx < 2 || lx > 63 || t < 2 || t > 52
         const i = (y * W + x) * 4
-        if (x < 8 || x >= W - 8 || emissive(i)) continue
+        if (x < 16 || x >= W - 16 || emissive(i)) continue
         const k = edge ? 0.18 : 0.34
         const c = [150, 172, 240]
         for (let ch = 0; ch < 3; ch++) {
