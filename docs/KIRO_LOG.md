@@ -119,6 +119,13 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
 - Kiro feature: spec
 - How Kiro helped: drafted the three files and linked the six existing specs instead of repeating them. Queue, spawn distances and the (9,4) spawn at about 6.7 tiles from the desk were checked against `office.json`.
 - Problems and fixes: the requirements say Deadlock golems are static in GUARD state and Deadlock becomes the active bug after Race Twins; this reading of "one active bug" is my assumption and needs the owner's check.
+- Commit: 5c3fa5e
+
+### 2026-11-15 — UI kit pixel art
+- What: 63 UI pieces (3 colours x 3 states of 9-slice buttons, 12 icon buttons, tabs, panel with rivets, menu row, checkbox, radio, progress bar, hearts, pill, coin, scrollbar, terminal icon) drawn in code, built to `public/sprites/ui/` with `ui.json` slice data. Press Start 2P (OFL) added to `public/fonts/`. `docs/art/ui-preview.png` rebuilds the reference layout at 2x. New scripts: `npm run draw-ui`, `npm run build-ui`; dev dependency `opentype.js`.
+- Kiro feature: vibe coding
+- How Kiro helped: wrote the generators and compared each preview with the reference. Fixes after viewing: text rows were clipped (font baseline off by one), several icons redrawn (gear, speaker, floppy, code, folder).
+- Problems and fixes: Press Start 2P is wider than the reference font, so text panels are wider than in the reference. The reference image itself is not in the repo.
 - Commit: pending
 
 ## Decisions
@@ -149,6 +156,7 @@ Measured on 2026-11-15.
 | MCP servers | 2 |
 | Monster sprites | 14 PNG files |
 | Office sprites | 66 PNG pieces in `public/sprites/office/` (tiles and props) |
+| UI kit sprites | 63 PNG pieces in `public/sprites/ui/` |
 | Commits | 13 before this one |
 
 Bundle sizes from the last `npm run build` (gzip):

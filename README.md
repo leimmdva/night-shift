@@ -30,6 +30,16 @@ Full dated record: [docs/KIRO_LOG.md](docs/KIRO_LOG.md).
 - **Vibe coding:** the game skeleton, monster behaviour utilities (28 unit tests) and the sprite build script were generated in chat sessions.
 - **Corrections:** the first hook format and single-file specs were wrong and were fixed on 2026-11-05.
 
+## Fonts, art and audio credits
+
+| Asset | Source | Licence |
+|---|---|---|
+| `public/fonts/PressStart2P-Regular.ttf` (UI pixel font) | [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) by CodeMan38 | SIL OFL 1.1, text in `public/fonts/PressStart2P-OFL.txt` |
+| `public/sprites/ui/` (UI kit) | Drawn for this project by `scripts/sprites/draw/draw-ui.mjs` (`npm run build-ui`); layout inspired by a reference image that is not in the repo | Project licence (MIT) |
+| Ambience and music | None added yet. Only CC0 files will be used; each file and its source will be listed here | CC0 |
+
+Short sound effects are synthesised in code with Web Audio and use no files.
+
 ## Run locally
 
 ```bash

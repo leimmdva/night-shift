@@ -1,0 +1,489 @@
+{
+ "bar-fill": {
+  "w": 8,
+  "h": 8,
+  "slice": [
+   3,
+   0,
+   3,
+   0
+  ]
+ },
+ "bar-frame": {
+  "w": 16,
+  "h": 12,
+  "slice": [
+   6,
+   6,
+   6,
+   6
+  ]
+ },
+ "button-beige-disabled": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ],
+  "label": "#6E625F",
+  "labelDy": 0
+ },
+ "button-beige-normal": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ],
+  "label": "#2E1E26",
+  "labelDy": 0
+ },
+ "button-beige-pressed": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ],
+  "label": "#2E1E26",
+  "labelDy": 1
+ },
+ "button-purple-disabled": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ],
+  "label": "#6E625F",
+  "labelDy": 0
+ },
+ "button-purple-normal": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ],
+  "label": "#F6ECDC",
+  "labelDy": 0
+ },
+ "button-purple-pressed": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ],
+  "label": "#D9C8DE",
+  "labelDy": 1
+ },
+ "button-tan-disabled": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ],
+  "label": "#6E625F",
+  "labelDy": 0
+ },
+ "button-tan-normal": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ],
+  "label": "#2E1E26",
+  "labelDy": 0
+ },
+ "button-tan-pressed": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ],
+  "label": "#2E1E26",
+  "labelDy": 1
+ },
+ "checkbox-checked": {
+  "w": 14,
+  "h": 14
+ },
+ "checkbox-empty": {
+  "w": 14,
+  "h": 14
+ },
+ "coin": {
+  "w": 12,
+  "h": 12
+ },
+ "cursor": {
+  "w": 6,
+  "h": 8
+ },
+ "glyph-code": {
+  "w": 16,
+  "h": 16
+ },
+ "glyph-exit": {
+  "w": 16,
+  "h": 16
+ },
+ "glyph-folder": {
+  "w": 16,
+  "h": 16
+ },
+ "glyph-fullscreen": {
+  "w": 16,
+  "h": 16
+ },
+ "glyph-gear": {
+  "w": 16,
+  "h": 16
+ },
+ "glyph-help": {
+  "w": 16,
+  "h": 16
+ },
+ "glyph-info": {
+  "w": 16,
+  "h": 16
+ },
+ "glyph-music": {
+  "w": 16,
+  "h": 16
+ },
+ "glyph-pumpkin": {
+  "w": 16,
+  "h": 16
+ },
+ "glyph-save": {
+  "w": 16,
+  "h": 16
+ },
+ "glyph-speaker": {
+  "w": 16,
+  "h": 16
+ },
+ "glyph-terminal": {
+  "w": 16,
+  "h": 16
+ },
+ "heart-empty": {
+  "w": 15,
+  "h": 13
+ },
+ "heart-full": {
+  "w": 15,
+  "h": 13
+ },
+ "icon-frame-disabled": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "icon-frame-normal": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "icon-frame-pressed": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-code": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-exit": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-folder": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-fullscreen": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-gear": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-help": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-info": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-music": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-pumpkin": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-save": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-speaker": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "iconbtn-terminal": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ]
+ },
+ "menu-row-selected": {
+  "w": 8,
+  "h": 12,
+  "slice": [
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ "more-arrow": {
+  "w": 7,
+  "h": 4
+ },
+ "panel": {
+  "w": 24,
+  "h": 24,
+  "slice": [
+   8,
+   8,
+   8,
+   8
+  ],
+  "padding": 8
+ },
+ "pill": {
+  "w": 20,
+  "h": 20,
+  "slice": [
+   9,
+   9,
+   9,
+   9
+  ]
+ },
+ "radio-empty": {
+  "w": 14,
+  "h": 14
+ },
+ "radio-selected": {
+  "w": 14,
+  "h": 14
+ },
+ "scroll-down-normal": {
+  "w": 16,
+  "h": 16
+ },
+ "scroll-down-pressed": {
+  "w": 16,
+  "h": 16
+ },
+ "scroll-thumb": {
+  "w": 10,
+  "h": 16,
+  "slice": [
+   0,
+   5,
+   0,
+   5
+  ]
+ },
+ "scroll-track": {
+  "w": 10,
+  "h": 12,
+  "slice": [
+   0,
+   4,
+   0,
+   4
+  ]
+ },
+ "scroll-up-normal": {
+  "w": 16,
+  "h": 16
+ },
+ "scroll-up-pressed": {
+  "w": 16,
+  "h": 16
+ },
+ "tab-active-normal": {
+  "w": 20,
+  "h": 20,
+  "slice": [
+   7,
+   7,
+   7,
+   7
+  ],
+  "label": "#F6ECDC"
+ },
+ "tab-active-pressed": {
+  "w": 20,
+  "h": 20,
+  "slice": [
+   7,
+   7,
+   7,
+   7
+  ],
+  "label": "#D9C8DE"
+ },
+ "tab-inactive-normal": {
+  "w": 20,
+  "h": 18,
+  "slice": [
+   7,
+   7,
+   7,
+   7
+  ],
+  "label": "#2E1E26"
+ },
+ "tab-inactive-pressed": {
+  "w": 20,
+  "h": 18,
+  "slice": [
+   7,
+   7,
+   7,
+   7
+  ],
+  "label": "#2E1E26"
+ },
+ "tab-pointer-normal": {
+  "w": 9,
+  "h": 5,
+  "overlap": 1
+ },
+ "tab-pointer-pressed": {
+  "w": 9,
+  "h": 5,
+  "overlap": 1
+ },
+ "terminal-screen": {
+  "w": 26,
+  "h": 22
+ }
+}
