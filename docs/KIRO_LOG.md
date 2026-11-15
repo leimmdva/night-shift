@@ -105,6 +105,13 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
 - Kiro feature: vibe coding
 - How Kiro helped: wrote the new drawing code (`office-props2.mjs`), layout, compose changes and a reachability check that now also reports hide-spot coverage (max 5 tiles) and spawn distance. Layout was corrected by hand after viewing previews (isolated tile, doormat under EXIT sign, ghost spawn).
 - Problems and fixes: one walkable tile beside the boxes was cut off (blocked by moving the stack); the doormat was narrowed to clear the EXIT pole. Side walls have a thin dark border, not as dark as the reference.
+- Commit: 853d1f8
+
+### 2026-11-15 — Owner decisions locked into steering
+- What: `product.md`, `project.md`, `tech.md` now fix scope (all 8 monsters, cut order Memory Leech then Deadlock), one-active-bug flow, laptop-only-in-hide-spot rule, server room, player and Sudo look, sound policy (CC0 music, synthesised SFX), 15–20 min play time with first monster within 2 min. The editor spec's "~60s" first-monster wording was changed to "within 2 min".
+- Kiro feature: steering
+- How Kiro helped: found the contradicting lines ("single floor", "~60 seconds") and rewrote them. All decisions come from the owner.
+- Problems and fixes: none.
 - Commit: pending
 
 ## Decisions

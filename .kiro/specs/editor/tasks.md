@@ -16,4 +16,4 @@
 - [ ] Typing in editor works, no autocomplete dropdown appears
 - [ ] Close with ESC, reopen → editor shows original broken code
 - [ ] No console errors related to Monaco after close
-- [ ] Lighthouse on live deploy: Monaco chunk loads before first monster (~60s mark)
+- [ ] Lighthouse on live deploy: Monaco chunk loads before first monster (within 2 min)

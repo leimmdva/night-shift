@@ -2,8 +2,10 @@
 
 ## What this project is
 A browser-based 2D horror game for Kiroween 2026.
-Monsters carry the name of a buggy file. The player hides, opens a laptop,
-fixes real JavaScript code, runs tests, and the monster disappears.
+Monsters carry the name of a buggy file. The player hides, opens a laptop
+(only possible inside a hide spot), fixes real JavaScript code, runs tests,
+and the monster disappears. One bug is active at a time; all 8 monsters ship.
+Full scope and flow decisions live in product.md.
 The game teaches debugging through play and generates a postmortem report.
 
 ## Language rules
@@ -24,9 +26,13 @@ The game teaches debugging through play and generates a postmortem report.
 - No 3D
 - No LLM calls at runtime (hints are pre-written)
 - No TypeScript language worker in Monaco
+- No non-CC0 audio (ambience/music CC0 only, listed in README; SFX synthesised with Web Audio)
+- Last-resort cut order: Memory Leech, then Deadlock (see product.md)
 
 ## Sudo's voice
 Sudo is the ghost of a senior developer who disappeared during a night shift years ago.
+Visually: a friendly amber-glowing ghost with glasses and a coffee mug, shown only as a
+portrait in the corner of the laptop screen. He never walks the map.
 - Helpful, slightly sardonic, never alarming
 - Short messages: 1–2 sentences max
 - Speaks only about bugs and code — never breaks the fourth wall

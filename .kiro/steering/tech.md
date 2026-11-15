@@ -17,7 +17,7 @@
 
 ## Monaco loading strategy
 1. `preloadMonaco()` is called at game boot — Monaco starts loading in the background immediately.
-2. The player cannot open the laptop until the first monster appears (~60 seconds in).
+2. The player cannot open the laptop until the first monster appears (within the first 2 minutes) and the player is inside a hide spot.
 3. If Monaco is still loading when the player presses E, a "Laptop booting…" animation plays.
    This animation is part of the game world, not a loading spinner.
 4. **No language workers.** `languageWorkers: []` in vite-plugin-monaco-editor config.
@@ -37,13 +37,18 @@
 - Tested with empty cache + throttled connection (Slow 4G in DevTools)
 - First Contentful Paint: < 3s
 - Game interactive (Phaser ready): < 5s
-- Monaco ready: before first monster appears (~60s) — background load has enough time
+- Monaco ready: before first monster appears (within 2 min) — background load has enough time
 - If GitHub Pages Lighthouse scores are poor → migrate to Cloudflare Pages (one config file change)
 
 ## Deployment
 - Base URL: `/night-shift/` (set in `vite.config.ts`)
 - GitHub Actions workflow: push to `main` → build → deploy to `gh-pages` branch
 - Live demo must remain reachable until 30 January 2027 (Kiroween requirement)
+
+## Audio
+- Ambience and music: CC0 sources only. Each file and its source/licence is listed in README.md.
+- Short SFX (footsteps, test pass, test fail, caught, monster sounds) are synthesised at runtime with the Web Audio API. No sample files. Each monster has its own sound signature.
+- Audio starts after the first user input (browser autoplay policy).
 
 ## What is explicitly excluded
 - No LLM calls at runtime. Hints and autopsy text are pre-written strings.
