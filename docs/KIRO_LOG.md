@@ -15,7 +15,7 @@ This file records how Kiro was used to build it. Entries are dated and tied to c
 | Steering | `.kiro/steering/voice.md` | In-game English text, Sudo's three hint levels, autopsy card, morning meeting | Pack hints are three entries (location, type, solution) written in Sudo's voice |
 | Steering | `.kiro/steering/bug-pack.md` | Bug pack manifest shape and validation contract | Defines the `BugPack` fields that `src/types/BugPack.ts` and the validator check |
 | Steering | `.kiro/steering/dev-log.md` | Always-included rule: append a Timeline entry here after every change | Created with this log |
-| Specs (6) | `.kiro/specs/{editor,runner,monster-ai,bug-pack-validation,checkpoint,postmortem}/` | Each has `requirements.md`, `design.md`, `tasks.md` | `monster-ai` spec was rewritten in `8a2a139` and then implemented as `behaviourUtils.ts` with 28 unit tests |
+| Specs (7) | `.kiro/specs/{editor,runner,monster-ai,bug-pack-validation,checkpoint,postmortem,game-flow}/` | Each has `requirements.md`, `design.md`, `tasks.md` | `monster-ai` spec was rewritten in `8a2a139` and then implemented as `behaviourUtils.ts` with 28 unit tests |
 | Hook | `.kiro/hooks/validate-bug-pack.json` | On save of `src/bugs/**/*.ts`, runs `node scripts/validate-pack.js` | The script fails a pack whose tests do not fail on `brokenCode` or do not all pass on `solutionCode`. Current output: `03-infinite-crawler` broken run errors out (counted as fail), solution passes 4/4 |
 | MCP | `.kiro/settings/mcp.json` | Two stdio servers: `context7` (library docs for Phaser, Monaco, Vite, Vitest) and `playwright` (browser automation for E2E checks) | Configured in `d49ba4d`. No record yet of a specific change caused by either server: TBD |
 | Custom agent | `.kiro/agents/bug-pack-generator.md` | Generates a bug pack `index.ts` from a plain-language bug description and checks it with `npm run validate-packs` | Defined in `d49ba4d`. No pack has been generated with it yet: TBD |
@@ -112,6 +112,13 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
 - Kiro feature: steering
 - How Kiro helped: found the contradicting lines ("single floor", "~60 seconds") and rewrote them. All decisions come from the owner.
 - Problems and fixes: none.
+- Commit: 37ab6e7
+
+### 2026-11-15 — Game-flow spec
+- What: `.kiro/specs/game-flow/` (requirements in EARS, design, tasks) for the whole run: title, acts, one-bug queue, spawn rules, hiding and laptop rule, catch, autopsy, server room, morning meeting, save/resume. Tasks start with the Act 1 / Null Ghost vertical slice. No game code.
+- Kiro feature: spec
+- How Kiro helped: drafted the three files and linked the six existing specs instead of repeating them. Queue, spawn distances and the (9,4) spawn at about 6.7 tiles from the desk were checked against `office.json`.
+- Problems and fixes: the requirements say Deadlock golems are static in GUARD state and Deadlock becomes the active bug after Race Twins; this reading of "one active bug" is my assumption and needs the owner's check.
 - Commit: pending
 
 ## Decisions
@@ -135,7 +142,7 @@ Measured on 2026-11-15.
 | Unit tests | 28 (1 file, Vitest, all passing) |
 | Property-based tests | 0 |
 | E2E tests | 0 |
-| Specs | 6 |
+| Specs | 7 |
 | Hooks | 1 |
 | Steering files | 7 (including `dev-log.md`) |
 | Custom agents | 1 |
