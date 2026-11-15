@@ -1,0 +1,14 @@
+# Memory Leech - slime trail tile (tiles horizontally) (16x8)
+# '.' = transparent. Each other character is one pixel; colours are declared below.
+@ d #4F9A3A
+@ g #A9F07E
+@ h #D8FBC0
+---
+....dddd........
+ddddggggdddddddd
+ggggghhggggggggg
+gghggggggggghhgg
+gggggggggggggggg
+gggggggggggggggg
+dddddddddgggdddd
+.........ddd....

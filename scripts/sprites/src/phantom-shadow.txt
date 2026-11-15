@@ -1,0 +1,18 @@
+# Async Phantom - detached shadow (32x12)
+# '.' = transparent. Each other character is one pixel; colours are declared below.
+@ a #9C7CF2
+@ h #F4EEFF
+@ o #3B2A85
+---
+................................
+................................
+.......................ooooooo..
+......ooooooooooooooo.oaaaaaaao.
+...oooaaaaaaaaaaaaaaaoaaaaaaaaao
+..oaaaaaaaaaaaaaaaaaaaaahaaahaao
+.oaaaaaaaaaaaaaaaaaaaaaaaaaaaaao
+.ooaaaaaaaaaaaaaaaaaaaaaaaaaaaao
+..ooooaaaaaaaaaaaaaaaooaaaaaaaoo
+...oooooooooooooooooooooooooooo.
+......ooooooooooooooo..ooooooo..
+................................

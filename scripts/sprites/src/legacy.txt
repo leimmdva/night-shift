@@ -1,0 +1,75 @@
+# Legacy - billing.js + invoice.js + utils.js (final boss) (64x64)
+# '.' = transparent. Each other character is one pixel; colours are declared below.
+@ b #DCC890
+@ f #3C4A66
+@ k #1D2A27
+@ l #F4EACB
+@ o #5E4620
+@ r #D64233
+@ s #A98F58
+@ y #F2D34E
+---
+................................................................
+................................................................
+................................................................
+................................................................
+.................oooooooooooooooooooooooooooooo.................
+................oooooooooooooooooooooooooooooooo................
+................oolllllllllllllllllllllllllllloo................
+................oolllllllllllllllllllllllllllloo................
+................oolllllllllllllllllllllllllllloo................
+................oolbbbbbbbbbbbbbbbbbbbbbbbbsssoo................
+................oolbooooooooooooooooooooooosssooooooooooooooo...
+................oolbokkkkkkkkkkkkkkkkkkkkkosssoooooooooooooooo..
+..oooooooooooooooolbokllkkkkkkkkkkkkkkkkkkosssollllllllllllloo..
+.ooooooooooooooooolboklkkkkkkkkkkkkkkkkkkkosssollllllllllllloo..
+.oollllllllllllllolbokkkkkkkkkkkkkkkkkkkkkosssollllllllllllloo..
+.oollllllllllllllolbokkkkkkkkkkkkkkkkkkkkkosssobbbbbbbbbbsssoo..
+.oollllllllllllllolbokkkkkkkkkkkkkkkkkkkkkosssooooooooooosssoo..
+.oolbbbbbbbbbbbbbolbokkkkkkkllkkkllkkkkkkkosssokkkkkkkkkosssoo..
+.oolbooooooooooooolbokkkkkkkllkkkllkkkkkkkosssollkkkkkkkosssoo..
+.oolbokkkkkkkkkkkolbokkkkkkkllkkkllkkkkkkkosssolkkkkkkkkosssoo..
+.oolbokllkkkkkkkkolbokkkkkkkllkkkllkkkkkkkosssokkkkkkkkkosssoo..
+.oolboklkkkkkkkkkolbokkkkkkkllkkkllkkkkkkkosssokkkkkkkkkosssoo..
+.oolbokklllkkkkkkolbokkkkkkkkkkkkkkkkkkkkkosssokkkkkkkkkosssoo..
+.oolbokkkkkkkkkkkolbokkkkkkkkkkkkkkkkkkkkkosssooooooooooosssoo..
+.oolbokkkkkkkkkkkolbokkkkkkkkkkkkkkkkkkkkkosssobbbbbobrbbsssoo..
+.oolbokkkkkkkkkkkolbokkkkkkkkkkkkkkkkkkkkkosssobbbbbbbbbbsssoo..
+.oolbooooooooooooolbokkkkkkkkkkkkkkkkkkkkkosssosssssssssssssoo..
+.oolbbbbbbbbbobrbolbokkkkkkkkklllkkkkkkkkkosssosssssssssssssoo..
+.oolbbbbbbbbbbbbbolbokkkkkkkklkkklkkkkkkkkosssoooooooooooooooo..
+.oossssssssssssssolbokkkkkkkkkkkkkkkkkkkkkosssooooooooooooooo...
+.oossssssssssssssolbokkkkkkkkkkkkkkkkkkkkkosssoo................
+.ooooooooooooooooolbokkkkkkkkkkkkkkkkkkkkkosssoo................
+oooooooooooooooooolbooooooooooooooooooooooosssoo................
+oolllllllllllllllolbbbbbbbbbbbbbbbbbbbobrbbsssoooooooooooooooo..
+oolllllllllllllllolbbbbbbbbbbbbbbbbbbbbbbbbsssooooooooooooooooo.
+oolllllllllllllllossssssssssssssssssssssssssssolllllllllllllloo.
+oolbbbbbbbbbbbbbbossssssssssssssssssssssssssssolllllllllllllloo.
+oolbooooooooooooooooooooooooooooooooooooooooooolllllllllllllloo.
+oolbokkkkkkkkkkkkkkkkkkkkkosssoooolbbbbbbbbbbbbbbbbbbbbbbbsssoo.
+oolbokllkkkkkkkkkkkkkkkkkkosssoooolboooooooooooooooooooooooosoo.
+oolboklkkkkkkkkkkkkkkkkkkkosssoooolbokkkkkkkkkkkoyyyyyyyyyyosoo.
+oolbokkkkkkkkkkkkkkkkkkkkkosssoooolbokllkkkkkkkkoyyyyyyyyyyosoo.
+oolbokkkkkkkkkkkkkkkkkkkkkosssoooolboklkkkkkkkkkoysssssssyyosoo.
+oolbokkkkkkkkkkkkkkkkkkkkkosssoooolbokkkkkkkkkkkoyyyyyyyyyyosoo.
+oolbokkkkkkkkkkkkkkkkkkkooooooooooooooookkkkkkkkoyssssssyyyosoo.
+oolbokkkllkkkkkkkkkkkkkkooffflllllllfffokkkkkkkkoyyyyyyyyyyosoo.
+oolbokkkkkkkkkkkkkkkkkkkoffffllllkklfffokkkkkkkkoyssssyyyyyosoo.
+oolbokkkkkkkkkkkkkkkkkkkoffffllllkklfffokkkkkkkkoyyyyyyyoooosoo.
+oolbokkkkkkkkkkkkkkkkkkkoffffllllkklfffokkkkkkkkoyyyyyyybbbosoo.
+oolbokkkkkkkkkkkkkkkkkkkofffflllllllfffokkkkkkkkoyyyyyyybbbosoo.
+oolbokkkkkkkkkkkkkkkkkkkoffffffffffffffolllkkkkkoooooooooooosoo.
+oolbokkkkkkkkkkkkkkkkkkkoffffffffffffffokkkkkkkkkkkkkkkkkosssoo.
+oolbokkkkkkkkkkkkkkkkkkkoffllllllllllffokkkkkkkkkkkkkkkkkosssoo.
+oolboooooooooooooooooooooffllllllllllffooooooooooooooooooosssoo.
+oolooooobbbbbbbbbbbbbbobofflsssssssllffobbbbbbbbbbbbbobrooooooo.
+oolorrroobbbbbbbbbbbbbbboffllllllllllffobbbbbbbbbbbbbbboorrrooo.
+oosorrrrooooooooooooooosoffllllllllllffossoooooooooooooorrrrooo.
+oosoorrrrrrrrrrrrrrrrroooffllllllllllffoooorrrrrrrrrrrrrrrroooo.
+oooooorrrrrrrrrrrrrrrrrrooooooooooooooooorrrrrrrrrrrrrrrrrooooo.
+oooooooooooooooooooorrrrrooooooooooooooorrrrooooooooooooooooooo.
+.ooooooooooooooooooooorrrooooooooooooooorrrooooooooooooooooooo..
+.....oooooooooooooooooooooo...........ooooooooooooooooooooo.....
+...................oooooooo...........ooooooo...................
+.....................ooooo.............ooooo....................
