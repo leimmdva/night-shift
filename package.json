@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "validate-packs": "node scripts/validate-pack.js",
+    "draw-sprites": "node scripts/sprites/draw/draw-sprites.mjs",
     "build-sprites": "node scripts/sprites/build-sprites.mjs"
   },
   "devDependencies": {

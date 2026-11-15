@@ -10,11 +10,24 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const SRC = join(root, 'scripts/sprites/src')
 const OUT = join(root, 'public/sprites/monsters')
 const SHEET = join(root, 'docs/art/monsters-preview.png')
-const MAX_COLOURS = 8
-const SCALE = 8
-const GAP = 16
-const SHEET_WIDTH = 1200
+const MAX_COLOURS = 16
+const SCALE = 6
+const GAP = 24
+const SHEET_WIDTH = 1500
 const BG = [0x12, 0x14, 0x1c]
+const LABEL = [0x9a, 0xa3, 0xb8]
+const LABEL_SCALE = 2
+
+// Tiny 3x5 pixel font for the preview labels (a-z and '-').
+const FONT = {
+  a: '010101111101101', b: '110101110101110', c: '011100100100011', d: '110101101101110',
+  e: '111100110100111', f: '111100110100100', g: '011100101101011', h: '101101111101101',
+  i: '111010010010111', j: '001001001101010', k: '101101110101101', l: '100100100100111',
+  m: '101111111101101', n: '110101101101101', o: '010101101101010', p: '110101110100100',
+  q: '010101101111011', r: '110101110101101', s: '011100010001110', t: '111010010010010',
+  u: '101101101101111', v: '101101101101010', w: '101101111111101', x: '101101010101101',
+  y: '101101010010010', z: '111001010100111', '-': '000000111000000',
+}
 
 // Monster order for the contact sheet.
 const ORDER = [
@@ -86,20 +99,46 @@ const sprites = names.map(parse)
 mkdirSync(OUT, { recursive: true })
 for (const s of sprites) writeFileSync(join(OUT, `${s.name}.png`), encodePng(s.w, s.h, s.px))
 
-// Contact sheet: shelf layout, 8x nearest-neighbour, on the night colour.
-const placed = []
-let x = GAP, y = GAP, rowH = 0, sheetW = SHEET_WIDTH
-for (const s of sprites) {
-  const w = s.w * SCALE, h = s.h * SCALE
-  if (x + w + GAP > sheetW) { x = GAP; y += rowH + GAP; rowH = 0 }
-  placed.push({ s, x, y })
-  x += w + GAP
-  rowH = Math.max(rowH, h)
+// Contact sheet: shelf layout, 6x nearest-neighbour, on the night colour, bottoms aligned per row,
+// monster name under each sprite.
+const LABEL_H = 5 * LABEL_SCALE
+const labelW = (t) => t.length * 4 * LABEL_SCALE - LABEL_SCALE
+const rows = []
+{
+  let cur = [], curW = GAP
+  for (const s of sprites) {
+    const w = Math.max(s.w * SCALE, labelW(s.name))
+    if (cur.length && curW + w + GAP > SHEET_WIDTH) { rows.push(cur); cur = []; curW = GAP }
+    cur.push({ s, w }); curW += w + GAP
+  }
+  if (cur.length) rows.push(cur)
 }
-const sheetH = y + rowH + GAP
+const placed = []
+let y = GAP
+for (const row of rows) {
+  const rowH = Math.max(...row.map((r) => r.s.h * SCALE))
+  let x = GAP
+  for (const { s, w } of row) {
+    placed.push({ s, x: x + Math.floor((w - s.w * SCALE) / 2), y: y + rowH - s.h * SCALE, lx: x + Math.floor((w - labelW(s.name)) / 2), ly: y + rowH + 8 })
+    x += w + GAP
+  }
+  y += rowH + 8 + LABEL_H + GAP
+}
+const sheetW = SHEET_WIDTH
+const sheetH = y
 const sheet = new Uint8Array(sheetW * sheetH * 4)
 for (let i = 0; i < sheetW * sheetH; i++) sheet.set([...BG, 255], i * 4)
-for (const { s, x: ox, y: oy } of placed) {
+for (const { s, x: ox, y: oy, lx, ly } of placed) {
+  let cx = lx
+  for (const ch of s.name) {
+    const g = FONT[ch]
+    if (g) for (let i = 0; i < 15; i++) if (g[i] === '1') {
+      for (let a = 0; a < LABEL_SCALE; a++) for (let b = 0; b < LABEL_SCALE; b++) {
+        sheet.set([...LABEL, 255], ((ly + Math.floor(i / 3) * LABEL_SCALE + b) * sheetW + cx + (i % 3) * LABEL_SCALE + a) * 4)
+      }
+    }
+    cx += 4 * LABEL_SCALE
+  }
   for (let py = 0; py < s.h * SCALE; py++) for (let pxl = 0; pxl < s.w * SCALE; pxl++) {
     const si = (Math.floor(py / SCALE) * s.w + Math.floor(pxl / SCALE)) * 4
     if (s.px[si + 3] === 0) continue

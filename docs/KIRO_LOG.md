@@ -85,7 +85,14 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
 - Kiro feature: steering, vibe coding
 - How Kiro helped: backfilled the timeline from `git log`; metrics measured by running `npm run build`, `npx vitest --run` and `npm run validate-packs`.
 - Problems and fixes: none.
-- Commit: 396f8fa (hash of the original commit; the amended commit differs, see `git log -1`)
+- Commit: 9e9136d
+
+### 2026-11-15 — Sprites redrawn as detailed 2.5D pixel art
+- What: all 14 sprites redrawn on bigger canvases (48x48 for most monsters) with a 3/4 top-down look: lit top, front and shadowed side planes, outlines, 4-step ramps, floor shadows. Drawing code lives in `scripts/sprites/draw/` (`npm run draw-sprites`); the PNG build limit is now 16 colours; preview regenerated.
+- Kiro feature: vibe coding
+- How Kiro helped: wrote a small shading toolkit (distance-field lighting, 3-face boxes) and the drawings, and judged each sprite from zoomed renders. Several rounds of redrawing by hand-tuned parameters (null-ghost hole, crawler head, golem padlock).
+- Problems and fixes: shading the ghost with its hole made a shadow ring, so the hole is punched after shading. Crawler ring plates and the crawler head are still busy at 1x.
+- Commit: pending
 
 ## Decisions
 
