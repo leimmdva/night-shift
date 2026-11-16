@@ -11,6 +11,8 @@
     "check-submission": "node scripts/check-submission.mjs",
     "draw-sprites": "node scripts/sprites/draw/draw-sprites.mjs",
     "build-sprites": "node scripts/sprites/build-sprites.mjs",
+    "draw-player": "node scripts/sprites/draw/player.mjs",
+    "build-player": "npm run draw-player && node scripts/sprites/build-player.mjs",
     "draw-office": "node scripts/sprites/draw/draw-office.mjs",
     "build-office": "node scripts/sprites/draw/draw-office.mjs && node scripts/sprites/build-office.mjs",
     "draw-ui": "node scripts/sprites/draw/draw-ui.mjs",
