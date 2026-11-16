@@ -35,6 +35,7 @@ export class BootScene extends Phaser.Scene {
     for (const n of officeSpriteNames()) this.load.image(`office/${n}`, `/sprites/office/${n}.png`)
     for (const n of UI_PIECES) this.load.image(`ui/${n}`, `/sprites/ui/${n}.png`)
     for (const n of MONSTER_SPRITES) this.load.image(`monster/${n}`, `/sprites/monsters/${n}.png`)
+    this.load.image('player', '/sprites/player/player.png')
     this.load.json('ui-kit', '/sprites/ui/ui.json')
   }
 

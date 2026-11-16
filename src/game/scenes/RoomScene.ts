@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import { officeMap, type RoomMap } from '../world/officeMap'
 import { lightBand, BAND_STRENGTH } from '../world/lighting'
+import { moveWithCollision, tileCenter } from '../world/collision'
 
 const T = 32
 const WALL_T = 16
@@ -14,9 +15,77 @@ const hash = (x: number, y: number): number => {
 export class RoomScene extends Phaser.Scene {
   map: RoomMap = officeMap
 
+  player!: Phaser.GameObjects.Sprite
+  facing: 'down' | 'up' | 'left' | 'right' = 'down'
+  protected keys!: {
+    up: Phaser.Input.Keyboard.Key[]; down: Phaser.Input.Keyboard.Key[]
+    left: Phaser.Input.Keyboard.Key[]; right: Phaser.Input.Keyboard.Key[]
+  }
+
+  /** Walking speed in px/s (about 2.8 tiles per second). */
+  static readonly SPEED = 90
+  /** Whole-number camera zoom, so every world pixel is drawn as a 2x2 block. */
+  static readonly ZOOM = 2
+
   create(): void {
     this.drawRoom()
-    this.cameras.main.centerOn(this.map.grid.widthPx / 2, this.map.grid.heightPx / 2)
+    this.createPlayer()
+    this.setupCamera()
+  }
+
+  protected createPlayer(): void {
+    const sheet = this.textures.get('player')
+    for (let i = 0; i < 9; i++) sheet.add(i, 0, i * 32, 0, 32, 36)
+    const mk = (key: string, frames: number[]) => this.anims.exists(key) || this.anims.create({
+      key, frames: frames.map((f) => ({ key: 'player', frame: f })), frameRate: 8, repeat: -1,
+    })
+    mk('walk-down', [1, 0, 2, 0]); mk('walk-up', [4, 3, 5, 3]); mk('walk-side', [7, 6, 8, 6])
+    const s = tileCenter(this.map, this.map.entrance.spawn.x, this.map.entrance.spawn.y)
+    this.player = this.add.sprite(s.x, s.y - 8, 'player', 0).setOrigin(0.5, 32 / 36)
+    const kb = this.input.keyboard!
+    const K = Phaser.Input.Keyboard.KeyCodes
+    this.keys = {
+      up: [kb.addKey(K.W), kb.addKey(K.UP)], down: [kb.addKey(K.S), kb.addKey(K.DOWN)],
+      left: [kb.addKey(K.A), kb.addKey(K.LEFT)], right: [kb.addKey(K.D), kb.addKey(K.RIGHT)],
+    }
+  }
+
+  protected setupCamera(): void {
+    const cam = this.cameras.main
+    cam.setZoom(RoomScene.ZOOM)
+    cam.setBounds(0, 0, this.map.grid.widthPx, this.map.grid.heightPx)
+    cam.startFollow(this.player, true, 0.2, 0.2)
+    cam.setRoundPixels(true)
+  }
+
+  /** Reads the movement keys and moves the player. Returns true when the player moved. */
+  protected movePlayer(delta: number): boolean {
+    const down = (ks: Phaser.Input.Keyboard.Key[]) => ks.some((k) => k.isDown)
+    let dx = (down(this.keys.right) ? 1 : 0) - (down(this.keys.left) ? 1 : 0)
+    let dy = (down(this.keys.down) ? 1 : 0) - (down(this.keys.up) ? 1 : 0)
+    const moving = dx !== 0 || dy !== 0
+    if (moving) {
+      const len = Math.hypot(dx, dy)
+      const step = (RoomScene.SPEED * delta) / 1000
+      dx = (dx / len) * step; dy = (dy / len) * step
+      const r = moveWithCollision(this.map, this.player.x, this.player.y, dx, dy)
+      this.player.setPosition(r.x, r.y)
+      if (Math.abs(dx) > Math.abs(dy) + 0.001) this.facing = dx > 0 ? 'right' : 'left'
+      else if (dy !== 0) this.facing = dy > 0 ? 'down' : 'up'
+    }
+    const dir = this.facing === 'left' || this.facing === 'right' ? 'side' : this.facing
+    this.player.setFlipX(this.facing === 'left')
+    if (moving) this.player.anims.play(`walk-${dir}`, true)
+    else {
+      this.player.anims.stop()
+      this.player.setFrame(dir === 'down' ? 0 : dir === 'up' ? 3 : 6)
+    }
+    this.player.setDepth(10 + this.player.y)
+    return moving
+  }
+
+  update(_time: number, delta: number): void {
+    this.movePlayer(delta)
   }
 
   /** Draws floor, walls, props and decals in the same order as scripts/sprites/office-compose.mjs. */

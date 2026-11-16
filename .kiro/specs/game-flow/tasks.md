@@ -15,8 +15,8 @@ Act 1 with Null Ghost on the live site: the player sprite walks the office with 
 ### 1.2 Player and map
 - [x] Load `office.json` and the 66 office pieces in `RoomScene`; draw floor, walls, props, decals. **Check:** `npm run dev`, the office looks like `docs/art/office-preview.png`.
 - [x] Player sprite (gender-neutral junior dev, hoodie, headphones, flashlight, 4 directions, 2-frame walk) in `scripts/sprites/src/player/`, built into `public/sprites/player/`. **Check:** `docs/art/player-preview.png` exists and the sprite matches the monsters' style (owner review).
-- [ ] Movement with arrow keys/WASD, collisions from `walkable` and props with `blocks: true`. **Check:** unit test of the collision function on `office.json`; manually the player cannot walk through the fridge, counter or desk.
-- [ ] Camera follows the player, clamped to the 640 x 448 map. **Check:** at the map edges no area outside the map is visible.
+- [x] Movement with arrow keys/WASD, collisions from `walkable` and props with `blocks: true`. **Check:** unit test of the collision function on `office.json`; manually the player cannot walk through the fridge, counter or desk.
+- [x] Camera follows the player, clamped to the 640 x 448 map. **Check:** at the map edges no area outside the map is visible.
 
 ### 1.3 Hiding
 - [ ] Enter/leave hide spots at `enter` tiles with the interact key; hidden sprite state. **Check:** Playwright: walk to `locker`, press interact, state is `hidden`; press again, state is `walking` on the `enter` tile.
