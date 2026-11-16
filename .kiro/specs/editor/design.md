@@ -22,7 +22,7 @@ LaptopScene.closeLaptop()
 
 ## Key decisions
 
-**No language workers:** `vite-plugin-monaco-editor` is configured with `languageWorkers: []`. This removes the `typescript-language-features` worker (~3MB), keeping the Monaco chunk small and preventing autocomplete from solving puzzles for the player.
+**No language workers:** `src/editor/monacoSetup.ts` imports `monaco-editor/esm/vs/editor/edcore.main` (no bundled language services) and only the JavaScript tokenizer, and sets `MonacoEnvironment.getWorker` to return the plain editor worker. This removes the `typescript-language-features` worker (~3MB), keeping the Monaco chunk small and preventing autocomplete from solving puzzles for the player.
 
 **Background preload:** `preloadMonaco()` is called before Phaser boots. By the time the first monster appears (within 2 min), Monaco is fully loaded. The "Laptop booting…" state is a themed animation, not a loading spinner.
 

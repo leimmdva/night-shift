@@ -5,7 +5,7 @@
 ### Loading
 - WHEN the game boots THE SYSTEM SHALL call `preloadMonaco()` once from `src/main.ts`
 - WHEN Monaco is imported THE SYSTEM SHALL load it as a separate Vite chunk, not bundled with game code
-- WHEN Monaco loads THE SYSTEM SHALL NOT load any TypeScript language worker (`languageWorkers: []`)
+- WHEN Monaco loads THE SYSTEM SHALL NOT load any TypeScript language worker (`edcore.main` plus the JavaScript tokenizer, `MonacoEnvironment.getWorker` returns the editor worker only; no console warnings, no 404s)
 - WHEN `getMonaco()` is called multiple times THE SYSTEM SHALL return the same promise (singleton)
 - WHEN the player opens the laptop before Monaco is ready THE SYSTEM SHALL display "Laptop booting…" in the editor container until the promise resolves
 - WHEN loading on Slow 4G THE SYSTEM SHALL resolve the "Laptop booting…" state within 60 seconds

@@ -14,7 +14,7 @@ let monacoPromise: Promise<typeof Monaco> | null = null
 /** Call once at game start — kicks off the background load. */
 export function preloadMonaco(): void {
   if (monacoPromise) return
-  monacoPromise = import('monaco-editor').then((m) => {
+  monacoPromise = import('./monacoSetup').then(({ default: m }) => {
     // Syntax highlighting only — no language workers
     m.editor.defineTheme('nightshift', {
       base: 'vs-dark',
@@ -26,7 +26,7 @@ export function preloadMonaco(): void {
         'editorLineNumber.foreground': '#484f58',
       },
     })
-    return m
+    return m as unknown as typeof Monaco
   })
 }
 
