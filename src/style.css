@@ -19,3 +19,9 @@ html, body {
 canvas {
   display: block;
 }
+
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('/fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-display: block;
+}

@@ -9,6 +9,8 @@ export function startGame(): void {
     width: 960,
     height: 540,
     backgroundColor: '#0d1117',
+    pixelArt: true,
+    roundPixels: true,
     scene: [BootScene, OfficeScene, LaptopScene],
     physics: {
       default: 'arcade',

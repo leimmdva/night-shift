@@ -13,7 +13,7 @@ Act 1 with Null Ghost on the live site: the player sprite walks the office with 
 - [x] `src/game/flow/spawner.ts`: `pickSpawns` with the 6-tile desk rule and fallback. **Check:** unit test on `office.json` returns only spawns at least 6 tiles from the desk; fast-check property over random player positions.
 
 ### 1.2 Player and map
-- [ ] Load `office.json` and the 66 office pieces in `RoomScene`; draw floor, walls, props, decals. **Check:** `npm run dev`, the office looks like `docs/art/office-preview.png`.
+- [x] Load `office.json` and the 66 office pieces in `RoomScene`; draw floor, walls, props, decals. **Check:** `npm run dev`, the office looks like `docs/art/office-preview.png`.
 - [ ] Player sprite (gender-neutral junior dev, hoodie, headphones, flashlight, 4 directions, 2-frame walk) in `scripts/sprites/src/player/`, built into `public/sprites/player/`. **Check:** `docs/art/player-preview.png` exists and the sprite matches the monsters' style (owner review).
 - [ ] Movement with arrow keys/WASD, collisions from `walkable` and props with `blocks: true`. **Check:** unit test of the collision function on `office.json`; manually the player cannot walk through the fridge, counter or desk.
 - [ ] Camera follows the player, clamped to the 640 x 448 map. **Check:** at the map edges no area outside the map is visible.
