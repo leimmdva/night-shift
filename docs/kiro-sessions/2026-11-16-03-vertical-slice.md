@@ -2,7 +2,7 @@
 
 - Date: 2026-11-16
 - How Kiro was run: Kiro IDE, non-interactive session, on branch `feat/vertical-slice` (not pushed, not merged).
-- Commit(s): see the list in Kiro's summary below and the Timeline entry in `docs/KIRO_LOG.md`.
+- Commit(s): listed under "Resulting commits" below.
 
 ## Prompt given to Kiro
 
@@ -35,7 +35,23 @@ Work in passes and commit often: this session may be cut off, and partial progre
 
 ## Kiro's summary
 
-Session in progress. If this section still says so, the session ended before it could write a summary (time limit or interruption).
+Done on `feat/vertical-slice` (not pushed, not merged), one commit per task group, build and tests green at each commit:
+
+- Pure logic with unit tests: `src/state/runState.ts`, `src/game/flow/queue.ts`, `src/game/flow/spawner.ts` (6-tile desk rule, fast-check property), `src/game/world/{collision,hiding,nav}.ts`, `src/state/checkpoint.ts`.
+- `RoomScene` / `OfficeScene` draw the office from `office.json` (lights-on look), `HudScene` (prompt, vignette, toast, autopsy card) and `LaptopScene` use the UI kit and Press Start 2P.
+- Player sprite: `scripts/sprites/draw/player.mjs`, `build-player.mjs`, preview in `docs/art/player-preview.png`.
+- Null Ghost: `MonsterActor`, `factory.ts`, MonsterAI with path finding and line of sight; two MonsterAI fixes so hidden players are ignored.
+- Monaco: `edcore.main` plus the JavaScript tokenizer and the plain editor worker; the plugin `vite-plugin-monaco-editor` was removed. No console warning, no 404.
+- Spoiler comments removed from packs 01 to 03; `npm run validate-packs` passes.
+- `scripts/e2e-slice.mjs` (npm run e2e-slice) passes on the dev server and on `vite preview` (natural 34 s spawn). Screenshots are in `docs/art/slice/`.
+
+Not done: task 1.6 "verify the Vercel deploy" (needs the owner's push). Everything after the slice (title screen, queue, acts 2 to 3, server room, morning meeting, sound) is untouched.
+
+Not happy with: the player art is a first pass (small headphones, legs hidden by the shoes, side view reads thin); the ghost's SEARCH state hovers 90 to 100 px from the hide spot instead of walking to it; the empty lower part of the laptop panel; the 2x UI text at 1280 x 720 is large; the music and sound cues are placeholders (four Web Audio blips).
+
+## Resulting commits
+
+a63de0b, d0333d2, 42ec51a, d74e5cd, 6ef4731, 9710c56, cc6f7b8, ae5d896, 6a8655f, bdd1621, 438d8e3, plus the docs commits.
 
 ## Owner feedback
 

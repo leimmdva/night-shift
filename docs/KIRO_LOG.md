@@ -189,12 +189,21 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
 - Problems and fixes: the deploy of a22a31e built and went READY in about 13 s. Checked live: index, JS/CSS chunks, a sprite and the font return 200; the Monaco chunks load in the background; the laptop opens and shows profile.js. Two issues on the live site are listed under Open issues.
 - Owner feedback: pending.
 - Session: [2026-11-16-02-vercel-production-url.md](kiro-sessions/2026-11-16-02-vercel-production-url.md)
-- Commit: pending
+- Commit: 0a9658a
+
+### 2026-11-16 — Vertical slice: Act 1 with Null Ghost (branch `feat/vertical-slice`, not pushed)
+- What: milestone 1 of the game-flow tasks. The office is drawn from `office.json` with the approved pieces; a new player sprite (9 frames, built by `scripts/sprites/draw/player.mjs`) walks it with tile and prop collisions and a zoom-2 camera; hide spots with a UI kit prompt and a vignette; Null Ghost spawns by the 6-tile rule and runs MonsterAI; catches follow the checkpoint rule; the laptop (Monaco, worker runner, Sudo hints) opens only while hidden; a fix dissolves the ghost and shows the autopsy card. Also: Monaco now loads without language services (no worker warning, no `/undefined` 404) and the spoiler comments are gone from packs 01 to 03.
+- Kiro feature: spec (tasks ticked one by one), steering, MCP config reviewed (Playwright driven as a script, not through the MCP server), vibe coding
+- How Kiro helped: wrote the pure logic first with unit tests (`runState`, `queue`, `spawner`, collision, hide-spot detection, laptop and catch rules, `checkpoint`; 61 tests in 6 files, two fast-check properties), then the scenes, and drove the whole loop with `scripts/e2e-slice.mjs`. It looked at the screenshots and fixed what they showed (player headphones too tall, "Laptop booting…" text left behind the editor, ghost off-camera in the dissolve shot, a stray `}` from Monaco auto-closing in the first E2E typing attempt).
+- Problems and fixes: MonsterAI sent a hidden player into CHASE and caught it (PATROL ignored hiding, CHASE checked distance before hiding); fixed in `MonsterState.ts`. Phaser key capture would have blocked typing W, A, S, D, E and L in Monaco; the laptop turns global capture off while open. Player art is a first pass and needs owner review. Task 1.6 (live site) is open: the push is the owner's.
+- Owner feedback: pending.
+- Session: [2026-11-16-03-vertical-slice.md](kiro-sessions/2026-11-16-03-vertical-slice.md)
+- Commit: a63de0b, d0333d2, 42ec51a, d74e5cd, 6ef4731, 9710c56, cc6f7b8, ae5d896, 6a8655f, bdd1621, 438d8e3
 
 ## Decisions
 
-- **Monaco in its own chunk, loaded in the background.** The player cannot open the laptop for about 60 seconds, so Monaco has time to load. Phaser and Monaco are separate chunks and load in parallel (`vite.config.ts` plus `vite-plugin-monaco-editor`).
-- **No Monaco language workers.** Autocomplete would solve the puzzle for the player.
+- **Monaco in its own chunk, loaded in the background.** The player cannot open the laptop for about 60 seconds, so Monaco has time to load. Phaser and Monaco are separate chunks and load in parallel (`vite.config.ts` chunks).
+- **No Monaco language workers.** Autocomplete would solve the puzzle for the player. Since the vertical slice this is done with `edcore.main` plus the JavaScript tokenizer and a plain editor worker (`src/editor/monacoSetup.ts`); `vite-plugin-monaco-editor` was removed.
 - **Player code runs in a fresh Web Worker, terminated after 5 s.** Infinite-loop bugs such as Infinite Crawler cannot freeze the page.
 - **Bug packs are data, validated by a hook.** A pack must fail its tests on the broken code and pass them on the solution, so no pack ships unsolvable or already solved.
 - **Monster behaviour mirrors the bug.** Behaviour logic is kept as pure functions in `behaviourUtils.ts` so it can be unit tested without Phaser.
@@ -219,40 +228,41 @@ Measured on 2026-11-15.
 |---|---|
 | Bug packs | 3 of 8 planned (01-null-ghost, 02-off-by-one, 03-infinite-crawler) |
 | Packs passing `npm run validate-packs` | 3 of 3 |
-| Unit tests | 28 (1 file, Vitest, all passing) |
-| Property-based tests | 0 |
-| E2E tests | 0 |
+| Unit tests | 61 (6 files, Vitest, all passing; measured 2026-11-16 on `feat/vertical-slice`) |
+| Property-based tests | 2 (fast-check: spawn rule, collision) |
+| E2E tests | 1 script, `scripts/e2e-slice.mjs` (passes on dev server and on `vite preview`) |
 | Specs | 7 |
 | Hooks | 1 |
 | Steering files | 8 (including `dev-log.md` and `kiroween-rules.md`) |
 | Custom agents | 1 |
 | MCP servers | 2 |
 | Monster sprites | 14 PNG files |
+| Player sprite | 9 frames (32 x 36) in one sheet, `public/sprites/player/player.png` |
 | Office sprites | 66 PNG pieces in `public/sprites/office/` (tiles and props) |
 | UI kit sprites | 63 PNG pieces in `public/sprites/ui/` |
-| Commits | 20 before this one |
+| Commits | 21 on `main`, 12 more on `feat/vertical-slice` before the docs commit |
 
-Bundle sizes from the last `npm run build` (gzip):
+Bundle sizes from the last `npm run build` on `feat/vertical-slice` (gzip):
 
 | Chunk | gzip |
 |---|---|
-| `editor.api` (Monaco core) | 588.26 kB |
+| `monaco` (core, no language services) | 823.86 kB |
 | `phaser` | 318.49 kB |
-| `editor.main` (Monaco) | 244.40 kB |
-| `index` (game code) | 4.57 kB |
-| `index.html` | 0.72 kB |
+| `monaco` CSS | 20.80 kB |
+| `index` (game code) | 16.16 kB |
+| `index.html` | 0.40 kB |
 
-The build also emits many small per-language Monaco chunks (2–11 kB gzip each) and two editor CSS files (about 11 kB gzip each). Vite warns that three chunks exceed 500 kB before gzip. Lighthouse and Slow 4G measurements on the live deploy: TBD.
+The editor worker is a separate 260 kB (raw) file. The per-language Monaco chunks and the TypeScript worker are gone. Vite still warns that two chunks exceed 500 kB before gzip. Lighthouse and Slow 4G measurements on the live deploy: TBD.
 
 ## Open issues / next steps
 
 - Bug packs 04 to 08 are not written (async-phantom, memory-leech, race-twins, deadlock, legacy).
 - Pack storage differs from `structure.md` and `bug-pack.md` (single `index.ts` instead of four files). Update either the docs or the packs.
-- Sprites exist but their use in OfficeScene is unverified: TBD.
-- No property-based tests (fast-check) and no Playwright E2E tests yet.
-- Morning meeting, autopsy card and postmortem UI: implementation status TBD.
+- Monster sprites other than Null Ghost are not used in the game yet. The player sprite is a first pass and waits for owner review (`docs/art/player-preview.png`).
+- The slice E2E has not run against the live URL yet (task 1.6). Run `npm run e2e-slice -- <url>` after the push.
+- Slice assumptions to confirm: the laptop key is L (E leaves a hide spot, so it cannot also open the laptop); hide spots are used from within 1 tile of the `enter` tile; after a catch the player wakes on the `enter` tile of the last hide spot used (or at the entrance); the ghost may be moved away if it stands within 140 px of that tile; E2E uses dev-only helpers (`window.__ns.spawnNow`, `monsterTo`, `teleport`).
+- Autopsy card exists (HudScene). Morning meeting and postmortem UI are not built.
 - The `bug-pack-generator` agent and the two MCP servers have not been exercised in a recorded session. Record the first real use here.
 - Performance targets (FCP under 3 s, interactive under 5 s on Slow 4G) are not measured.
 - At least 3 external playtests, demo video and social post are still open from the submission checklist.
-- Live site: Monaco logs "Could not create web worker(s)" and requests `/undefined` (404). Cause not investigated yet.
-- Live site: the broken code of pack 01 still contains the spoiler comment `// Bug: ...`. Remove it from `broken.js`.
+- Fixed on `feat/vertical-slice`, to be confirmed on the live site after the merge: the Monaco worker warning and `/undefined` 404, and the spoiler comments in the broken code of packs 01 to 03.
