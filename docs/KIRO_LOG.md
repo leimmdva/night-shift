@@ -180,6 +180,15 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
 - Problems and fixes: the real Vercel URL is unknown, so the README link is the placeholder `https://night-shift.vercel.app`. The real deploy is not verified yet.
 - Owner feedback: pending.
 - Session: [2026-11-16-01-move-hosting-to-vercel.md](kiro-sessions/2026-11-16-01-move-hosting-to-vercel.md)
+- Commit: a22a31e
+
+### 2026-11-16 — First Vercel deploy and production URL
+- What: recorded the first Vercel deploy and replaced the placeholder demo URL in the README with `https://night-shift-kiroween.vercel.app`. The placeholder `https://night-shift.vercel.app` belongs to an unrelated site.
+- Kiro feature: steering, vibe coding
+- How Kiro helped: searched the repo for the placeholder (only the README link was a live reference), made the edit, ran the checks and wrote the records. The deploy itself and the live checks were done by the owner.
+- Problems and fixes: the deploy of a22a31e built and went READY in about 13 s. Checked live: index, JS/CSS chunks, a sprite and the font return 200; the Monaco chunks load in the background; the laptop opens and shows profile.js. Two issues on the live site are listed under Open issues.
+- Owner feedback: pending.
+- Session: [2026-11-16-02-vercel-production-url.md](kiro-sessions/2026-11-16-02-vercel-production-url.md)
 - Commit: pending
 
 ## Decisions
@@ -200,6 +209,7 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
   - Look: the monster sprites (53b32f3) and the office map (853d1f8) are approved. The player is a gender-neutral junior developer in a hoodie with headphones and a flashlight. Sudo is an amber-glowing ghost with glasses and a coffee mug, shown only as a portrait on the laptop screen.
   - Sound: ambience and music from CC0 sources only, listed in the README. Short SFX are synthesised with Web Audio, one signature per monster.
 - **Hosting moved from GitHub Pages to Vercel on 2026-11-16.** GitHub Actions runs for the account stopped starting ("The job was not started because your account is locked due to a billing issue"), so the Pages deploy failed from commit 5c3fa5e on and the live site stayed on the 31 October build. Vercel (Hobby plan) is linked to the repo and deploys every push to `main`. Base URL is `/`; no GitHub Actions workflow.
+- **Production URL: https://night-shift-kiroween.vercel.app** (Vercel project "night-shift"). Vercel Authentication covers preview deployments only, so production is public. The GitHub repo About link points to it.
 
 ## Metrics
 
@@ -220,7 +230,7 @@ Measured on 2026-11-15.
 | Monster sprites | 14 PNG files |
 | Office sprites | 66 PNG pieces in `public/sprites/office/` (tiles and props) |
 | UI kit sprites | 63 PNG pieces in `public/sprites/ui/` |
-| Commits | 18 before this one |
+| Commits | 20 before this one |
 
 Bundle sizes from the last `npm run build` (gzip):
 
@@ -244,3 +254,5 @@ The build also emits many small per-language Monaco chunks (2–11 kB gzip each)
 - The `bug-pack-generator` agent and the two MCP servers have not been exercised in a recorded session. Record the first real use here.
 - Performance targets (FCP under 3 s, interactive under 5 s on Slow 4G) are not measured.
 - At least 3 external playtests, demo video and social post are still open from the submission checklist.
+- Live site: Monaco logs "Could not create web worker(s)" and requests `/undefined` (404). Cause not investigated yet.
+- Live site: the broken code of pack 01 still contains the spoiler comment `// Bug: ...`. Remove it from `broken.js`.
