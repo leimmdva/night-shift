@@ -5,7 +5,15 @@ import { moveWithCollision, tileCenter } from '../world/collision'
 import { nearestHideSpot, canOpenLaptop, interactResult, type PlayerMode } from '../world/hiding'
 import type { HideSpot } from '../world/officeMap'
 import type { HudScene } from './HudScene'
-import { lockedCue } from '../../audio/cues'
+import { lockedCue, caughtCue } from '../../audio/cues'
+import type { BugPack } from '../../types/BugPack'
+import { newRun, onSolved, onCaught, type RunState } from '../../state/runState'
+import { save } from '../../state/checkpoint'
+import { nextBug } from '../flow/queue'
+import { pickSpawns, firstSpawnDelay, distanceToDesk } from '../flow/spawner'
+import { createMonster, hasMonster } from '../monsters/factory'
+import type { MonsterActor, Facing } from '../monsters/MonsterActor'
+import { isCatchable } from '../world/hiding'
 
 const T = 32
 const WALL_T = 16
@@ -41,10 +49,33 @@ export class RoomScene extends Phaser.Scene {
   private interactKey!: Phaser.Input.Keyboard.Key
   private laptopKey!: Phaser.Input.Keyboard.Key
 
+  run!: RunState
+  actor: MonsterActor | null = null
+  activePack: BugPack | null = null
+  /** time.now at which the next monster spawns */
+  spawnAt = Infinity
+  spawnInfo: { tx: number; ty: number; deskDistance: number; atMs: number } | null = null
+  protected catching = false
+  protected graceUntil = 0
+  private beam!: Phaser.GameObjects.Graphics
+  private startedAt = 0
+
   create(): void {
     this.drawRoom()
     this.createPlayer()
     this.setupCamera()
+    this.run = newRun({ room: 'office', x: this.map.entrance.spawn.x, y: this.map.entrance.spawn.y })
+    this.startedAt = this.time.now
+    this.spawnAt = this.time.now + firstSpawnDelay()
+    this.beam = this.add.graphics().setDepth(190_000)
+    this.game.events.on('laptop:closed', this.onLaptopClosed, this)
+    this.game.events.on('laptop:solved', this.onLaptopSolved, this)
+    this.game.events.on('laptop:hint', this.onLaptopHint, this)
+    this.events.once('shutdown', () => {
+      this.game.events.off('laptop:closed', this.onLaptopClosed, this)
+      this.game.events.off('laptop:solved', this.onLaptopSolved, this)
+      this.game.events.off('laptop:hint', this.onLaptopHint, this)
+    })
     this.scene.launch('HudScene')
     this.hud = this.scene.get('HudScene') as HudScene
     const kb = this.input.keyboard!
@@ -64,16 +95,26 @@ export class RoomScene extends Phaser.Scene {
       facing: this.facing,
       player: { x: this.player.x, y: this.player.y, tx: Math.floor(this.player.x / t), ty: Math.floor((this.player.y - 4) / t) },
       prompt: this.promptText(),
+      deaths: this.run.deaths,
+      solved: this.run.solved,
+      hintLevels: this.run.hintLevels,
+      spawnInDueMs: Math.round(this.spawnAt - this.time.now),
+      spawnInfo: this.spawnInfo,
+      catching: this.catching,
+      autopsyOpen: this.hud?.cardOpen ?? false,
+      monster: this.actor && !this.actor.gone
+        ? { x: this.actor.x, y: this.actor.y, state: this.actor.state, alpha: this.actor.sprite.alpha, dissolving: this.actor.dissolving, dist: Math.hypot(this.actor.x - this.player.x, this.actor.y - this.player.y) }
+        : null,
     }
   }
 
   /** Overridden by rooms that have monsters: is there an active bug to fix? */
   protected hasActiveBug(): boolean {
-    return false
+    return !!this.actor && !this.actor.dissolving && !this.actor.gone
   }
 
   protected onInteract(): void {
-    if (this.hud?.cardOpen) return
+    if (this.hud?.cardOpen || performance.now() - this.hud.lastClosedAt < 250 || this.catching) return
     const near = nearestHideSpot(this.map, this.player.x, this.player.y)
     const action = interactResult(this.mode, this.laptopOpen, near)
     if (action === 'hide' && near) this.enterHide(near)
@@ -89,7 +130,103 @@ export class RoomScene extends Phaser.Scene {
     this.openLaptop()
   }
 
-  protected openLaptop(): void {}
+  protected openLaptop(): void {
+    const pack = this.activePack
+    if (!pack) return
+    this.laptopOpen = true
+    this.hud.setPrompt(null)
+    this.scene.launch('LaptopScene', { pack, hintLevel: this.run.hintLevels[pack.id] ?? 0 })
+  }
+
+  private onLaptopClosed(): void {
+    this.laptopOpen = false
+  }
+
+  private onLaptopHint(level: number): void {
+    const pack = this.activePack
+    if (!pack) return
+    const cur = this.run.hintLevels[pack.id] ?? 0
+    if (level > cur) this.run = { ...this.run, hintLevels: { ...this.run.hintLevels, [pack.id]: Math.min(3, level) as 1 | 2 | 3 } }
+  }
+
+  /** All tests passed in the laptop: save, dissolve the monster, show the autopsy card. */
+  private onLaptopSolved(): void {
+    const pack = this.activePack
+    if (!pack || !this.actor) return
+    const spot = this.hideSpot ?? this.lastHideSpot
+    this.run = onSolved(this.run, pack.id, spot ? { room: 'office', x: spot.enter.x, y: spot.enter.y } : undefined)
+    save(this.run)
+    this.laptopOpen = false
+    const actor = this.actor
+    this.activePack = null
+    this.spawnAt = Infinity
+    actor.dissolve(1500, () => {
+      this.actor = null
+      this.hud.showAutopsy(pack, () => {})
+    })
+  }
+
+  // ── monsters ──────────────────────────────────────────────────────────────
+  spawnMonster(pack: BugPack): void {
+    const tile = pickSpawns(this.map, { x: Math.floor(this.player.x / 32), y: Math.floor((this.player.y - 4) / 32) }, 1)[0]
+    const c = tileCenter(this.map, tile.x, tile.y)
+    const actor = createMonster(this, this.map, pack, c, this.player, () => this.catchPlayer())
+    if (!actor) return
+    this.actor = actor
+    this.activePack = pack
+    this.spawnInfo = { tx: tile.x, ty: tile.y, deskDistance: distanceToDesk(this.map, tile), atMs: Math.round(this.time.now - this.startedAt) }
+  }
+
+  /** The monster touched the player (AI catch or contact check). Hidden players are never caught. */
+  protected catchPlayer(): void {
+    if (this.catching || !isCatchable(this.mode) || this.time.now < this.graceUntil || !this.actor || !this.activePack) return
+    this.catching = true
+    caughtCue()
+    const pack = this.activePack
+    const actor = this.actor
+    const cam = this.cameras.main
+    cam.flash(200, 255, 255, 255)
+    this.player.anims.stop()
+    actor.ai.defeated = true // freeze: monsters hold still while the screen goes white and black
+    actor.sprite.body && (actor.sprite.body as Phaser.Physics.Arcade.Body).setVelocity(0)
+    this.time.delayedCall(700, () => cam.fadeOut(500, 0, 0, 0))
+    cam.once('camerafadeoutcomplete', () => {
+      this.run = onCaught(this.run, pack.id)
+      save(this.run)
+      const spot = this.lastHideSpot
+      const wake = spot ? tileCenter(this.map, spot.enter.x, spot.enter.y) : tileCenter(this.map, this.map.entrance.spawn.x, this.map.entrance.spawn.y)
+      this.player.setPosition(wake.x, wake.y - (spot ? 0 : 8))
+      // never wake up inside the monster: it resumes from where it was unless that is right on top of the player
+      if (actor.gone === false && Math.hypot(actor.x - wake.x, actor.y - wake.y) < 140) {
+        const t = pickSpawns(this.map, { x: Math.floor(wake.x / 32), y: Math.floor((wake.y - 4) / 32) }, 1)[0]
+        const c = tileCenter(this.map, t.x, t.y)
+        actor.sprite.setPosition(c.x, c.y)
+      }
+      actor.ai.defeated = false
+      actor.ai.transitionTo('PATROL')
+      this.graceUntil = this.time.now + 2500
+      cam.fadeIn(500, 0, 0, 0)
+      this.catching = false
+      this.hud.toast('Sudo: "You know where to find the fix."', 3200)
+    })
+  }
+
+  private drawBeam(): void {
+    const g = this.beam
+    g.clear()
+    if (this.mode !== 'walking' || this.catching) return
+    const ang = { right: 0, down: Math.PI / 2, left: Math.PI, up: -Math.PI / 2 }[this.facing]
+    const px = this.player.x, py = this.player.y - 12
+    const R = 120, half = 0.62
+    g.fillStyle(0xfff2b0, 0.12)
+    g.beginPath()
+    g.moveTo(px, py)
+    for (let i = 0; i <= 8; i++) {
+      const a = ang - half + (2 * half * i) / 8
+      g.lineTo(px + Math.cos(a) * R, py + Math.sin(a) * R)
+    }
+    g.closePath().fillPath()
+  }
 
   enterHide(spot: HideSpot): void {
     this.mode = 'hidden'
@@ -171,9 +308,24 @@ export class RoomScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number): void {
-    if (this.mode === 'walking' && !this.hud?.cardOpen) this.movePlayer(delta)
+    if (!this.hud) return
+    const frozen = this.catching
+    if (this.mode === 'walking' && !this.hud.cardOpen && !frozen) this.movePlayer(delta)
     else this.player.anims.stop()
-    this.hud?.setPrompt(this.promptText())
+    ;(this.player as unknown as { isHiding: boolean }).isHiding = this.mode === 'hidden'
+
+    // spawn the next monster of the queue when its time has come
+    if (!this.actor && !this.hud.cardOpen) {
+      const next = nextBug(this.run.solved, this.run.cut)
+      if (next && hasMonster(next) && this.time.now >= this.spawnAt) this.spawnMonster(next)
+    }
+    if (this.actor) {
+      this.actor.update(delta, this.player, this.facing as Facing, this.mode === 'hidden')
+      // contact catch, independent of the AI state
+      if (this.hasActiveBug() && Math.hypot(this.actor.x - this.player.x, this.actor.y - this.player.y) < 20) this.catchPlayer()
+    }
+    this.drawBeam()
+    this.hud.setPrompt(this.promptText())
   }
 
   /** Draws floor, walls, props and decals in the same order as scripts/sprites/office-compose.mjs. */

@@ -14,6 +14,8 @@ export class HudScene extends Phaser.Scene {
   private card?: Phaser.GameObjects.Container
   private cardOnClose?: () => void
   cardOpen = false
+  /** performance.now() of the last card close; the room ignores E for a moment after it. */
+  lastClosedAt = -1000
 
   constructor() {
     super({ key: 'HudScene' })
@@ -112,6 +114,7 @@ export class HudScene extends Phaser.Scene {
     this.card.destroy()
     this.card = undefined
     this.cardOpen = false
+    this.lastClosedAt = performance.now()
     const cb = this.cardOnClose
     this.cardOnClose = undefined
     if (callback) cb?.()

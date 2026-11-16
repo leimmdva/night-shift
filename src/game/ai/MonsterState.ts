@@ -45,6 +45,7 @@ export class PatrolState implements BaseState {
 
   update(_delta: number): void {
     if (
+      !this.ctx.playerIsHiding() &&
       this.ctx.distanceToPlayer() < this.detectionRadius &&
       this.ctx.canSeePlayer()
     ) {
@@ -108,13 +109,14 @@ export class ChaseState implements BaseState {
   enter(): void {}
 
   update(_delta: number): void {
-    if (this.ctx.distanceToPlayer() < 24) {
-      this.ctx.emit('player-caught')
+    // A hidden player cannot be caught: check hiding before the catch distance.
+    if (this.ctx.playerIsHiding()) {
+      this.ctx.transition('SEARCH')
       return
     }
 
-    if (this.ctx.playerIsHiding()) {
-      this.ctx.transition('SEARCH')
+    if (this.ctx.distanceToPlayer() < 24) {
+      this.ctx.emit('player-caught')
       return
     }
 

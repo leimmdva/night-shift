@@ -23,10 +23,10 @@ Act 1 with Null Ghost on the live site: the player sprite walks the office with 
 - [x] Hint on screen when the player is next to a hide spot. **Check:** the hint shows only within 1 tile of an `enter` tile.
 
 ### 1.4 Null Ghost
-- [ ] Spawn Null Ghost after 20 to 120 s of control, using `pickSpawns`. **Check:** Playwright reads the spawn position and asserts distance to desk ≥ 6 tiles and time ≤ 120 s.
-- [ ] Wire `MonsterAI` with the Null Ghost behaviour; ghost patrols, alerts, chases, searches. **Check:** Playwright reads the ghost state over time and sees PATROL and at least one other state when the player walks into view.
-- [ ] Catch: when `mode === 'walking'` and within catch radius emit `player-caught`; run the checkpoint catch sequence. **Check:** Playwright lets the ghost catch the player; the screen flashes, position resets, death count is 1, the monster is still alive.
-- [ ] A hidden player is never caught. **Check:** unit test of the catchable rule; manual: hide, let the ghost reach the spot, no catch.
+- [x] Spawn Null Ghost after 20 to 120 s of control, using `pickSpawns`. **Check:** Playwright reads the spawn position and asserts distance to desk ≥ 6 tiles and time ≤ 120 s.
+- [x] Wire `MonsterAI` with the Null Ghost behaviour; ghost patrols, alerts, chases, searches. **Check:** Playwright reads the ghost state over time and sees PATROL and at least one other state when the player walks into view.
+- [x] Catch: when `mode === 'walking'` and within catch radius emit `player-caught`; run the checkpoint catch sequence. **Check:** Playwright lets the ghost catch the player; the screen flashes, position resets, death count is 1, the monster is still alive.
+- [x] A hidden player is never caught. **Check:** unit test of the catchable rule; manual: hide, let the ghost reach the spot, no catch.
 
 ### 1.5 Laptop and fix
 - [ ] Laptop key opens `LaptopScene` only when hidden and a monster is active; otherwise a locked cue. **Check:** Playwright: laptop key while walking does nothing; while hidden the editor appears.
