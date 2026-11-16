@@ -45,6 +45,7 @@ export async function mountEditor(
   initialCode: string
 ): Promise<Monaco.editor.IStandaloneCodeEditor> {
   const monaco = await getMonaco()
+  container.replaceChildren() // remove the "Laptop booting…" placeholder
 
   const editor = monaco.editor.create(container, {
     value: initialCode,

@@ -29,11 +29,11 @@ Act 1 with Null Ghost on the live site: the player sprite walks the office with 
 - [x] A hidden player is never caught. **Check:** unit test of the catchable rule; manual: hide, let the ghost reach the spot, no catch.
 
 ### 1.5 Laptop and fix
-- [ ] Laptop key opens `LaptopScene` only when hidden and a monster is active; otherwise a locked cue. **Check:** Playwright: laptop key while walking does nothing; while hidden the editor appears.
-- [ ] The room scene keeps updating while the laptop is open. **Check:** Playwright with the laptop open: the ghost's position changes between two samples.
-- [ ] Monaco shows `01-null-ghost` `brokenCode`; Run Tests uses the worker. **Check:** unchanged code shows failing tests; pasting `solutionCode` shows all passing.
-- [ ] On pass: emit `bug-solved`, close the laptop, dissolve the ghost over 1.5 s, save to `night-shift-save`. **Check:** Playwright: after the fix the ghost is gone and `localStorage['night-shift-save']` lists `null-ghost`.
-- [ ] Autopsy card (UI kit dialog panel) with the three pack texts. **Check:** the card shows `what`, `impact`, `fix` from `src/bugs/01-null-ghost/index.ts`; each under 20 words.
+- [x] Laptop key opens `LaptopScene` only when hidden and a monster is active; otherwise a locked cue. **Check:** Playwright: laptop key while walking does nothing; while hidden the editor appears.
+- [x] The room scene keeps updating while the laptop is open. **Check:** Playwright with the laptop open: the ghost's position changes between two samples.
+- [x] Monaco shows `01-null-ghost` `brokenCode`; Run Tests uses the worker. **Check:** unchanged code shows failing tests; pasting `solutionCode` shows all passing.
+- [x] On pass: emit `bug-solved`, close the laptop, dissolve the ghost over 1.5 s, save to `night-shift-save`. **Check:** Playwright: after the fix the ghost is gone and `localStorage['night-shift-save']` lists `null-ghost`.
+- [x] Autopsy card (UI kit dialog panel) with the three pack texts. **Check:** the card shows `what`, `impact`, `fix` from `src/bugs/01-null-ghost/index.ts`; each under 20 words.
 
 ### 1.6 Live site
 - [ ] `npm run build`, push is done by the owner; verify the Vercel deploy. **Check:** Playwright E2E for the slice path runs against the live URL and passes; Monaco is ready before the ghost spawns.
