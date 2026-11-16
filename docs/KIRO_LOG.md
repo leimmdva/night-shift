@@ -4,6 +4,15 @@ Night Shift is a browser-based 2D horror game built for Kiroween 2026. Monsters 
 
 This file records how Kiro was used to build it. Entries are dated and tied to commits. Entries 2026-10-31 to 2026-11-05 were backfilled on 2026-11-15 from `git log`; details that were not recorded at the time are marked "TBD". From 2026-11-15 on, each session also has a file in [kiro-sessions/](kiro-sessions/) with the prompt, summary, commits and owner feedback. Earlier sessions: [kiro-sessions/before-2026-11-15-not-recorded.md](kiro-sessions/before-2026-11-15-not-recorded.md).
 
+### 2026-11-16 — Player sprite redraw: hooded junior dev (branch `feat/vertical-slice`, not pushed)
+- What: redrew all 9 player frames after the owner rejected the first pass (no hood, huge yellow headphones, shoes covering the legs, flashlight without light, quality far below the monsters). Same sheet layout, so `RoomScene` is unchanged. Teal hoodie with hood, kangaroo pocket, drawstrings and cuffs; thin dark-grey headphones with an amber accent; jeans and small sneakers; flashlight with a lit amber lens; expressive face; alternating leg steps, arm swing and bob.
+- Kiro feature: vibe coding
+- How Kiro helped: rewrote `scripts/sprites/draw/player.mjs` with the monsters' volume shader, built the sheet and preview, compared the preview with `monsters-preview.png`, fixed two rounds (legs were hidden by a long torso; the side-view hair and headband were too heavy) and took the in-game shot `docs/art/slice/07-player.png`.
+- Problems and fixes: the colour limit of 16 per frame was raised to 40 for the player (one ramp per material). The flashlight, the side-view hood bump and the pocket are still coarse at 32 x 36.
+- Owner feedback: the first pass was rejected (reasons above); feedback on this redraw: pending.
+- Session: [2026-11-16-04-player-redraw.md](kiro-sessions/2026-11-16-04-player-redraw.md)
+- Commit: pending
+
 ## Kiro features in this repo
 
 | Feature | Path | What it does | Concrete example of its effect |
@@ -258,7 +267,7 @@ The editor worker is a separate 260 kB (raw) file. The per-language Monaco chunk
 
 - Bug packs 04 to 08 are not written (async-phantom, memory-leech, race-twins, deadlock, legacy).
 - Pack storage differs from `structure.md` and `bug-pack.md` (single `index.ts` instead of four files). Update either the docs or the packs.
-- Monster sprites other than Null Ghost are not used in the game yet. The player sprite is a first pass and waits for owner review (`docs/art/player-preview.png`).
+- Monster sprites other than Null Ghost are not used in the game yet. The player sprite was redrawn after owner feedback and waits for review (`docs/art/player-preview.png`).
 - The slice E2E has not run against the live URL yet (task 1.6). Run `npm run e2e-slice -- <url>` after the push.
 - Slice assumptions to confirm: the laptop key is L (E leaves a hide spot, so it cannot also open the laptop); hide spots are used from within 1 tile of the `enter` tile; after a catch the player wakes on the `enter` tile of the last hide spot used (or at the entrance); the ghost may be moved away if it stands within 140 px of that tile; E2E uses dev-only helpers (`window.__ns.spawnNow`, `monsterTo`, `teleport`).
 - Autopsy card exists (HudScene). Morning meeting and postmortem UI are not built.
