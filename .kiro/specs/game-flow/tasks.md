@@ -37,7 +37,7 @@ Act 1 with Null Ghost on the live site: the player sprite walks the office with 
 
 ### 1.6 Live site
 - [ ] `npm run build`, push is done by the owner; verify the Vercel deploy. **Check:** Playwright E2E for the slice path runs against the live URL and passes; Monaco is ready before the ghost spawns.
-- [ ] Record slice results in `docs/KIRO_LOG.md`. **Check:** entry has a commit hash.
+- [x] Record slice results in `docs/KIRO_LOG.md`. **Check:** entry has a commit hash.
 
 ## Milestone 2 — Act 1 complete (Off-by-One)
 - [ ] Title screen with Continue / New Game / Settings / Quit from the UI kit. **Check:** Playwright reaches the office from "New Game".
