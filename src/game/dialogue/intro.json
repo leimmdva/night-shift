@@ -1,0 +1,15 @@
+{
+  "id": "intro",
+  "note": "First draft. Not wired into the game yet. Portraits live in public/sprites/portraits (boss, boss-stern, player, player-worried). 'after' lists stage cues that run once the line has been read.",
+  "lines": [
+    { "speaker": "BOSS", "expression": "neutral", "text": "Good, you're still here. The release is at 8:30 tomorrow." },
+    { "speaker": "YOU", "expression": "neutral", "text": "Tomorrow morning? What is left on the list?" },
+    { "speaker": "BOSS", "expression": "neutral", "text": "Eight open bugs. Small ones. Mostly." },
+    { "speaker": "YOU", "expression": "worried", "text": "Wait... all eight? Tonight?" },
+    { "speaker": "BOSS", "expression": "stern", "text": "I'm sure you'll be fine. The building gets noisy after midnight. Old wiring." },
+    { "speaker": "YOU", "expression": "worried", "text": "Noisy how?" },
+    { "speaker": "BOSS", "expression": "neutral", "text": "The coffee is fresh. Whatever you hear, finish the fix first." },
+    { "speaker": "YOU", "expression": "neutral", "text": "Whatever I hear. Right." },
+    { "speaker": "BOSS", "expression": "stern", "text": "Goodnight. The lights run on a timer.", "after": ["boss-leaves", "lights-off"] }
+  ]
+}
