@@ -40,7 +40,6 @@ const pack: BugPack = {
   },
 
   brokenCode: `// profile.js
-// Bug: address can be null, but city is read directly from it.
 
 function getUserCity(user) {
   return user.address.city

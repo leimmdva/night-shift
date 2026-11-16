@@ -8,36 +8,36 @@ Order is fixed: finish a milestone before starting the next.
 Act 1 with Null Ghost on the live site: the player sprite walks the office with collisions from office.json, the camera follows, the player can enter/leave hide spots, Null Ghost spawns and uses MonsterAI, the laptop opens only when hidden, pack 01 (profile.js) can be fixed in Monaco, tests pass, the ghost dissolves, the autopsy card shows.
 
 ### 1.1 Pure flow logic
-- [ ] `src/state/runState.ts`: `RunState`, `onSolved`, `onCaught`, `actOf`. **Check:** Vitest unit tests cover each function; `npx vitest run` passes.
-- [ ] `src/game/flow/queue.ts`: `nextBug` over the packs that exist. **Check:** unit test: with nothing solved returns pack 01; with 01 solved returns 02; with all solved returns `null`.
-- [ ] `src/game/flow/spawner.ts`: `pickSpawns` with the 6-tile desk rule and fallback. **Check:** unit test on `office.json` returns only spawns at least 6 tiles from the desk; fast-check property over random player positions.
+- [x] `src/state/runState.ts`: `RunState`, `onSolved`, `onCaught`, `actOf`. **Check:** Vitest unit tests cover each function; `npx vitest run` passes.
+- [x] `src/game/flow/queue.ts`: `nextBug` over the packs that exist. **Check:** unit test: with nothing solved returns pack 01; with 01 solved returns 02; with all solved returns `null`.
+- [x] `src/game/flow/spawner.ts`: `pickSpawns` with the 6-tile desk rule and fallback. **Check:** unit test on `office.json` returns only spawns at least 6 tiles from the desk; fast-check property over random player positions.
 
 ### 1.2 Player and map
-- [ ] Load `office.json` and the 66 office pieces in `RoomScene`; draw floor, walls, props, decals. **Check:** `npm run dev`, the office looks like `docs/art/office-preview.png`.
-- [ ] Player sprite (gender-neutral junior dev, hoodie, headphones, flashlight, 4 directions, 2-frame walk) in `scripts/sprites/src/player/`, built into `public/sprites/player/`. **Check:** `docs/art/player-preview.png` exists and the sprite matches the monsters' style (owner review).
-- [ ] Movement with arrow keys/WASD, collisions from `walkable` and props with `blocks: true`. **Check:** unit test of the collision function on `office.json`; manually the player cannot walk through the fridge, counter or desk.
-- [ ] Camera follows the player, clamped to the 640 x 448 map. **Check:** at the map edges no area outside the map is visible.
+- [x] Load `office.json` and the 66 office pieces in `RoomScene`; draw floor, walls, props, decals. **Check:** `npm run dev`, the office looks like `docs/art/office-preview.png`.
+- [x] Player sprite (gender-neutral junior dev, hoodie, headphones, flashlight, 4 directions, 2-frame walk) in `scripts/sprites/src/player/`, built into `public/sprites/player/`. **Check:** `docs/art/player-preview.png` exists and the sprite matches the monsters' style (owner review).
+- [x] Movement with arrow keys/WASD, collisions from `walkable` and props with `blocks: true`. **Check:** unit test of the collision function on `office.json`; manually the player cannot walk through the fridge, counter or desk.
+- [x] Camera follows the player, clamped to the 640 x 448 map. **Check:** at the map edges no area outside the map is visible.
 
 ### 1.3 Hiding
-- [ ] Enter/leave hide spots at `enter` tiles with the interact key; hidden sprite state. **Check:** Playwright: walk to `locker`, press interact, state is `hidden`; press again, state is `walking` on the `enter` tile.
-- [ ] Hint on screen when the player is next to a hide spot. **Check:** the hint shows only within 1 tile of an `enter` tile.
+- [x] Enter/leave hide spots at `enter` tiles with the interact key; hidden sprite state. **Check:** Playwright: walk to `locker`, press interact, state is `hidden`; press again, state is `walking` on the `enter` tile.
+- [x] Hint on screen when the player is next to a hide spot. **Check:** the hint shows only within 1 tile of an `enter` tile.
 
 ### 1.4 Null Ghost
-- [ ] Spawn Null Ghost after 20 to 120 s of control, using `pickSpawns`. **Check:** Playwright reads the spawn position and asserts distance to desk ≥ 6 tiles and time ≤ 120 s.
-- [ ] Wire `MonsterAI` with the Null Ghost behaviour; ghost patrols, alerts, chases, searches. **Check:** Playwright reads the ghost state over time and sees PATROL and at least one other state when the player walks into view.
-- [ ] Catch: when `mode === 'walking'` and within catch radius emit `player-caught`; run the checkpoint catch sequence. **Check:** Playwright lets the ghost catch the player; the screen flashes, position resets, death count is 1, the monster is still alive.
-- [ ] A hidden player is never caught. **Check:** unit test of the catchable rule; manual: hide, let the ghost reach the spot, no catch.
+- [x] Spawn Null Ghost after 20 to 120 s of control, using `pickSpawns`. **Check:** Playwright reads the spawn position and asserts distance to desk ≥ 6 tiles and time ≤ 120 s.
+- [x] Wire `MonsterAI` with the Null Ghost behaviour; ghost patrols, alerts, chases, searches. **Check:** Playwright reads the ghost state over time and sees PATROL and at least one other state when the player walks into view.
+- [x] Catch: when `mode === 'walking'` and within catch radius emit `player-caught`; run the checkpoint catch sequence. **Check:** Playwright lets the ghost catch the player; the screen flashes, position resets, death count is 1, the monster is still alive.
+- [x] A hidden player is never caught. **Check:** unit test of the catchable rule; manual: hide, let the ghost reach the spot, no catch.
 
 ### 1.5 Laptop and fix
-- [ ] Laptop key opens `LaptopScene` only when hidden and a monster is active; otherwise a locked cue. **Check:** Playwright: laptop key while walking does nothing; while hidden the editor appears.
-- [ ] The room scene keeps updating while the laptop is open. **Check:** Playwright with the laptop open: the ghost's position changes between two samples.
-- [ ] Monaco shows `01-null-ghost` `brokenCode`; Run Tests uses the worker. **Check:** unchanged code shows failing tests; pasting `solutionCode` shows all passing.
-- [ ] On pass: emit `bug-solved`, close the laptop, dissolve the ghost over 1.5 s, save to `night-shift-save`. **Check:** Playwright: after the fix the ghost is gone and `localStorage['night-shift-save']` lists `null-ghost`.
-- [ ] Autopsy card (UI kit dialog panel) with the three pack texts. **Check:** the card shows `what`, `impact`, `fix` from `src/bugs/01-null-ghost/index.ts`; each under 20 words.
+- [x] Laptop key opens `LaptopScene` only when hidden and a monster is active; otherwise a locked cue. **Check:** Playwright: laptop key while walking does nothing; while hidden the editor appears.
+- [x] The room scene keeps updating while the laptop is open. **Check:** Playwright with the laptop open: the ghost's position changes between two samples.
+- [x] Monaco shows `01-null-ghost` `brokenCode`; Run Tests uses the worker. **Check:** unchanged code shows failing tests; pasting `solutionCode` shows all passing.
+- [x] On pass: emit `bug-solved`, close the laptop, dissolve the ghost over 1.5 s, save to `night-shift-save`. **Check:** Playwright: after the fix the ghost is gone and `localStorage['night-shift-save']` lists `null-ghost`.
+- [x] Autopsy card (UI kit dialog panel) with the three pack texts. **Check:** the card shows `what`, `impact`, `fix` from `src/bugs/01-null-ghost/index.ts`; each under 20 words.
 
 ### 1.6 Live site
 - [ ] `npm run build`, push is done by the owner; verify the Vercel deploy. **Check:** Playwright E2E for the slice path runs against the live URL and passes; Monaco is ready before the ghost spawns.
-- [ ] Record slice results in `docs/KIRO_LOG.md`. **Check:** entry has a commit hash.
+- [x] Record slice results in `docs/KIRO_LOG.md`. **Check:** entry has a commit hash.
 
 ## Milestone 2 — Act 1 complete (Off-by-One)
 - [ ] Title screen with Continue / New Game / Settings / Quit from the UI kit. **Check:** Playwright reaches the office from "New Game".

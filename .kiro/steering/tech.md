@@ -20,7 +20,7 @@
 2. The player cannot open the laptop until the first monster appears (within the first 2 minutes) and the player is inside a hide spot.
 3. If Monaco is still loading when the player presses E, a "Laptop booting…" animation plays.
    This animation is part of the game world, not a loading spinner.
-4. **No language workers.** `languageWorkers: []` in vite-plugin-monaco-editor config.
+4. **No language workers.** `src/editor/monacoSetup.ts` imports `edcore.main` (editor core without language services) plus the JavaScript tokenizer, and sets `MonacoEnvironment.getWorker` to the plain editor worker. No TypeScript worker is built or loaded.
    - Autocomplete is disabled. This is intentional: autocomplete would solve the puzzle for the player.
    - Syntax highlighting is kept.
    - Bundle size is significantly smaller without `typescript-language-features` worker.

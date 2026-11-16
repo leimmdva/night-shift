@@ -13,6 +13,10 @@ export interface MonsterAIConfig {
   chaseSpeed?: number
   onCatch?: () => void
   walls?: Phaser.Physics.Arcade.StaticGroup
+  /** Next point to walk to when going from `from` to `to` (path around furniture); null = no path. */
+  navigate?: (from: { x: number; y: number }, to: { x: number; y: number }) => { x: number; y: number } | null
+  /** Line-of-sight test on the room's tile grid; replaces the wall-group check when given. */
+  lineOfSight?: (a: { x: number; y: number }, b: { x: number; y: number }) => boolean
 }
 
 type WithBody = { body: Phaser.Physics.Arcade.Body }
@@ -91,7 +95,8 @@ export class MonsterAI {
       moveTo(x: number, y: number, speed: number): void {
         const body = (self.monster as unknown as WithBody).body
         if (!body) return
-        const angle = Math.atan2(y - self.monster.y, x - self.monster.x)
+        const next = self.config.navigate?.({ x: self.monster.x, y: self.monster.y }, { x, y }) ?? { x, y }
+        const angle = Math.atan2(next.y - self.monster.y, next.x - self.monster.x)
         body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed)
       },
       stop(): void {
@@ -108,6 +113,9 @@ export class MonsterAI {
         return Math.hypot(self.player.x - self.monster.x, self.player.y - self.monster.y)
       },
       canSeePlayer(): boolean {
+        if (self.config.lineOfSight) {
+          return self.config.lineOfSight({ x: self.monster.x, y: self.monster.y }, { x: self.player.x, y: self.player.y })
+        }
         if (!self.config.walls) return true
         const steps = 12
         for (let i = 1; i < steps; i++) {

@@ -64,8 +64,8 @@ export function runCode(
 
       const { passed, results, error } = e.data
       const output = results
-        ? results.map((r: { name: string; ok: boolean }) =>
-            `${r.ok ? '✓' : '✗'} ${r.name}`
+        ? results.map((r: { name: string; ok: boolean; error?: string }) =>
+            `${r.ok ? '✓' : '✗'} ${r.name}${!r.ok && r.error ? `\n    ${r.error}` : ''}`
           ).join('\n')
         : ''
 
