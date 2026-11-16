@@ -46,7 +46,6 @@ const pack: BugPack = {
   },
 
   brokenCode: `// retry.js
-// Bug: attempts is never incremented — loop never exits.
 
 function retry(fn, maxAttempts) {
   let attempts = 0
@@ -56,7 +55,6 @@ function retry(fn, maxAttempts) {
       return fn()
     } catch (e) {
       lastError = e
-      // attempts is never incremented here
     }
   }
   throw lastError

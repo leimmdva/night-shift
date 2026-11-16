@@ -46,7 +46,6 @@ const pack: BugPack = {
   },
 
   brokenCode: `// pagination.js
-// Bug: loop boundary is off by one — includes one extra item per page.
 
 function getPage(items, page, pageSize) {
   const start = page * pageSize
