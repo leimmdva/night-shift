@@ -8,7 +8,7 @@ Order is fixed: finish a milestone before starting the next.
 Act 1 with Null Ghost on the live site: the player sprite walks the office with collisions from office.json, the camera follows, the player can enter/leave hide spots, Null Ghost spawns and uses MonsterAI, the laptop opens only when hidden, pack 01 (profile.js) can be fixed in Monaco, tests pass, the ghost dissolves, the autopsy card shows.
 
 ### 1.1 Pure flow logic
-- [ ] `src/state/runState.ts`: `RunState`, `onSolved`, `onCaught`, `actOf`. **Check:** Vitest unit tests cover each function; `npx vitest run` passes.
+- [x] `src/state/runState.ts`: `RunState`, `onSolved`, `onCaught`, `actOf`. **Check:** Vitest unit tests cover each function; `npx vitest run` passes.
 - [ ] `src/game/flow/queue.ts`: `nextBug` over the packs that exist. **Check:** unit test: with nothing solved returns pack 01; with 01 solved returns 02; with all solved returns `null`.
 - [ ] `src/game/flow/spawner.ts`: `pickSpawns` with the 6-tile desk rule and fallback. **Check:** unit test on `office.json` returns only spawns at least 6 tiles from the desk; fast-check property over random player positions.
 
