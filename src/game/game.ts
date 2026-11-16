@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 import { BootScene } from './scenes/BootScene'
 import { OfficeScene } from './scenes/OfficeScene'
 import { LaptopScene } from './scenes/LaptopScene'
+import { HudScene } from './scenes/HudScene'
 
 export function startGame(): void {
   new Phaser.Game({
@@ -11,7 +12,7 @@ export function startGame(): void {
     backgroundColor: '#0d1117',
     pixelArt: true,
     roundPixels: true,
-    scene: [BootScene, OfficeScene, LaptopScene],
+    scene: [BootScene, OfficeScene, HudScene, LaptopScene],
     physics: {
       default: 'arcade',
       arcade: { debug: false },

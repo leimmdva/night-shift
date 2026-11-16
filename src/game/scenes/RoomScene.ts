@@ -2,6 +2,10 @@ import Phaser from 'phaser'
 import { officeMap, type RoomMap } from '../world/officeMap'
 import { lightBand, BAND_STRENGTH } from '../world/lighting'
 import { moveWithCollision, tileCenter } from '../world/collision'
+import { nearestHideSpot, canOpenLaptop, interactResult, type PlayerMode } from '../world/hiding'
+import type { HideSpot } from '../world/officeMap'
+import type { HudScene } from './HudScene'
+import { lockedCue } from '../../audio/cues'
 
 const T = 32
 const WALL_T = 16
@@ -27,10 +31,92 @@ export class RoomScene extends Phaser.Scene {
   /** Whole-number camera zoom, so every world pixel is drawn as a 2x2 block. */
   static readonly ZOOM = 2
 
+  /** Player state (game-flow design, "Hiding and laptop gating"). */
+  mode: PlayerMode = 'walking'
+  hideSpot: HideSpot | null = null
+  /** The hide spot used last; the checkpoint after a catch. */
+  lastHideSpot: HideSpot | null = null
+  laptopOpen = false
+  protected hud!: HudScene
+  private interactKey!: Phaser.Input.Keyboard.Key
+  private laptopKey!: Phaser.Input.Keyboard.Key
+
   create(): void {
     this.drawRoom()
     this.createPlayer()
     this.setupCamera()
+    this.scene.launch('HudScene')
+    this.hud = this.scene.get('HudScene') as HudScene
+    const kb = this.input.keyboard!
+    this.interactKey = kb.addKey(Phaser.Input.Keyboard.KeyCodes.E)
+    this.laptopKey = kb.addKey(Phaser.Input.Keyboard.KeyCodes.L)
+    this.interactKey.on('down', () => this.onInteract())
+    this.laptopKey.on('down', () => this.onLaptopKey())
+  }
+
+  /** Read-only snapshot for tests and debugging; exposed as window.__ns by the room that is running. */
+  debugState(): Record<string, unknown> {
+    const t = this.map.grid.tile
+    return {
+      mode: this.mode,
+      hideSpot: this.hideSpot?.id ?? null,
+      laptopOpen: this.laptopOpen,
+      facing: this.facing,
+      player: { x: this.player.x, y: this.player.y, tx: Math.floor(this.player.x / t), ty: Math.floor((this.player.y - 4) / t) },
+      prompt: this.promptText(),
+    }
+  }
+
+  /** Overridden by rooms that have monsters: is there an active bug to fix? */
+  protected hasActiveBug(): boolean {
+    return false
+  }
+
+  protected onInteract(): void {
+    if (this.hud?.cardOpen) return
+    const near = nearestHideSpot(this.map, this.player.x, this.player.y)
+    const action = interactResult(this.mode, this.laptopOpen, near)
+    if (action === 'hide' && near) this.enterHide(near)
+    else if (action === 'leave') this.leaveHide()
+  }
+
+  protected onLaptopKey(): void {
+    if (this.laptopOpen || this.hud?.cardOpen) return
+    if (!canOpenLaptop(this.mode, this.hasActiveBug())) {
+      if (this.mode === 'walking') lockedCue()
+      return
+    }
+    this.openLaptop()
+  }
+
+  protected openLaptop(): void {}
+
+  enterHide(spot: HideSpot): void {
+    this.mode = 'hidden'
+    this.hideSpot = spot
+    this.lastHideSpot = spot
+    this.player.setVisible(false)
+    this.player.anims.stop()
+    this.hud.setHidden(true)
+  }
+
+  leaveHide(): void {
+    const spot = this.hideSpot
+    this.mode = 'walking'
+    this.hideSpot = null
+    if (spot) {
+      const c = tileCenter(this.map, spot.enter.x, spot.enter.y)
+      this.player.setPosition(c.x, c.y)
+    }
+    this.player.setVisible(true)
+    this.hud.setHidden(false)
+  }
+
+  /** Prompt text for the current situation, or null. */
+  protected promptText(): string | null {
+    if (this.hud.cardOpen || this.laptopOpen) return null
+    if (this.mode === 'hidden') return this.hasActiveBug() ? 'E — leave\nL — laptop' : 'E — leave'
+    return nearestHideSpot(this.map, this.player.x, this.player.y) ? 'E — hide' : null
   }
 
   protected createPlayer(): void {
@@ -85,7 +171,9 @@ export class RoomScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number): void {
-    this.movePlayer(delta)
+    if (this.mode === 'walking' && !this.hud?.cardOpen) this.movePlayer(delta)
+    else this.player.anims.stop()
+    this.hud?.setPrompt(this.promptText())
   }
 
   /** Draws floor, walls, props and decals in the same order as scripts/sprites/office-compose.mjs. */

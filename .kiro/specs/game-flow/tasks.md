@@ -19,8 +19,8 @@ Act 1 with Null Ghost on the live site: the player sprite walks the office with 
 - [x] Camera follows the player, clamped to the 640 x 448 map. **Check:** at the map edges no area outside the map is visible.
 
 ### 1.3 Hiding
-- [ ] Enter/leave hide spots at `enter` tiles with the interact key; hidden sprite state. **Check:** Playwright: walk to `locker`, press interact, state is `hidden`; press again, state is `walking` on the `enter` tile.
-- [ ] Hint on screen when the player is next to a hide spot. **Check:** the hint shows only within 1 tile of an `enter` tile.
+- [x] Enter/leave hide spots at `enter` tiles with the interact key; hidden sprite state. **Check:** Playwright: walk to `locker`, press interact, state is `hidden`; press again, state is `walking` on the `enter` tile.
+- [x] Hint on screen when the player is next to a hide spot. **Check:** the hint shows only within 1 tile of an `enter` tile.
 
 ### 1.4 Null Ghost
 - [ ] Spawn Null Ghost after 20 to 120 s of control, using `pickSpawns`. **Check:** Playwright reads the spawn position and asserts distance to desk ≥ 6 tiles and time ≤ 120 s.
