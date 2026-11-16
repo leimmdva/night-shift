@@ -36,7 +36,7 @@ Act 1 with Null Ghost on the live site: the player sprite walks the office with 
 - [ ] Autopsy card (UI kit dialog panel) with the three pack texts. **Check:** the card shows `what`, `impact`, `fix` from `src/bugs/01-null-ghost/index.ts`; each under 20 words.
 
 ### 1.6 Live site
-- [ ] `npm run build`, push is done by the owner; verify the GitHub Pages build. **Check:** Playwright E2E for the slice path runs against the live URL and passes; Monaco is ready before the ghost spawns.
+- [ ] `npm run build`, push is done by the owner; verify the Vercel deploy. **Check:** Playwright E2E for the slice path runs against the live URL and passes; Monaco is ready before the ghost spawns.
 - [ ] Record slice results in `docs/KIRO_LOG.md`. **Check:** entry has a commit hash.
 
 ## Milestone 2 — Act 1 complete (Off-by-One)

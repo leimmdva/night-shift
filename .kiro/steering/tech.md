@@ -13,7 +13,7 @@
 | State / save | localStorage | native | Checkpoint and postmortem data only; no server |
 | Unit + PBT tests | Vitest + fast-check | latest | Property-based tests for bug pack validation |
 | E2E tests | Playwright | latest | Full game flow automation |
-| Deployment | GitHub Pages | — | Free, same repo, no extra account |
+| Deployment | Vercel (Hobby plan) | — | Free, auto-deploy from `main`. Replaces GitHub Pages, whose Actions runs stopped starting (billing lock) |
 
 ## Monaco loading strategy
 1. `preloadMonaco()` is called at game boot — Monaco starts loading in the background immediately.
@@ -38,11 +38,11 @@
 - First Contentful Paint: < 3s
 - Game interactive (Phaser ready): < 5s
 - Monaco ready: before first monster appears (within 2 min) — background load has enough time
-- If GitHub Pages Lighthouse scores are poor → migrate to Cloudflare Pages (one config file change)
+- If Vercel Lighthouse scores are poor → consider Cloudflare Pages
 
 ## Deployment
-- Base URL: `/night-shift/` (set in `vite.config.ts`)
-- GitHub Actions workflow: push to `main` → build → deploy to `gh-pages` branch
+- Base URL: `/` (set in `vite.config.ts`; Vercel serves from the domain root)
+- Vercel project linked to the GitHub repo: every push to `main` builds (`npm run build`) and deploys. Config in `vercel.json`. No GitHub Actions workflow.
 - Live demo must remain reachable until 30 January 2027 (Kiroween requirement)
 
 ## Audio

@@ -9,7 +9,7 @@ Every change must respect these rules. If a change would break one, stop and say
 1. **Public repo, OSI licence.** The GitHub repo is public. `LICENSE` is MIT and shows in the repo's About section.
 2. **`/.kiro` is committed.** The `.kiro` directory (specs, hooks, steering, agents, settings) is tracked by git and never listed in `.gitignore`.
 3. **English only.** Everything in the repo and in the submission is in English: code, comments, docs, in-game text, video, write-up.
-4. **Live demo.** A working GitHub Pages demo stays up until the end of judging (30 January).
+4. **Live demo.** A working demo hosted on Vercel (auto-deploy from `main`) stays up until the end of judging (30 January).
 5. **Demo video.** A public YouTube video under 3 minutes. No copyrighted music.
 6. **Kiro write-up.** A written explanation of how Kiro was used (vibe coding, specs, hooks, steering, MCP, agents). It is sourced from `docs/KIRO_LOG.md` and `docs/kiro-sessions/`, so those must stay complete (see `dev-log.md`).
 7. **No unlicensed assets.** Every font, sound and image not made in this repo needs an OSI, CC0 or OFL licence and is listed with its source in the README section "Credits". Reference images with unknown licences stay out of the repo.

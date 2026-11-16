@@ -2,7 +2,7 @@
 
 - Date: 2026-11-16
 - How Kiro was run: Kiro IDE, non-interactive session.
-- Commit(s): the commit "docs: session records, owner feedback and Kiroween compliance check" (hash recorded in the next KIRO_LOG entry)
+- Commit(s): the commit "docs: session records, owner feedback and Kiroween compliance check" (hash recorded in the next KIRO_LOG entry; it is 8a76e4a)
 
 ## Prompt given to Kiro
 

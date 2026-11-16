@@ -13,9 +13,7 @@ night-shift/
 │   │   └── bug-pack.md
 │   ├── specs/             # One spec per major system
 │   └── hooks/             # Automation hooks (e.g. bug-pack validator)
-├── .github/
-│   └── workflows/
-│       └── deploy.yml     # GitHub Pages deploy
+├── vercel.json            # Vercel build and caching config (deploys on push to main)
 ├── src/
 │   ├── main.ts            # Entry point: boot Phaser, start Monaco preload
 │   ├── style.css

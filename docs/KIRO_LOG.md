@@ -171,6 +171,15 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
 - Problems and fixes: the official rules page returned 403, so rules are checked only against search snippets and a 2025 summary. The 2026 period is 30 Oct to 4 Dec, which matches the 5 Dec 01:00 Türkiye cut-off. The 30 January demo date, the 3-minute video limit and the category requirement are not confirmed for 2026. The session 03 log had no error text, so the server error name comes from the owner.
 - Owner feedback: pending.
 - Session: [2026-11-15-08-session-records-and-compliance.md](kiro-sessions/2026-11-15-08-session-records-and-compliance.md) (file date is 2026-11-16 in its header)
+- Commit: 8a76e4a
+
+### 2026-11-16 — Move hosting from GitHub Pages to Vercel
+- What: `base: '/'` in `vite.config.ts`, new `vercel.json` (build config, cache headers for `/assets`, `/sprites`, `/fonts`), removed the Pages workflow, updated steering, README and the game-flow tasks line.
+- Kiro feature: steering, vibe coding
+- How Kiro helped: found that no source file hard-codes the old base path, made the edits and ran the checks (28 tests, build, `check-submission`, preview returned 200 for `/`, a sprite and the font).
+- Problems and fixes: the real Vercel URL is unknown, so the README link is the placeholder `https://night-shift.vercel.app`. The real deploy is not verified yet.
+- Owner feedback: pending.
+- Session: [2026-11-16-01-move-hosting-to-vercel.md](kiro-sessions/2026-11-16-01-move-hosting-to-vercel.md)
 - Commit: pending
 
 ## Decisions
@@ -190,6 +199,7 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
   - Rooms: the office and a small server room. The final fight (Legacy) is in the narrow, red-lit server room.
   - Look: the monster sprites (53b32f3) and the office map (853d1f8) are approved. The player is a gender-neutral junior developer in a hoodie with headphones and a flashlight. Sudo is an amber-glowing ghost with glasses and a coffee mug, shown only as a portrait on the laptop screen.
   - Sound: ambience and music from CC0 sources only, listed in the README. Short SFX are synthesised with Web Audio, one signature per monster.
+- **Hosting moved from GitHub Pages to Vercel on 2026-11-16.** GitHub Actions runs for the account stopped starting ("The job was not started because your account is locked due to a billing issue"), so the Pages deploy failed from commit 5c3fa5e on and the live site stayed on the 31 October build. Vercel (Hobby plan) is linked to the repo and deploys every push to `main`. Base URL is `/`; no GitHub Actions workflow.
 
 ## Metrics
 

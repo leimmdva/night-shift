@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 
 export default defineConfig({
-  base: '/night-shift/',
+  base: '/',
   plugins: [
     // Monaco split into its own chunk, loaded separately
     // TypeScript language worker is excluded — syntax highlighting only,

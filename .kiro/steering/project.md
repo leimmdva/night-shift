@@ -19,7 +19,7 @@ The game teaches debugging through play and generates a postmortem report.
 - Web Worker (sandboxed code execution, terminated after 5s timeout)
 - Vitest + fast-check + Playwright (unit, property-based, and E2E tests)
 - localStorage (checkpoint and postmortem data)
-- GitHub Pages (deployment)
+- Vercel, Hobby plan (deployment, auto-deploy from main)
 
 ## Scope boundaries (do not add without explicit decision)
 - No multiplayer
