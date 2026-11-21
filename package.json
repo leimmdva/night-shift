@@ -16,6 +16,8 @@
     "build-player": "npm run draw-player && node scripts/sprites/build-player.mjs",
     "draw-office": "node scripts/sprites/draw/draw-office.mjs",
     "build-office": "node scripts/sprites/draw/draw-office.mjs && node scripts/sprites/build-office.mjs",
+    "draw-portraits": "node scripts/sprites/draw/portraits.mjs",
+    "build-portraits": "npm run draw-portraits && node scripts/sprites/build-portraits.mjs",
     "draw-ui": "node scripts/sprites/draw/draw-ui.mjs",
     "build-ui": "node scripts/sprites/draw/draw-ui.mjs && node scripts/sprites/build-ui.mjs"
   },

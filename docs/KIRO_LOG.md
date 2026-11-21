@@ -11,7 +11,7 @@ This file records how Kiro was used to build it. Entries are dated and tied to c
 - Problems and fixes: the colour limit of 16 per frame was raised to 40 for the player (one ramp per material). The flashlight, the side-view hood bump and the pocket are still coarse at 32 x 36.
 - Owner feedback: the first pass was rejected (reasons above); feedback on this redraw: pending.
 - Session: [2026-11-16-04-player-redraw.md](kiro-sessions/2026-11-16-04-player-redraw.md)
-- Commit: pending
+- Commit: fc13a2d
 
 ## Kiro features in this repo
 
@@ -209,6 +209,15 @@ Not present in the repo: powers, skills, `.kiro/hooks` other than the one above.
 - Session: [2026-11-16-03-vertical-slice.md](kiro-sessions/2026-11-16-03-vertical-slice.md)
 - Commit: a63de0b, d0333d2, 42ec51a, d74e5cd, 6ef4731, 9710c56, cc6f7b8, ae5d896, 6a8655f, bdd1621, 438d8e3
 
+### 2026-11-16 — Intro dialogue art: owner's portrait, boss portrait, dialogue preview (branch `feat/intro-dialogue-art`, not pushed)
+- What: the owner's hand-drawn player portrait became `public/sprites/portraits/player.png` (grid detected, 1 art pixel = 1 image pixel, credited in the README). The boss (Mortem Labs engineering manager) was drawn on the same 40 x 78 canvas with `boss.png` and `boss-stern.png`, plus `player-worried.png` (only eyebrow and mouth pixels changed). Two 1280 x 720 dialogue screen previews and a nine-line intro dialogue draft (`src/game/dialogue/intro.json`, not wired in) with a unit test.
+- Kiro feature: vibe coding (text-grid sprite pipeline, build scripts, preview compositor)
+- How Kiro helped: found the scan's grid by fitting edge positions, wrote the importer and the boss drawing script, built the previews from the UI kit and the lit office, and compared the boss with the owner's portrait at 8x and 20x; it redrew the boss twice (hair, arms, mug, legs) after seeing the zoomed crops.
+- Problems and fixes: the scan is not a perfectly regular grid, so the `</>` on the T-shirt became three dots and the floor shadow was dropped. The first boss had floating hands, a helmet-like head and a smudged lanyard; fixed with connected arms, a stepped hairline and a one-pixel lanyard. The preview is a 1280 x 720 mock (portraits 6x, UI 3x); the game canvas is 960 x 540 with UI at 2x.
+- Owner feedback: pending.
+- Session: [2026-11-16-05-intro-dialogue-art.md](kiro-sessions/2026-11-16-05-intro-dialogue-art.md)
+- Commit: 980f6f4, 7a06960, 4d9c0b8, de9d682
+
 ## Decisions
 
 - **Monaco in its own chunk, loaded in the background.** The player cannot open the laptop for about 60 seconds, so Monaco has time to load. Phaser and Monaco are separate chunks and load in parallel (`vite.config.ts` chunks).
@@ -237,7 +246,7 @@ Measured on 2026-11-15.
 |---|---|
 | Bug packs | 3 of 8 planned (01-null-ghost, 02-off-by-one, 03-infinite-crawler) |
 | Packs passing `npm run validate-packs` | 3 of 3 |
-| Unit tests | 61 (6 files, Vitest, all passing; measured 2026-11-16 on `feat/vertical-slice`) |
+| Unit tests | 66 (7 files, Vitest, all passing; measured 2026-11-16 on `feat/intro-dialogue-art`) |
 | Property-based tests | 2 (fast-check: spawn rule, collision) |
 | E2E tests | 1 script, `scripts/e2e-slice.mjs` (passes on dev server and on `vite preview`) |
 | Specs | 7 |
@@ -248,6 +257,7 @@ Measured on 2026-11-15.
 | Monster sprites | 14 PNG files |
 | Player sprite | 9 frames (32 x 36) in one sheet, `public/sprites/player/player.png` |
 | Office sprites | 66 PNG pieces in `public/sprites/office/` (tiles and props) |
+| Portraits | 4 PNG files (40 x 78) in `public/sprites/portraits/`: player (owner's drawing), player-worried, boss, boss-stern |
 | UI kit sprites | 63 PNG pieces in `public/sprites/ui/` |
 | Commits | 21 on `main`, 12 more on `feat/vertical-slice` before the docs commit |
 
